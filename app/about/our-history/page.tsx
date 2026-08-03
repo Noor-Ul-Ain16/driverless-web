@@ -1,64 +1,66 @@
-const historyImage = "https://images.squarespace-cdn.com/content/v1/5b79970e3c3a53723fab8cfc/1648072708637-L8NKIZXZOSNBDEZITSAA/GN3_8315.JPG?format=1500w";
+import Link from 'next/link'
 
 export default function OurHistoryPage() {
   return (
-    <div className="w-full bg-white">
-      <div className="relative h-64 overflow-hidden md:h-[28rem]">
-        <img
-          src={historyImage}
-          alt="Autonomous racing track"
-          className="h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute inset-0 flex items-center justify-center px-6">
-          <div className="text-center text-white">
-            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.5em] text-red-400">
-              Our Story
-            </p>
-            <h1 className="text-4xl font-bold sm:text-5xl">Our History</h1>
+    <div className="w-full bg-white py-16 px-6 md:px-12 text-zinc-900">
+      <div className="max-w-5xl mx-auto">
+        {/* Page Header */}
+        <div className="text-center mb-12">
+          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-red-600 mb-3">About Us</p>
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-black">Our History</h1>
+          
+          {/* Sub-navigation Tabs */}
+          <div className="flex justify-center gap-4 mt-8 text-xs font-bold uppercase tracking-widest">
+            <Link href="/about/who-we-are" className="px-5 py-2.5 rounded-full border border-gray-200 text-gray-600 hover:border-black hover:text-black transition">
+              Who We Are
+            </Link>
+            <span className="px-5 py-2.5 rounded-full bg-black text-white">Our History</span>
           </div>
         </div>
-      </div>
 
-      <div className="mx-auto max-w-6xl px-6 py-16 md:px-12">
-        <section className="mb-12 max-w-3xl">
-          <h2 className="text-sm font-semibold uppercase tracking-[0.4em] text-[#8a1d1d] mb-4">
-            Our Team
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-6">
-            The MIT Driverless team began as a small student effort with a clear ambition: build a full-scale autonomous racecar and compete with the best teams in the world. Through years of iteration, testing, and collaboration, we have grown into one of the leading student autonomy teams.
-          </p>
-          <p className="text-gray-700 leading-relaxed">
-            We continue to scale and push the edge of autonomous racing. We would not have achieved this without dedicated students, close collaboration across disciplines, and support from our industry partners.
-          </p>
-        </section>
+        {/* History Header Image */}
+        <div className="w-full h-64 sm:h-96 rounded-3xl overflow-hidden mb-12 border border-gray-200 bg-zinc-100 flex items-center justify-center">
+          <img 
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp0eSUrQx-YkqSCVo9ANXVJjWgsbV4iuIrr-Ii_dzA87VhkQLJkfxMeqQc&s=10" 
+            alt="NCAI Autonomous Vehicle History" 
+            className="w-full h-full object-cover"
+          />
+        </div>
 
-        <section>
-          <h2 className="text-sm font-semibold uppercase tracking-[0.4em] text-[#8a1d1d] mb-6">
-            Our Target - A2RL
-          </h2>
-          <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-center">
-            <div className="overflow-hidden rounded-3xl bg-zinc-100 shadow-sm">
-              <img
-                src="https://images.squarespace-cdn.com/content/v1/5b79970e3c3a53723fab8cfc/1761365797613-506FF1DN1VOS8Q4RRRTB/a2rl-season-launch.jpg?format=1200w"
-                alt="Autonomous race car in garage"
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <div className="space-y-6 text-gray-700">
-              <p>
-                The Abu Dhabi Autonomous Racing League (A2RL) is an innovative motorsport series featuring AI-driven, driverless cars competing at the Yas Marina Formula 1 Circuit. A2RL aims to advance autonomous vehicle technology and inspire future STEM talent.
-              </p>
-              <p>
-                The inaugural event in April 2024 saw eight international teams compete for a $2.25m prize pool. We aim to enter and race at A2RL in 2026!
-              </p>
-              <p className="text-sm font-semibold text-black">
-                NED Driverless is focused on pushing the envelope of autonomy, data-driven vehicle control, and real-world racing strategy.
-              </p>
-            </div>
+        {/* Narrative Section */}
+        <section className="space-y-8 text-gray-700 leading-relaxed text-base sm:text-lg">
+          <div className="border-l-4 border-red-600 pl-6 py-2">
+            <h2 className="text-2xl font-bold text-black mb-2">Building Pakistan&apos;s First Autonomous Car</h2>
+            <p className="text-gray-600 text-sm">National Centre of Artificial Intelligence — NED University</p>
+          </div>
+
+          <p>
+            NCAI Autonomous&apos; mission is to be the home of practical self-driving research at NED University — the place where the brightest engineering students learn to deploy AI on full-scale vehicles, and connect with industry partners looking for their next generation of talent.
+          </p>
+
+          <p>
+            The Autonomous Drive System is NCAI&apos;s flagship platform, in active development with NED University&apos;s engineering teams. It pairs LiDAR, radar, and camera perception with a deep-learning navigation stack, giving the vehicle a continuous read on the road around it — tuned for the unpredictable mix of traffic found on Pakistani streets, not just a closed test track.
+          </p>
+
+          <div className="my-12 p-8 rounded-3xl bg-zinc-50 border border-gray-200">
+            <h3 className="text-xl font-bold text-black mb-4">Milestones Achieved</h3>
+            <ul className="space-y-4 text-sm text-gray-700">
+              <li className="flex items-start gap-3">
+                <span className="h-2 w-2 rounded-full bg-red-600 mt-2 shrink-0" />
+                <span><strong>SAE Level 2 Autonomy:</strong> Successfully deployed real-time perception and steering control models on campus test vehicles.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="h-2 w-2 rounded-full bg-red-600 mt-2 shrink-0" />
+                <span><strong>In-Road Testing:</strong> Active dataset collection and autonomous driving navigation tests at NED University Main Campus.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="h-2 w-2 rounded-full bg-red-600 mt-2 shrink-0" />
+                <span><strong>International Publications:</strong> Academic publications accepted across international journals and IEEE conferences.</span>
+              </li>
+            </ul>
           </div>
         </section>
       </div>
     </div>
-  );
+  )
 }
