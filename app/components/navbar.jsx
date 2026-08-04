@@ -149,7 +149,7 @@ export default function Navbar() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         {/* Brand Logo - NCAI in Red */}
         <Link href="/" className="flex items-center gap-2 text-zinc-900" aria-label="NCAI Autonomous home">
-          <span className="text-xl font-black tracking-tight text-red-700">NCAI</span>
+          <span className="text-xl font-black tracking-tight text-[#8a1d1d]">NCAI</span>
           <span className="text-zinc-400">/</span>
           <span className="text-xs font-bold tracking-widest text-zinc-600 uppercase">AUTONOMOUS</span>
         </Link>
@@ -231,7 +231,7 @@ export default function Navbar() {
             {/* Get In Touch Button */}
             <Link
               href="/contact"
-              className="border border-zinc-900 bg-white px-4 py-2 text-xs font-bold uppercase tracking-wider text-zinc-900 transition hover:bg-zinc-900 hover:text-white"
+              className="border border-zinc-900 bg-white px-4 py-2 text-xs font-bold uppercase tracking-wider text-zinc-900 transition hover:border-black hover:bg-zinc-100"
             >
               Get In Touch
             </Link>

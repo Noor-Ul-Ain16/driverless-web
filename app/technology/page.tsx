@@ -1,82 +1,107 @@
 export default function TechnologyPage() {
+
+
+
   return (
-    <div className="w-full bg-white">
-      {/* Hero Section */}
-      <div id="overview" className="relative h-72 scroll-mt-24 overflow-hidden bg-gradient-to-br from-zinc-950 via-zinc-900 to-black md:h-[28rem]">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(244,63,94,0.18),_transparent_55%)]" />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="relative z-10 mx-auto flex h-full max-w-6xl flex-col items-center justify-center px-6 text-center text-white">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.35em] text-red-400">Technology</p>
-          <h1 className="text-4xl font-bold sm:text-5xl">Technical Stack & Research</h1>
-          <p className="mt-4 max-w-3xl text-base text-white/80 sm:text-lg">
-            NCAI / AUTONOMOUS develops full-stack autonomous vehicle pipelines, perception engines, and high-speed motion control algorithms, sharing technical insights through publications and open research.
+    <main className="w-full bg-white">
+      <section
+        id="overview"
+        className="scroll-mt-24 px-6 py-16 md:px-12 md:py-20"
+      >
+        <div className="mx-auto max-w-5xl text-center">
+          {/* Main Heading */}
+          <h1 className="text-3xl font-bold uppercase tracking-tight text-black sm:text-4xl md:text-5xl">
+            Autonomous Drive System
+          </h1>
+
+          {/* Road Testing Status */}
+          <p className="mt-8 text-xs font-bold uppercase tracking-[0.22em] text-[#8a1d1d]">
+            In Road Testing – NED University Main Campus
           </p>
-        </div>
-      </div>
 
-      {/* Core Research Pillars Section */}
-      <div id="pillars" className="mx-auto max-w-6xl scroll-mt-24 px-6 py-16 md:px-12">
-        <div className="grid gap-10 lg:grid-cols-3">
-          {/* Perception Card */}
-          <section className="rounded-[2rem] border border-gray-200 bg-zinc-50 p-8 shadow-sm transition hover:shadow-md">
-            <h2 className="text-2xl font-semibold text-black">Perception</h2>
-            <p className="mt-4 text-gray-700 leading-relaxed">
-              Our perception stack fuses camera, LiDAR, and radar data to detect track boundaries, obstacles, and dynamic objects in real time.
-            </p>
-            <ul className="mt-6 space-y-3 text-sm text-gray-600">
-              <li>• Multi-sensor fusion</li>
-              <li>• Computer vision with YOLO and custom neural nets</li>
-              <li>• Low-latency object tracking</li>
-            </ul>
-          </section>
+          {/* Description */}
+          <p className="mx-auto mt-6 max-w-4xl text-sm leading-7 text-zinc-700 md:text-base">
+            The Autonomous Drive System is NCAI&apos;s flagship platform, in
+            active development with NED University&apos;s engineering teams. It
+            pairs LiDAR, radar, and camera perception with a deep-learning
+            navigation stack, giving the vehicle a continuous read on the road
+            around it — tuned for the unpredictable mix of traffic found on
+            Pakistani streets, not just a closed test track.
+          </p>
 
-          {/* State Estimation Card */}
-          <section className="rounded-[2rem] border border-gray-200 bg-zinc-50 p-8 shadow-sm transition hover:shadow-md">
-            <h2 className="text-2xl font-semibold text-black">State Estimation</h2>
-            <p className="mt-4 text-gray-700 leading-relaxed">
-              We localize the vehicle with high accuracy using sensor fusion, IMU integration, and pose estimation for fast cornering and stable trajectory tracking.
-            </p>
-            <ul className="mt-6 space-y-3 text-sm text-gray-600">
-              <li>• Kalman filtering</li>
-              <li>• GPS/INS integration</li>
-              <li>• Real-time pose prediction</li>
-            </ul>
-          </section>
+          {/* Technology Capabilities */}
+          <ul
+            id="pillars"
+            className="mx-auto mt-8 max-w-2xl space-y-3 text-left text-sm text-zinc-700 md:text-base"
+          >
+            <li className="flex gap-3">
+              <span className="text-[#8a1d1d]">•</span>
+              <span>Deep-learning path and real-time decision making</span>
+            </li>
 
-          {/* Controls Card */}
-          <section className="rounded-[2rem] border border-gray-200 bg-zinc-50 p-8 shadow-sm transition hover:shadow-md">
-            <h2 className="text-2xl font-semibold text-black">Controls</h2>
-            <p className="mt-4 text-gray-700 leading-relaxed">
-              Our control system converts perception and planning outputs into smooth, aggressive commands for steering, throttle, and braking.
-            </p>
-            <ul className="mt-6 space-y-3 text-sm text-gray-600">
-              <li>• Model predictive control</li>
-              <li>• Trajectory optimization</li>
-              <li>• Safety-aware planning</li>
-            </ul>
-          </section>
-        </div>
+            <li className="flex gap-3">
+              <span className="text-[#8a1d1d]">•</span>
+              <span>
+                Multi-sensor fusion across LiDAR, radar, and vision
+              </span>
+            </li>
 
-        {/* Capabilities Section */}
-        <section className="mt-16 rounded-[2rem] border border-gray-200 bg-white p-10 shadow-sm">
-          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-            <div>
-              <h2 className="text-3xl font-bold text-black">Our stack in action</h2>
-              <p className="mt-4 text-gray-700 leading-relaxed">
-                We engineer the full autonomous pipeline for racing: perception for the environment, estimation for vehicle state, planning for racing lines, and controls for high-speed execution.
-              </p>
+            <li className="flex gap-3">
+              <span className="text-[#8a1d1d]">•</span>
+              <span>
+                ASIL-D-aligned, fail-operational control architecture
+              </span>
+            </li>
+
+            <li className="flex gap-3">
+              <span className="text-[#8a1d1d]">•</span>
+              <span>HD live mapping and localization</span>
+            </li>
+
+            <li className="flex gap-3">
+              <span className="text-[#8a1d1d]">•</span>
+              <span>V2X connectivity for smart-city integration</span>
+            </li>
+          </ul>
+
+
+          <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="overflow-hidden rounded-sm border border-zinc-200">
+              <img
+                src="https://placehold.co/800x500?text=Autonomous+Vehicle+Interior"
+                alt="Autonomous vehicle interior"
+                className="h-52 w-full object-cover"
+              />
             </div>
-            <div className="rounded-[1.75rem] bg-zinc-950 p-8 text-white">
-              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-red-400">Core capabilities</p>
-              <ul className="mt-6 space-y-4 text-sm leading-relaxed text-zinc-200">
-                <li>• Real-time sensor processing at 100+ Hz</li>
-                <li>• End-to-end autonomous race strategy</li>
-                <li>• Robust software for track variation and dynamic obstacles</li>
-              </ul>
+
+            <div className="overflow-hidden rounded-sm border border-zinc-200">
+              <img
+                src="https://placehold.co/800x500?text=AI+Control+Panel"
+                alt="AI control panel"
+                className="h-52 w-full object-cover"
+              />
+            </div>
+
+
+            <div className="overflow-hidden rounded-sm border border-zinc-200">
+              <img
+                src="https://placehold.co/800x500?text=Night+Driving+Test"
+                alt="Night driving test"
+                className="h-52 w-full object-cover"
+              />
+            </div>
+
+            <div className="overflow-hidden rounded-sm border border-zinc-200">
+              <img
+                src="https://placehold.co/800x500?text=Live+Perception+Visualization"
+                alt="Live perception visualization"
+                className="h-52 w-full object-cover"
+              />
             </div>
           </div>
-        </section>
-      </div>
-    </div>
+
+        </div>
+      </section>
+    </main>
   )
 }
