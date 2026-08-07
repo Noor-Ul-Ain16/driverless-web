@@ -18,14 +18,17 @@ export default function NewsLink() {
             IN THE PRESS
           </h2>
 
+
+
           <Link
             href="/newsroom"
-            className="mt-6 inline-flex w-fit items-center gap-2 text-sm font-bold text-[#8a1d1d] transition-all hover:gap-3"
+            style={{ color: '#8a1d1d' }}
+            className="mt-10 font-bold hover:opacity-80 inline-flex items-center gap-1"
           >
             Full Newsroom overview
             <span aria-hidden="true">→</span>
           </Link>
-      </div>
+        </div>
 
 
 
@@ -71,7 +74,7 @@ export default function NewsLink() {
 
 
       <div className="mx-auto max-w-6xl">
-        
+
         {/* Clickable Red Card Container */}
         <Link
           href="/about" // Change to "/team" if your route is /team
@@ -90,8 +93,8 @@ export default function NewsLink() {
           {/* Right Arrow Icon & Action Badge */}
           <div className="flex items-center gap-3 self-start text-sm font-bold uppercase tracking-wider text-white md:self-center">
             <span>Explore Team</span>
-            <span 
-              aria-hidden="true" 
+            <span
+              aria-hidden="true"
               className="text-2xl transition-transform duration-300 group-hover:translate-x-2"
             >
               →
@@ -100,8 +103,8 @@ export default function NewsLink() {
         </Link>
 
       </div>
-     
-  
+
+
 
     </section>
   )

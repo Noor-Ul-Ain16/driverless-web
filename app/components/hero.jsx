@@ -34,7 +34,7 @@ export default function Home() {
             {/* Buttons */}
             <div className="mt-7 flex flex-col items-center justify-center gap-2.5 sm:flex-row">
               <Link
-                href="/about/our-history"
+                href="/about/who-we-are"
                 className="inline-flex min-w-[108px] items-center justify-center border border-black bg-black px-5 py-2.5 text-[9px] font-bold uppercase tracking-wide !text-white transition-colors duration-200 hover:border-[#8a1d1d] hover:bg-[#8a1d1d] hover:!text-white"
               >
                 Learn More

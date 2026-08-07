@@ -3,77 +3,96 @@
 export default function Footer() {
   const sponsors = [
     {
-      name: 'Aptiv',
-      logo: 'https://images.squarespace-cdn.com/content/v1/5b79970e3c3a53723fab8cfc/1668446797631-5AHZY06646ZX5ZB9GFW5/aptiv_logo_rev_rgb.png?format=300w',
+      name: '92 News HD Plus',
+      logo: '92_News_HD_Plus_logo.png',
     },
     {
-      name: 'EDC',
-      logo: 'https://images.squarespace-cdn.com/content/v1/5b79970e3c3a53723fab8cfc/1668446797701-OGMBX3A0MJSDUXB7COK7/EDC+Logo.png?format=100w',
+      name: 'abn news',
+      logo: 'abn news.jpeg',
     },
     {
-      name: 'General Motors',
-      logo: 'https://images.squarespace-cdn.com/content/v1/5b79970e3c3a53723fab8cfc/1668446798159-RP13CR6I4GRCZ8AHKJRR/GM.png?format=100w',
+      name: 'ary',
+      logo: 'ary.png',
     },
     {
-      name: 'IBM',
-      logo: 'https://images.squarespace-cdn.com/content/v1/5b79970e3c3a53723fab8cfc/1668446798255-PPV0HWUSHYWX7EFOGJ0M/IBM.png?format=300w',
+      name: 'asia one',
+      logo: 'asia one.png',
     },
     {
-      name: 'Motional',
-      logo: 'https://images.squarespace-cdn.com/content/v1/5b79970e3c3a53723fab8cfc/1668446798743-XYC4L9JK1V71CCQY440K/Motional.png?format=100w',
+      name: 'bol',
+      logo: 'bol.jpg',
     },
     {
-      name: 'RTI',
-      logo: 'https://images.squarespace-cdn.com/content/v1/5b79970e3c3a53723fab8cfc/1668446798714-AF2LU0FQHKJBFQJ5TAM2/RTI.png?format=100w',
+      name: 'dawn',
+      logo: 'dawn.png',
     },
+    
+    {
+      name: 'dw',
+      logo: 'dw.jpg',
+    },
+    {
+      name: 'express-news-logo-png_seeklogo-390653',
+      logo: 'express-news-logo-png_seeklogo-390653.png',
+    },
+    {
+      name: 'gtv news',
+      logo: 'gtv news.jpeg',
+    },{
+      name: 'independent urdu',
+      logo: 'independent urdu.jpg',
+    },
+    {
+      name: 'independent_urdu_logo',
+      logo: 'independent_urdu_logo.jpeg',
+    },{
+      name: 'karachi matters',
+      logo: 'karachi matters.jpg',
+    },
+    {
+      name: 'no background_aaj-tv-aaj-news-logo-png',
+      logo: 'no background_aaj-tv-aaj-news-logo-png.png',
+    },{
+      name: 'nukta',
+      logo: 'nukta.png',
+    },
+    {
+      name: 'public news',
+      logo: 'public news.jpg',
+    },{
+      name: 'startup pakistan',
+      logo: 'startup pakistan.jpeg',
+    },
+    {
+      name: 'times of karachi',
+      logo: 'times of karachi.jpeg',
+    },
+    
   ]
 
-  const mainSponsors = [
-    {
-      name: 'Oshkosh',
-      logo: 'https://images.squarespace-cdn.com/content/v1/5b79970e3c3a53723fab8cfc/1668447401456-X8QUMBOHNE9VGAV7QRGJ/Oshkosh_Logo_White_TM_Hrz_150.png?format=500w',
-    },
-    {
-      name: 'Pratt Miller',
-      logo: 'https://images.squarespace-cdn.com/content/v1/5b79970e3c3a53723fab8cfc/1668447532659-LKHUW7MDF7XXYJ7JK2BA/PM+Logo.png?format=500w',
-    },
-  ]
+  const validSponsors = sponsors.filter((item) => item.logo.trim() !== '')
 
   return (
     <footer className="w-full bg-[#8a1d1d] text-white py-14 px-6 md:px-12">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <h3 className="text-xl font-semibold tracking-[0.08em] mb-8">
-            Previously Powered by
-          </h3>
-
-          <div className="flex flex-wrap justify-center items-center gap-10 mb-12">
-            {mainSponsors.map((sponsor) => (
-              <img
-                key={sponsor.name}
-                src={sponsor.logo}
-                alt={sponsor.name}
-                className="h-12 md:h-14 object-contain"
-              />
+                
+        {validSponsors.length > 0 && (
+          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-11 mb-12 px-4">
+            {validSponsors.map((sponsor, index) => (
+              <div key={sponsor.name || index} className="flex items-center justify-center h-12 min-w-20">
+                <img
+                  src={sponsor.logo}
+                  alt={sponsor.name || 'Sponsor Logo'}
+                  className="h-15 object-contain"
+                />
+              </div>
             ))}
           </div>
-        </div>
-
-        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-11 mb-12 px-4">
-          {sponsors.map((sponsor) => (
-            <div key={sponsor.name} className="flex items-center justify-center h-12 min-w-20">
-              <img
-                src={sponsor.logo}
-                alt={sponsor.name}
-                className="h-10 object-contain"
-              />
-            </div>
-          ))}
-        </div>
+        )}
 
         <div className="text-center border-t border-white/30 pt-8 mt-12">
           <p className="text-sm text-zinc-200">
-            © 2025 MIT Driverless | 265 Massachusetts Avenue, Cambridge, MA 02139, USA
+            &copy; {new Date().getFullYear()} All rights reserved.
           </p>
         </div>
       </div>

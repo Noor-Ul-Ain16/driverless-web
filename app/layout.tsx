@@ -16,8 +16,8 @@ const bodyFont = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "MIT Driverless",
-  description: "MIT Driverless official website",
+  title: "NED Driverless",
+  description: "NED Driverless official website",
 };
 
 export default function RootLayout({
