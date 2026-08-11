@@ -1,25 +1,73 @@
+'use client'
+
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 
 export default function WhoWeArePage() {
-  return (
-    <div className="w-full bg-white py-16 px-6 md:px-12 text-zinc-900">
-      <div className="max-w-6xl mx-auto">
-        {/* Page Header */}
-        <div className="text-center mb-12">
-          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#8a1d1d] mb-3">About Us</p>
-          <h1 className="mt-10 text-4xl sm:text-5xl font-extrabold text-black">Who We Are</h1>
+  // Common Animation Variants
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0 },
+  }
 
-          
-        </div>
+  const staggerGrid = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1, // Items ek ke baad ek animated honge
+      },
+    },
+  }
+
+  return (
+    <div className="w-full bg-white py-16 px-6 md:px-12 text-zinc-900 overflow-hidden">
+      <div className="max-w-6xl mx-auto">
+        
+        {/* Page Header */}
+        <motion.div 
+          className="text-center mb-12"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          transition={{ staggerChildren: 0.15, duration: 0.5 }}
+        >
+          <motion.p 
+            variants={fadeInUp}
+            className="text-xs font-semibold uppercase tracking-[0.35em] text-[#8a1d1d] mb-3"
+          >
+            About Us
+          </motion.p>
+          <motion.h1 
+            variants={fadeInUp}
+            className="mt-10 text-4xl sm:text-5xl font-extrabold text-black"
+          >
+            Who We Are
+          </motion.h1>
+        </motion.div>
 
         {/* Director Section */}
         <section className="mb-20">
-          <h2 className="text-3xl font-bold text-black mb-8 border-b border-gray-200 pb-3">Director</h2>
+          <motion.h2 
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-3xl font-bold text-black mb-8 border-b border-gray-200 pb-3"
+          >
+            Director
+          </motion.h2>
 
-          <div className="grid md:grid-cols-[280px_1fr] gap-8 items-start bg-zinc-50 p-8 rounded-3xl border border-gray-200">
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6 }}
+            className="grid md:grid-cols-[280px_1fr] gap-8 items-start bg-zinc-50 p-8 rounded-3xl border border-gray-200"
+          >
             <div className="aspect-[4/5] rounded-2xl bg-zinc-200 border border-gray-300 overflow-hidden flex items-center justify-center">
               <img
-                src="https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png"
+                src="/Dr. Muhammad Khurram"  
                 alt="Prof. Dr. Muhammad Khurram"
                 className="w-full h-full object-cover"
               />
@@ -30,111 +78,160 @@ export default function WhoWeArePage() {
               
               <h2 className="mt-10 text-xl font-bold text-[#8a1d1d]">Professor and Co-Chairman</h2>
 
-              <p className="text-sm font-medium">Depratment of Computer & Information  Systems Engineering</p>
-              <p className="text-sm font-medium"> Director, Research Center for Artificial Intelligence (RCAI)</p>
+              <p className="text-sm font-medium">Department of Computer & Information Systems Engineering</p>
+              <p className="text-sm font-medium">Director, Research Center for Artificial Intelligence (RCAI)</p>
               <p className="text-sm font-medium">Focal Person, National Center of Artificial Intelligence (NCAI) & Head, Smart City Lab</p>
-              <p className="text-sm font-medium">Ph.D. (IC Design), Massey University, New Zealand, 2012
-
-              </p>
-
+              <p className="text-sm font-medium">Ph.D. (IC Design), Massey University, New Zealand, 2012</p>
             </div>
-          </div>
+          </motion.div>
         </section>
 
         {/* Research Team Section */}
         <section>
-          <h2 className="text-3xl font-bold text-black mb-10 border-b border-gray-200 pb-3">Research Team</h2>
+          <motion.h2 
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-3xl font-bold text-black mb-10 border-b border-gray-200 pb-3"
+          >
+            Research Team
+          </motion.h2>
 
           {/* Graduate Leads */}
           <div className="mb-12">
             <h3 className="text-xl font-bold text-[#8a1d1d] mb-6">Graduate Leads</h3>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <motion.div 
+              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+              variants={staggerGrid}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+            >
               {[
-                { name: "Ansharah Mobeen", role: "Team Lead" },
-                { name: "Fatima Saud", role: "Project Manager, Computer Vision Engineer, Research Associate" },
-                { name: "Hamid Raza", role: "Embedded Systems Engineer, Research Assistant" },
-                { name: "Salim", role: "Embedded Systems Engineer, Research Assistant" }
+                { name: "Ansharah Mobeen", role: "Team Lead", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
+                { name: "Fatima Saud", role: "Project Manager, Computer Vision Engineer, Research Associate", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
+                { name: "Hamid Raza", role: "Embedded Systems Engineer, Research Assistant", image: "Hamid Raza.jpeg" },
+                { name: "Salim", role: "Embedded Systems Engineer, Research Assistant", image: "/Saleem.jpg" }
               ].map((member) => (
-                <div key={member.name} className="p-6 rounded-2xl border border-gray-200 bg-zinc-50 flex flex-col items-center text-center">
+                <motion.div 
+                  key={member.name} 
+                  variants={fadeInUp}
+                  transition={{ duration: 0.4 }}
+                  className="p-6 rounded-2xl border border-gray-200 bg-zinc-50 flex flex-col items-center text-center hover:shadow-md transition-shadow"
+                >
                   <img
-                    src="https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png"
+                    src={member.image}
                     alt={member.name}
                     className="w-20 h-20 rounded-full object-cover mb-4 border border-gray-300"
                   />
                   <h4 className="font-bold text-black text-lg">{member.name}</h4>
                   <p className="text-xs text-gray-600 mt-1 font-medium">{member.role}</p>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
 
           {/* Undergraduate Students Section */}
           <div className="mb-12">
             <h3 className="text-xl font-bold text-[#8a1d1d] mb-6">Undergraduate Students</h3>
-            <div className="grid gap-6 sm:grid-cols-2 max-w-2xl">
+            <motion.div 
+              className="grid gap-6 sm:grid-cols-2 max-w-2xl"
+              variants={staggerGrid}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+            >
               {[
-                { name: "Tehreem Raza Khan", role: "Hardware Lead" },
-                { name: "Eshal Kashif", role: "Software Lead" }
+                { name: "Tehreem Raza Khan", role: "Hardware Lead", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
+                { name: "Eshal Kashif", role: "Software Lead", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" }
               ].map((member) => (
-                <div key={member.name} className="p-6 rounded-2xl border border-gray-200 bg-zinc-50 flex flex-col items-center text-center">
+                <motion.div 
+                  key={member.name} 
+                  variants={fadeInUp}
+                  transition={{ duration: 0.4 }}
+                  className="p-6 rounded-2xl border border-gray-200 bg-zinc-50 flex flex-col items-center text-center hover:shadow-md transition-shadow"
+                >
                   <img
-                    src="https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png"
+                    src={member.image}
                     alt={member.name}
                     className="w-20 h-20 rounded-full object-cover mb-4 border border-gray-300"
                   />
                   <h4 className="font-bold text-black text-lg">{member.name}</h4>
                   <p className="text-xs text-gray-600 mt-1 font-medium">{member.role}</p>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
 
           {/* Software Team */}
           <div className="mb-12">
             <h3 className="text-lg font-bold text-zinc-900 mb-4 border-b border-gray-100 pb-2">Software</h3>
-            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+            <motion.div 
+              className="grid gap-4 sm:grid-cols-2 md:grid-cols-3"
+              variants={staggerGrid}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.1 }}
+            >
               {[
-                "Muhammad Hussnain Mansoor",
-                "Syed Hussain Sajjad",
-                "Muhammad Haris",
-                "Hamdan",
-                "Mazna Noman Khan",
-                "Anam Jafar"
+                { name: "Muhammad Hussnain Mansoor", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
+                { name: "Syed Hussain Sajjad", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
+                { name: "Muhammad Haris", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
+                { name: "Hamdan", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
+                { name: "Mazna Noman Khan", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
+                { name: "Anam Jafar", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" }
               ].map((member) => (
-                <div key={member} className="p-4 rounded-xl border border-gray-200 bg-white shadow-xs flex items-center gap-3">
+                <motion.div 
+                  key={member.name} 
+                  variants={fadeInUp}
+                  transition={{ duration: 0.3 }}
+                  className="p-4 rounded-xl border border-gray-200 bg-white shadow-xs flex items-center gap-3 hover:shadow-sm transition-shadow"
+                >
                   <img
-                    src="https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png"
-                    alt={member}
+                    src={member.image}
+                    alt={member.name}
                     className="w-10 h-10 rounded-full object-cover border border-gray-200"
                   />
-                  <p className="font-medium text-black text-sm">{member}</p>
-                </div>
+                  <p className="font-medium text-black text-sm">{member.name}</p>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
 
           {/* Embedded/Hardware Team */}
           <div>
             <h3 className="text-lg font-bold text-zinc-900 mb-4 border-b border-gray-100 pb-2">Embedded / Hardware</h3>
-            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+            <motion.div 
+              className="grid gap-4 sm:grid-cols-2 md:grid-cols-3"
+              variants={staggerGrid}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.1 }}
+            >
               {[
-                "Sumbal Zehra",
-                "Abdul Moiz",
-                "Muhammad Areeb",
-                "Muhammad Ubaid",
-                "Farhan Raza",
-                "Shaheer Azmat Khan"
+                { name: "Sumbal Zehra", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
+                { name: "Abdul Moiz", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
+                { name: "Muhammad Areeb", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
+                { name: "Muhammad Ubaid", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
+                { name: "Farhan Raza", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
+                { name: "Shaheer Azmat Khan", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" }
               ].map((member) => (
-                <div key={member} className="p-4 rounded-xl border border-gray-200 bg-white shadow-xs flex items-center gap-3">
+                <motion.div 
+                  key={member.name} 
+                  variants={fadeInUp}
+                  transition={{ duration: 0.3 }}
+                  className="p-4 rounded-xl border border-gray-200 bg-white shadow-xs flex items-center gap-3 hover:shadow-sm transition-shadow"
+                >
                   <img
-                    src="https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png"
-                    alt={member}
+                    src={member.image}
+                    alt={member.name}
                     className="w-10 h-10 rounded-full object-cover border border-gray-200"
                   />
-                  <p className="font-medium text-black text-sm">{member}</p>
-                </div>
+                  <p className="font-medium text-black text-sm">{member.name}</p>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
       </div>

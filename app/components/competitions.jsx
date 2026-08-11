@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 
 export default function TechnologySection() {
   const pillars = [
@@ -25,21 +26,55 @@ export default function TechnologySection() {
     },
   ]
 
+  // Animation Variants
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0 },
+  }
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2, // Items ek ke baad ek animate honge
+      },
+    },
+  }
+
   return (
-    <section className="bg-white px-6 py-16 md:px-12 md:py-20">
+    <section className="bg-white px-6 py-16 md:px-12 md:py-20 overflow-hidden">
       <div className="mx-auto max-w-6xl space-y-16">
 
         {/* Top Header Section */}
-        <div className="text-center">
-          <p className="mb-4 text-xs font-bold uppercase tracking-[0.25em] text-[#a82d27]">
+        <motion.div 
+          className="text-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ staggerChildren: 0.15, duration: 0.5 }}
+        >
+          <motion.p 
+            variants={fadeInUp}
+            transition={{ duration: 0.5 }}
+            className="mb-4 text-xs font-bold uppercase tracking-[0.25em] text-[#a82d27]"
+          >
             Technology
-          </p>
+          </motion.p>
 
-          <h2 className="mx-auto max-w-4xl text-3xl font-black uppercase tracking-tight text-black md:text-5xl leading-tight">
+          <motion.h2 
+            variants={fadeInUp}
+            transition={{ duration: 0.6 }}
+            className="mx-auto max-w-4xl text-3xl font-black uppercase tracking-tight text-black md:text-5xl leading-tight"
+          >
             Built on three research pillars
-          </h2>
+          </motion.h2>
 
-          <p className="mt-6 text-sm text-zinc-500 md:text-base">
+          <motion.p 
+            variants={fadeInUp}
+            transition={{ duration: 0.6 }}
+            className="mt-6 text-sm text-zinc-500 md:text-base"
+          >
             Everything the vehicle does traces back to how it senses, decides, and moves.{' '}
             <Link
               href="/technology"
@@ -48,13 +83,24 @@ export default function TechnologySection() {
             >
               Full technology overview <span aria-hidden="true">→</span>
             </Link>
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* 3 Pillars Grid Section */}
-        <div className="grid grid-cols-1 divide-y divide-zinc-200 border border-zinc-200 md:grid-cols-3 md:divide-x md:divide-y-0 bg-white">
+        <motion.div 
+          className="grid grid-cols-1 divide-y divide-zinc-200 border border-zinc-200 md:grid-cols-3 md:divide-x md:divide-y-0 bg-white"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           {pillars.map((pillar) => (
-            <article key={pillar.label} className="p-8 text-left flex flex-col justify-between">
+            <motion.article 
+              key={pillar.label} 
+              variants={fadeInUp}
+              transition={{ duration: 0.5 }}
+              className="p-8 text-left flex flex-col justify-between"
+            >
               <div>
                 <p className="mb-6 text-xs font-bold uppercase tracking-[0.2em] text-[#a82d27]">
                   {pillar.label}
@@ -68,52 +114,40 @@ export default function TechnologySection() {
                   {pillar.description}
                 </p>
               </div>
-            </article>
+            </motion.article>
           ))}
-        </div>
+        </motion.div>
 
         {/* Media Showcase Grid */}
-        <div className="grid gap-6 md:grid-cols-4">
-          <div className="relative min-h-[280px] overflow-hidden border border-zinc-200 bg-zinc-100">
-            <Image
-              src="/images/autonomous-car.gif"
-              alt="Autonomous vehicle interior"
-              fill
-              unoptimized
-              className="object-cover"
-            />
-          </div>
-
-          <div className="relative min-h-[280px] overflow-hidden border border-zinc-200 bg-zinc-100">
-            <Image
-              src="/images/autonomous-research.gif"
-              alt="AI control panel"
-              fill
-              unoptimized
-              className="object-cover"
-            />
-          </div>
-
-          <div className="relative min-h-[280px] overflow-hidden border border-zinc-200 bg-zinc-100">
-            <Image
-              src="/images/autonomous-car.gif"
-              alt="GPS and Localization"
-              fill
-              unoptimized
-              className="object-cover"
-            />
-          </div>
-
-          <div className="relative min-h-[280px] overflow-hidden border border-zinc-200 bg-zinc-100">
-            <Image
-              src="/images/autonomous-car.gif"
-              alt="Live perception visualization"
-              fill
-              unoptimized
-              className="object-cover"
-            />
-          </div>
-        </div>
+        <motion.div 
+          className="grid gap-6 md:grid-cols-4"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          {[
+            { src: '/images/autonomous-car.gif', alt: 'Autonomous vehicle interior' },
+            { src: '/images/autonomous-research.gif', alt: 'AI control panel' },
+            { src: '/images/autonomous-car.gif', alt: 'GPS and Localization' },
+            { src: '/images/autonomous-car.gif', alt: 'Live perception visualization' },
+          ].map((media, idx) => (
+            <motion.div 
+              key={idx}
+              variants={fadeInUp}
+              transition={{ duration: 0.5 }}
+              className="relative min-h-[280px] overflow-hidden border border-zinc-200 bg-zinc-100"
+            >
+              <Image
+                src={media.src}
+                alt={media.alt}
+                fill
+                unoptimized
+                className="object-cover transition-transform duration-500 hover:scale-105"
+              />
+            </motion.div>
+          ))}
+        </motion.div>
 
       </div>
     </section>

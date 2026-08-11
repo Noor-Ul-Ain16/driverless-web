@@ -6,23 +6,24 @@ import { useEffect, useRef, useState } from "react"
 
 export default function Navbar() {
   const pathname = usePathname() || "/"
-  const [activeDropdown, setActiveDropdown] = useState(null) // 'involved' | 'technology' | null
+  const [activeDropdown, setActiveDropdown] = useState(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  
+  const [currentHash, setCurrentHash] = useState("")
+
   const dropdownTimeout = useRef(null)
   const navRef = useRef(null)
 
   const links = [
     { label: "Home", href: "/" },
-    { label: "About Us", href: "/about/who-we-are" }, 
+    { label: "About Us", href: "/about/who-we-are" },
     { label: "Technology", href: "/technology", dropdown: "technology" },
-    { label: "Newsroom", href: "/newsroom" },
+    { label: "Media", href: "/media", dropdown: "media" },
     { label: "Get Involved", href: "/get-involved", dropdown: "involved" },
   ]
-  
+
   const getInvolvedSubmenu = [
-    { label: "Join the Team", href: "/get-involved" },
-    { label: "Become a Sponsor", href: "https://driverless.mit.edu/sponsorship-inquiry", external: true },
+    { label: "Join Our Team", href: "/get-involved/join-our-team" },
+    { label: "Sponsorship Opportunity", href: "/get-involved/sponsorship-form" },
   ]
 
   const technologySubmenu = [
@@ -30,14 +31,60 @@ export default function Navbar() {
     { label: "Publications", href: "/technology/publications" },
   ]
 
-  // Active Tab Check Logic
-  const isActive = (href) => {
-    if (!href) return false
-    const cleanHref = href.split("#")[0]
-    if (cleanHref === "/") {
+  const mediaSubmenu = [
+    { label: "News", href: "/media/news" },
+    { label: "Gallery", href: "/media/gallery" },
+  ]
+
+  // Track hash changes on client
+  useEffect(() => {
+    const updateHash = () => setCurrentHash(window.location.hash)
+    updateHash()
+    window.addEventListener("hashchange", updateHash)
+    window.addEventListener("popstate", updateHash)
+    return () => {
+      window.removeEventListener("hashchange", updateHash)
+      window.removeEventListener("popstate", updateHash)
+    }
+  }, [])
+
+  // Submenu items ke liye strict match check
+  const isExactActive = (href) => {
+    if (!href || !pathname) return false
+    const [cleanHref, hash] = href.split("#")
+
+    if (hash) {
+      return pathname === cleanHref && (currentHash === `#${hash}` || (!currentHash && hash === "overview"))
+    }
+
+    return pathname === cleanHref && !currentHash
+  }
+
+  // Parent Navigation Links ke liye Active Check
+  const isParentActive = (link) => {
+    if (!link.href || !pathname) return false
+
+    // Home Page Check
+    if (link.href === "/") {
       return pathname === "/"
     }
-    return pathname === cleanHref || pathname.startsWith(cleanHref + "/")
+
+    const [cleanHref] = link.href.split("#")
+
+    // Direct Exact Match
+    if (pathname === cleanHref) {
+      return true
+    }
+
+    // Base route matching for parent category (e.g., /technology matches /technology/publications)
+    const baseRoute = cleanHref.split("/")[1]
+    const currentBaseRoute = pathname.split("/")[1]
+
+    if (baseRoute && currentBaseRoute && baseRoute === currentBaseRoute) {
+      return true
+    }
+
+    return pathname.startsWith(`${cleanHref}/`)
   }
 
   // Close menus on route change
@@ -46,7 +93,7 @@ export default function Navbar() {
     setMobileMenuOpen(false)
   }, [pathname])
 
-  // Handle outside clicks and timeout cleanup
+  // Outside click & Escape key handler
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (navRef.current && !navRef.current.contains(event.target)) {
@@ -54,9 +101,18 @@ export default function Navbar() {
       }
     }
 
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setActiveDropdown(null)
+        setMobileMenuOpen(false)
+      }
+    }
+
     document.addEventListener("mousedown", handleClickOutside)
+    document.addEventListener("keydown", handleKeyDown)
     return () => {
       document.removeEventListener("mousedown", handleClickOutside)
+      document.removeEventListener("keydown", handleKeyDown)
       if (dropdownTimeout.current) {
         window.clearTimeout(dropdownTimeout.current)
       }
@@ -83,6 +139,7 @@ export default function Navbar() {
   const getSubmenuItems = (type) => {
     if (type === "involved") return getInvolvedSubmenu
     if (type === "technology") return technologySubmenu
+    if (type === "media") return mediaSubmenu
     return []
   }
 
@@ -94,7 +151,7 @@ export default function Navbar() {
           href={item.href}
           target="_blank"
           rel="noreferrer"
-          className="block px-5 py-3 text-xs font-semibold uppercase tracking-[0.2em] !text-white transition hover:bg-zinc-800 hover:!text-white"
+          className="block px-5 py-3 text-xs font-semibold uppercase tracking-[0.15em] text-white transition hover:bg-[#6e1717]"
           onClick={onClick}
           role="menuitem"
         >
@@ -103,18 +160,26 @@ export default function Navbar() {
       )
     }
 
-    const active = isActive(item.href)
+    const active = isExactActive(item.href)
 
     return (
       <Link
         key={item.href}
         href={item.href}
-        className={`block px-5 py-3 text-xs font-semibold uppercase tracking-[0.2em] transition ${
-          active 
-            ? "!text-[#8a1d1d] font-bold bg-zinc-900" 
-            : "!text-white hover:bg-zinc-800 hover:!text-[#8a1d1d]"
+        className={`block px-5 py-3 text-xs font-semibold uppercase tracking-[0.15em] transition ${
+          active
+            ? "bg-[#6e1717] font-bold text-white underline underline-offset-4"
+            : "text-white hover:bg-[#6e1717]"
         }`}
-        onClick={onClick}
+        onClick={() => {
+          if (item.href.includes("#")) {
+            const [, hash] = item.href.split("#")
+            setCurrentHash(`#${hash}`)
+          } else {
+            setCurrentHash("")
+          }
+          onClick()
+        }}
         role="menuitem"
       >
         {item.label}
@@ -132,12 +197,12 @@ export default function Navbar() {
           <span className="text-xs font-bold tracking-widest text-zinc-600 uppercase">DRIVERLESS</span>
         </Link>
 
-        {/* Mobile Toggle Button */}
+        {/* Mobile Menu Toggle */}
         <div className="flex items-center gap-3">
           <button
             type="button"
             className="inline-flex items-center justify-center rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm font-semibold text-zinc-800 transition hover:bg-zinc-100 md:hidden"
-            aria-label="Toggle navigation"
+            aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
             onClick={() => setMobileMenuOpen((current) => !current)}
           >
@@ -154,7 +219,7 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:gap-7">
             {links.map((link) => {
-              const active = isActive(link.href)
+              const active = isParentActive(link)
               const isOpen = activeDropdown === link.dropdown
 
               return (
@@ -168,33 +233,34 @@ export default function Navbar() {
                     <>
                       <button
                         type="button"
-                        className={`inline-flex items-center gap-1 text-sm font-medium transition ${
-                          active ? "!text-[#8a1d1d] font-semibold" : "text-zinc-700 hover:text-zinc-900"
+                        className={`inline-flex items-center gap-1 text-sm transition ${
+                          active ? "!text-[#8a1d1d] font-bold" : "text-zinc-700 font-medium hover:text-zinc-900"
                         }`}
                         aria-expanded={isOpen}
+                        aria-haspopup="true"
                         onClick={() => toggleDropdown(link.dropdown)}
                       >
                         {link.label}
-                        <svg 
-                          className={`h-3.5 w-3.5 text-current transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} 
-                          viewBox="0 0 12 12" 
-                          fill="none" 
+                        <svg
+                          className={`h-3.5 w-3.5 text-current transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+                          viewBox="0 0 12 12"
+                          fill="none"
                           aria-hidden
                         >
                           <path d="m2 4 4 4 4-4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
                         </svg>
                       </button>
 
-                      {/* Dropdown Container with Hover Bridge */}
+                      {/* Dropdown Container */}
                       <div
-                        className={`absolute left-0 top-full pt-2 z-30 w-64 transition duration-200 ${
+                        className={`absolute left-0 top-full pt-2 z-30 w-64 transition-all duration-200 ${
                           isOpen
                             ? "visible opacity-100 translate-y-0"
                             : "invisible pointer-events-none opacity-0 -translate-y-1"
                         }`}
                         role="menu"
                       >
-                        <div className="overflow-hidden rounded-md bg-black shadow-xl">
+                        <div className="overflow-hidden rounded-md bg-[#8a1d1d] text-white shadow-xl border border-[#6e1717]">
                           {getSubmenuItems(link.dropdown).map((item) =>
                             renderSubmenuLink(item, () => setActiveDropdown(null))
                           )}
@@ -204,8 +270,8 @@ export default function Navbar() {
                   ) : (
                     <Link
                       href={link.href}
-                      className={`text-sm font-medium transition ${
-                        active ? "!text-[#8a1d1d] font-semibold" : "text-zinc-700 hover:text-zinc-900"
+                      className={`text-sm transition ${
+                        active ? "!text-[#8a1d1d] font-bold" : "text-zinc-700 font-medium hover:text-zinc-900"
                       }`}
                     >
                       {link.label}
@@ -215,11 +281,11 @@ export default function Navbar() {
               )
             })}
 
-            {/* Get In Touch Button */}
+            {/* CTA Button */}
             <Link
-              href="/get-involved"
+              href="/get-involved/join-our-team"
               className={`border px-4 py-2 text-xs font-bold uppercase tracking-wider transition ${
-                isActive("/get-involved")
+                pathname === "/get-involved/join-our-team"
                   ? "border-[#8a1d1d] bg-[#8a1d1d] text-white"
                   : "border-zinc-900 bg-white text-zinc-900 hover:border-black hover:bg-zinc-100"
               }`}
@@ -234,7 +300,7 @@ export default function Navbar() {
       <div className={`${mobileMenuOpen ? "block" : "hidden"} border-t border-zinc-200 bg-white md:hidden`}>
         <div className="space-y-1 px-4 py-4">
           {links.map((link) => {
-            const active = isActive(link.href)
+            const active = isParentActive(link)
             const isOpen = activeDropdown === link.dropdown
 
             return (
@@ -243,8 +309,8 @@ export default function Navbar() {
                   <div className="space-y-1">
                     <button
                       type="button"
-                      className={`flex w-full items-center justify-between rounded-md px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em] transition ${
-                        active ? "!text-[#8a1d1d] font-bold" : "text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900"
+                      className={`flex w-full items-center justify-between rounded-md px-4 py-3 text-left text-xs uppercase tracking-[0.15em] transition ${
+                        active ? "!text-[#8a1d1d] font-bold bg-zinc-50" : "text-zinc-700 font-semibold hover:bg-zinc-100 hover:text-zinc-900"
                       }`}
                       onClick={() => toggleDropdown(link.dropdown)}
                       aria-expanded={isOpen}
@@ -260,7 +326,7 @@ export default function Navbar() {
                       </svg>
                     </button>
                     {isOpen && (
-                      <div className="space-y-1 rounded-md bg-black p-2">
+                      <div className="space-y-1 rounded-md bg-[#8a1d1d] p-2">
                         {getSubmenuItems(link.dropdown).map((item) =>
                           renderSubmenuLink(item, () => setMobileMenuOpen(false))
                         )}
@@ -270,8 +336,8 @@ export default function Navbar() {
                 ) : (
                   <Link
                     href={link.href}
-                    className={`block rounded-md px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] transition ${
-                      active ? "!text-[#8a1d1d] font-bold" : "text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900"
+                    className={`block rounded-md px-4 py-3 text-xs uppercase tracking-[0.15em] transition ${
+                      active ? "!text-[#8a1d1d] font-bold bg-zinc-50" : "text-zinc-700 font-semibold hover:bg-zinc-100 hover:text-zinc-900"
                     }`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -282,8 +348,8 @@ export default function Navbar() {
             )
           })}
           <Link
-            href="/get-involved"
-            className="mt-2 block w-full text-center border border-zinc-900 bg-zinc-900 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white"
+            href="/get-involved/join-our-team"
+            className="mt-2 block w-full text-center border border-zinc-900 bg-zinc-900 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-zinc-800"
             onClick={() => setMobileMenuOpen(false)}
           >
             Get In Touch

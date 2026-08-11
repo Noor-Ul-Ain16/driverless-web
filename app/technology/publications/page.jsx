@@ -1,24 +1,65 @@
 'use client'
 
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 
 export default function PublicationsPage() {
+  // Animation Variants
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 25 },
+    visible: { opacity: 1, y: 0 },
+  }
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15, // Har publication card ek ke baad ek animated hoga
+      },
+    },
+  }
+
   return (
-    <main id="publications" className="mx-auto max-w-4xl px-6 py-16 text-zinc-900">
-      <h1 className="text-3xl font-bold uppercase tracking-wide mb-10 border-b border-zinc-200 pb-4">
+    <main id="publications" className="mx-auto max-w-4xl px-6 py-16 text-zinc-900 overflow-hidden">
+      {/* Page Title */}
+      <motion.h1 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="text-3xl font-bold uppercase tracking-wide mb-10 border-b border-zinc-200 pb-4"
+      >
         Publications
-      </h1>
+      </motion.h1>
 
       {/* Journal Publications */}
       <section className="mb-12">
-        <h2 className="text-xl font-bold text-[#8a1d1d] mb-6">Journal Publications</h2>
-        <div className="space-y-6">
-          
+        <motion.h2 
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+          className="text-xl font-bold text-[#8a1d1d] mb-6"
+        >
+          Journal Publications
+        </motion.h2>
+
+        <motion.div 
+          className="space-y-6"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+        >
           {/* Card 1 */}
-          <div className="p-6 bg-zinc-50 border border-zinc-200 rounded-sm flex flex-col sm:flex-row gap-6 items-start">
+          <motion.div 
+            variants={fadeInUp}
+            transition={{ duration: 0.4 }}
+            className="p-6 rounded-sm flex flex-col sm:flex-row gap-6 items-start transition-all duration-300"
+          >
             <div className="w-full sm:w-40 h-28 relative flex-shrink-0 bg-zinc-200 rounded overflow-hidden">
               <Image 
-                src="/images/pub1.jpg" // Apna image path yahan dalein
+                src="/images/pub1.jpg" 
                 alt="Advancing Road Safety publication thumbnail" 
                 fill 
                 className="object-cover" 
@@ -40,13 +81,17 @@ export default function PublicationsPage() {
                 DOI: 10.3390/futuretransp5010002 (Open Access) →
               </a>
             </div>
-          </div>
+          </motion.div>
 
           {/* Card 2 */}
-          <div className="p-6 bg-zinc-50 border border-zinc-200 rounded-sm flex flex-col sm:flex-row gap-6 items-start">
+          <motion.div 
+            variants={fadeInUp}
+            transition={{ duration: 0.4 }}
+            className="p-6 rounded-sm flex flex-col sm:flex-row gap-6 items-start transition-all duration-300"
+          >
             <div className="w-full sm:w-40 h-28 relative flex-shrink-0 bg-zinc-200 rounded overflow-hidden">
               <Image 
-                src="/images/pub2.jpg" // Apna image path yahan dalein
+                src="/images/pub2.jpg" 
                 alt="Predict Steering Angle publication thumbnail" 
                 fill 
                 className="object-cover" 
@@ -69,21 +114,39 @@ export default function PublicationsPage() {
                 DOI: 10.1155/2022/5716820 →
               </a>
             </div>
-          </div>
-
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* Conference Proceedings */}
       <section>
-        <h2 className="text-xl font-bold text-[#8a1d1d] mb-6">Conference Proceedings</h2>
-        <div className="space-y-6">
+        <motion.h2 
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+          className="text-xl font-bold text-[#8a1d1d] mb-6"
+        >
+          Conference Proceedings
+        </motion.h2>
 
+        <motion.div 
+          className="space-y-6"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+        >
           {/* Card 3 */}
-          <div className="p-6 bg-zinc-50 border border-zinc-200 rounded-sm flex flex-col sm:flex-row gap-6 items-start">
+          <motion.div 
+            variants={fadeInUp}
+            transition={{ duration: 0.4 }}
+            className="p-6 rounded-sm flex flex-col sm:flex-row gap-6 items-start
+             transition-all duration-300"
+          >
             <div className="w-full sm:w-40 h-28 relative flex-shrink-0 bg-zinc-200 rounded overflow-hidden">
               <Image 
-                src="/images/pub3.jpg" // Apna image path yahan dalein
+                src="/images/pub3.jpg"
                 alt="Autonomous vehicle navigation publication thumbnail" 
                 fill 
                 className="object-cover" 
@@ -106,13 +169,18 @@ export default function PublicationsPage() {
                 DOI: 10.1088/1742-6596/2330/1/012016 (Open Access) →
               </a>
             </div>
-          </div>
+          </motion.div>
 
           {/* Card 4 */}
-          <div className="p-6 bg-zinc-50 border border-zinc-200 rounded-sm flex flex-col sm:flex-row gap-6 items-start">
+          <motion.div 
+            variants={fadeInUp}
+            transition={{ duration: 0.4 }}
+            className="p-6 rounded-sm flex flex-col sm:flex-row gap-6 items-start
+             transition-all duration-300"
+          >
             <div className="w-full sm:w-40 h-28 relative flex-shrink-0 bg-zinc-200 rounded overflow-hidden">
               <Image 
-                src="/images/pub4.jpg" // Apna image path yahan dalein
+                src="/images/pub4.jpg"
                 alt="Out-Cabin ADAS publication thumbnail" 
                 fill 
                 className="object-cover" 
@@ -135,9 +203,8 @@ export default function PublicationsPage() {
                 DOI: 10.1109/ICIICE69672.2026.11565080 →
               </a>
             </div>
-          </div>
-
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
     </main>
   )

@@ -32,3 +32,23 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-slow {
+  display: flex;
+  width: max-content;
+  animation: marquee 50s linear infinite;
+}
+
+/* Hover karne par agar pause karna chahen */
+.animate-marquee-slow:hover {
+  animation-play-state: paused;
+}
