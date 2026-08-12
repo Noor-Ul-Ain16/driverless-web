@@ -124,22 +124,22 @@ export default function NewsroomPage() {
 
   // News Logos
   const sponsors = [
-    { name: '92 News HD Plus', logo: '/92_News_HD_Plus_logo.png' },
-    { name: 'ABN News', logo: '/abn news.jpeg' },
-    { name: 'ARY News', logo: '/ary.png' },
-    { name: 'Asia One', logo: '/asia one.png' },
-    { name: 'BOL News', logo: '/bol.jpg' },
-    { name: 'Dawn', logo: '/dawn.png' },
-    { name: 'DW', logo: '/dw.jpg' },
-    { name: 'Express News', logo: '/express-news-logo-png_seeklogo-390653.png' },
-    { name: 'GTV News', logo: '/gtv news.jpeg' },
-    { name: 'Independent Urdu', logo: '/independent urdu.png' },
-    { name: 'Karachi Matters', logo: '/karachi matters.jpg' },
-    { name: 'Aaj News', logo: '/no background_aaj-tv-aaj-news-logo-png.png' },
-    { name: 'Nukta', logo: '/nukta.png' },
-    { name: 'Public News', logo: '/public news.jpg' },
-    { name: 'Startup Pakistan', logo: '/startup pakistan.jpeg' },
-    { name: 'Times of Karachi', logo: '/times of karachi.jpeg' },
+    { name: '92 News HD Plus', logo: '/news_logo_1.jpg' },
+    { name: 'ABN News', logo: '/news_logo_2.jpg' },
+    { name: 'ARY News', logo: '/news_logo_3.jpg' },
+    { name: 'Asia One', logo: '/news_logo_4.jpg' },
+    { name: 'BOL News', logo: '/news_logo_5.jpg' },
+    { name: 'Dawn', logo: '/news_logo_6.png' },
+    { name: 'DW', logo: '/news_logo_7.jpg' },
+    { name: 'Express News', logo: '/news_logo_8.png' },
+    { name: 'GTV News', logo: '/news_logo_9.jpg' },
+    { name: 'Independent Urdu', logo: '/news_logo_10.jpg' },
+    { name: 'Karachi Matters', logo: '/news_logo_11.jpg' },
+    { name: 'Aaj News', logo: '/news_logo_12.jpg' },
+    { name: 'Nukta', logo: '/news_logo_13.png' },
+    { name: 'Public News', logo: '/news_logo_14.png' },
+    { name: 'Startup Pakistan', logo: '/news_logo_15.jpg' },
+    { name: 'Times of Karachi', logo: '/news_logo_16.png' },
   ]
 
   return (
