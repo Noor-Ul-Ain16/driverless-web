@@ -1,11 +1,14 @@
 "use client";
 
+
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
 
 export default function TechnologyPage() {
   // Active sensor track karne ke liye state
   const [activeTab, setActiveTab] = useState<"lidar" | "cameras" | "gps">("lidar");
+
 
   // Sensor data object (Video URLs, Titles, Descriptions)
   const sensors = {
@@ -13,38 +16,32 @@ export default function TechnologyPage() {
       id: "lidar",
       title: "LiDAR Perception",
       subtitle: "360° Real-time 3D Point Cloud Sensing",
-      videoUrl: "h", // Replace with your video URL
-      description:
-        "High-definition LiDAR mapping creating precise 3D environment models for obstacle detection and spatial awareness.",
-      badge: "3D Spatial Mapping",
+      videoUrl: "", // Replace with your video URL
     },
     cameras: {
       id: "cameras",
       title: "Vision & Cameras",
       subtitle: "Multi-View Deep Learning Computer Vision",
       videoUrl: "", // Replace with your video URL
-      description:
-        "Multi-camera setup providing high-resolution visual processing for lane detection, traffic signs, and object classification.",
-      badge: "Deep Learning Perception",
     },
     gps: {
       id: "gps",
       title: "GPS & IMU Localization",
       subtitle: "Sub-Centimeter Positioning & Odometry",
       videoUrl: "", // Replace with your video URL
-      description:
-        "RTK-enabled GPS paired with inertial measurement units to ensure ultra-precise vehicle positioning and navigation.",
-      badge: "HD Localization",
     },
   };
 
+
   const activeSensor = sensors[activeTab];
+
 
   // Animation Variants
   const fadeInUp = {
     hidden: { opacity: 0, y: 25 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
+
 
   const listContainer = {
     hidden: { opacity: 0 },
@@ -56,18 +53,20 @@ export default function TechnologyPage() {
     },
   };
 
+
   const listItem = {
     hidden: { opacity: 0, x: -15 },
     visible: { opacity: 1, x: 0, transition: { duration: 0.4 } },
   };
 
+
   return (
-    <main className="w-full bg-white overflow-hidden">
+    <main className="w-full bg-white overflow-x-hidden">
       <section
         id="overview"
-        className="scroll-mt-24 px-6 py-16 md:px-12 md:py-20"
+        className="scroll-mt-24 py-16 md:py-20"
       >
-        <div className="mx-auto max-w-5xl text-center">
+        <div className="mx-auto max-w-5xl px-6 md:px-12 text-center">
           {/* Main Header Container with Staggered Fade-in */}
           <motion.div
             initial="hidden"
@@ -75,23 +74,25 @@ export default function TechnologyPage() {
             transition={{ staggerChildren: 0.15 }}
           >
             {/* Main Heading */}
-            <motion.h1 
+            <motion.h1
               variants={fadeInUp}
               className="text-3xl font-bold uppercase tracking-tight text-black sm:text-4xl md:text-5xl"
             >
               Autonomous Drive System
             </motion.h1>
 
+
             {/* Road Testing Status */}
-            <motion.p 
+            <motion.p
               variants={fadeInUp}
               className="mt-8 text-xs font-bold uppercase tracking-[0.22em] text-[#8a1d1d]"
             >
               In Road Testing – NED University Main Campus
             </motion.p>
 
+
             {/* Description */}
-            <motion.p 
+            <motion.p
               variants={fadeInUp}
               className="mx-auto mt-6 max-w-4xl text-sm leading-7 text-zinc-700 md:text-base"
             >
@@ -103,6 +104,7 @@ export default function TechnologyPage() {
               Pakistani streets, not just a closed test track.
             </motion.p>
           </motion.div>
+
 
           {/* Technology Capabilities List */}
           <motion.ul
@@ -126,21 +128,20 @@ export default function TechnologyPage() {
               </motion.li>
             ))}
           </motion.ul>
+        </div>
 
-          {/* --- 3-COLUMN SENSOR VIDEO SYSTEM --- */}
-          <motion.div 
-            initial={{ opacity: 0, y: 35 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.6 }}
-            className="mt-16 rounded-3xl bg-[#8a1d1d] p-8 text-left border border-zinc-200 shadow-lg"
-          >
-            <h2 className="mt-15 text-center text-xs font-bold uppercase tracking-widest text-zinc-100">
-              Interactive Sensor Feeds (Click to view feed)
-            </h2>
 
-            {/* 3 Columns */}
-            <div className="mt-15 grid grid-cols-1 gap-6 md:grid-cols-3">
+        {/* --- 3-COLUMN SENSOR VIDEO SYSTEM WITH FULL-WIDTH RED BG --- */}
+        <motion.div
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.6 }}
+          className="mt-16"
+        >
+          {/* 3 Boxes Grid - z-10 layered over red bg */}
+          <div className="relative z-10 mx-auto max-w-5xl px-6 md:px-12">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
               {Object.values(sensors).map((sensor) => {
                 const isActive = activeTab === sensor.id;
                 return (
@@ -150,49 +151,29 @@ export default function TechnologyPage() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    className={`group relative flex flex-col justify-between overflow-hidden rounded-xl border p-6 text-left transition-all duration-300 ${
-                      isActive
-                        ? "border-[#8a1d1d] bg-zinc-900 text-white shadow-xl ring-2 ring-zinc-120"
-                        : "border-zinc-200 bg-zinc-50 text-zinc-800 hover:border-zinc-400 hover:bg-zinc-100"
-                    }`}
+                    className={`group relative flex flex-col justify-between overflow-hidden rounded-xl border p-6 text-left transition-all duration-300 shadow-xl ${isActive
+                        ? "border-[#8a1d1d] bg-zinc-900 text-white ring-2 ring-zinc-800"
+                        : "border-zinc-200 bg-white text-zinc-800 hover:border-zinc-400 hover:bg-zinc-50"
+                      }`}
                   >
                     <div>
-                      <div className="flex items-center justify-between">
-                        <span
-                          className={`rounded-full px-2.5 py-1 text-[10px] font-semibold tracking-wider uppercase ${
-                            isActive
-                              ? "bg-[#8a1d1d] text-white"
-                              : "bg-zinc-200 text-zinc-700"
-                          }`}
-                        >
-                          {sensor.badge}
-                        </span>
-                        {isActive && (
-                          <span className="flex h-2.5 w-2.5 relative">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#8a1d1d]"></span>
-                          </span>
-                        )}
-                      </div>
-
-                      <h3 className="mt-4 text-xl font-bold tracking-tight">
+                      <h3 className="text-xl font-bold tracking-tight">
                         {sensor.title}
                       </h3>
                       <p
-                        className={`mt-1 text-xs font-medium ${
-                          isActive ? "text-zinc-300" : "text-zinc-500"
-                        }`}
+                        className={`mt-1 text-xs font-medium ${isActive ? "text-zinc-300" : "text-zinc-500"
+                          }`}
                       >
                         {sensor.subtitle}
                       </p>
                     </div>
 
+
                     <div className="mt-6 flex items-center gap-2 text-xs font-bold uppercase tracking-wider">
                       <span>{isActive ? "Active Feed" : "Select Feed"}</span>
                       <svg
-                        className={`h-4 w-4 transition-transform ${
-                          isActive ? "translate-x-1 text-[#8a1d1d]" : "text-zinc-400 group-hover:translate-x-1"
-                        }`}
+                        className={`h-4 w-4 transition-transform ${isActive ? "translate-x-1 text-[#8a1d1d]" : "text-zinc-400 group-hover:translate-x-1"
+                          }`}
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -209,47 +190,47 @@ export default function TechnologyPage() {
                 );
               })}
             </div>
+          </div>
 
-            {/* Selected Video Display Section with Dynamic Transition */}
-            <div className="mt-8 overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 p-4 shadow-2xl md:p-6">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeSensor.id}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.35 }}
-                >
-                  <div className="mb-4 flex flex-wrap items-center justify-between gap-2 border-b border-zinc-800 pb-4 text-white">
-                    <div>
-                      <h3 className="text-lg font-bold">{activeSensor.title} Demonstration</h3>
-                      <p className="text-xs text-zinc-400">{activeSensor.description}</p>
+
+          {/* Full-Width Red Background starting from half of the 3 boxes */}
+          <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen bg-[#8a1d1d] -mt-24 pt-32 pb-16">
+            <div className="mx-auto max-w-5xl px-6 md:px-12">
+              {/* Selected Video Display Section */}
+              <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 p-4 shadow-2xl md:p-6">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeSensor.id}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -15 }}
+                    transition={{ duration: 0.35 }}
+                  >
+                    <div className="mb-4 flex flex-wrap items-center justify-between gap-2 border-b border-zinc-800 pb-4 text-white">
+                      <div></div>
                     </div>
-                    <span className="rounded bg-red-950/80 px-3 py-1 text-xs font-mono font-bold text-red-400 border border-red-800/50">
-                      LIVE SENSOR FEED
-                    </span>
-                  </div>
 
-                  {/* Video Player */}
-                  <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-black">
-                    <video
-                      key={activeSensor.videoUrl}
-                      controls
-                      autoPlay
-                      muted
-                      loop
-                      className="h-full w-full object-cover"
-                    >
-                      <source src={activeSensor.videoUrl} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
+
+                    {/* Video Player */}
+                    <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-black">
+                      <video
+                        key={activeSensor.videoUrl}
+                        controls
+                        autoPlay
+                        muted
+                        loop
+                        className="h-full w-full object-cover"
+                      >
+                        <source src={activeSensor.videoUrl} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
             </div>
-          </motion.div>
-
-        </div>
+          </div>
+        </motion.div>
       </section>
     </main>
   );

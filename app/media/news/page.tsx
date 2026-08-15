@@ -66,7 +66,7 @@ export default function NewsroomPage() {
     {
       title: 'Startup pakistan',
       duration: '00:17',
-      thumbnail: 'video-image1.jpg',
+      thumbnail: '/video-image1.jpg',
       url: 'https://www.facebook.com/StartupPakistanSP/videos/1939950670199972/',
     },
     {
@@ -77,7 +77,7 @@ export default function NewsroomPage() {
     {
       title: 'Karachi matters',
       duration: '03:24',
-      thumbnail: 'video-image2.jpg',
+      thumbnail: '/video-image2.jpg',
       url: 'https://www.facebook.com/share/v/1D2hmwe1kG/',
     },
     {
@@ -107,17 +107,12 @@ export default function NewsroomPage() {
     {
       title: 'Morning Asia',
       duration: '10:20',
-      thumbnail: 'video-image3.jpg',
+      thumbnail: '/video-image3.jpg',
       url: 'https://www.facebook.com/AsiaOneNewsOfficial/videos/morning-asia-pakistans-first-ai-driverless-car-test-drive-ned-university-dr-muha/1435405401627968/',
     },
     {
-      title: 'Nukta',
-      thumbnail: 'https://img.youtube.com/vi/osnWkBfsi_Y/hqdefault.jpg',
-      url: 'https://www.youtube.com/shorts/osnWkBfsi_Y',
-    },
-    {
       title: 'Dawn',
-      thumbnail: '',
+      thumbnail: '/news_logo_6.png',
       url: 'https://www.facebook.com/dawndotcom/videos/pakistans-first-ai-driverless-car-is-taking-shape-at-the-university-of-karachi-c/1875616206396455/',
     },
   ]
@@ -127,18 +122,18 @@ export default function NewsroomPage() {
     { name: '92 News HD Plus', logo: '/news_logo_1.jpg' },
     { name: 'ABN News', logo: '/news_logo_2.jpg' },
     { name: 'ARY News', logo: '/news_logo_3.jpg' },
-    { name: 'Asia One', logo: '/news_logo_4.jpg' },
+    { name: 'Asia One', logo: '/news_logo_4(1).png' },
     { name: 'BOL News', logo: '/news_logo_5.jpg' },
-    { name: 'Dawn', logo: '/news_logo_6.png' },
+    { name: 'Dawn', logo: '/news_logo_6.PNG' },
     { name: 'DW', logo: '/news_logo_7.jpg' },
     { name: 'Express News', logo: '/news_logo_8.png' },
     { name: 'GTV News', logo: '/news_logo_9.jpg' },
-    { name: 'Independent Urdu', logo: '/news_logo_10.jpg' },
+    { name: 'Independent Urdu', logo: '/news_logo_10(3).png' },
     { name: 'Karachi Matters', logo: '/news_logo_11.jpg' },
-    { name: 'Aaj News', logo: '/news_logo_12.jpg' },
-    { name: 'Nukta', logo: '/news_logo_13.png' },
+    { name: 'Aaj News', logo: '/news_logo_12(1).png' },
+    { name: 'Nukta', logo: '/news_logo_13(1).png' },
     { name: 'Public News', logo: '/news_logo_14.png' },
-    { name: 'Startup Pakistan', logo: '/news_logo_15.jpg' },
+    { name: 'Startup Pakistan', logo: '/news_logo_15(1).png' },
     { name: 'Times of Karachi', logo: '/news_logo_16.png' },
   ]
 
@@ -275,8 +270,8 @@ export default function NewsroomPage() {
               >
                 <div className="relative h-40 w-full overflow-hidden bg-zinc-100">
                   <img
-                    src={video.thumbnail}
-                    alt={video.title}
+                    src={video.thumbnail || '/placeholder.jpg'}
+                    alt={video.title || 'Video Thumbnail'}
                     className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
 
@@ -295,6 +290,65 @@ export default function NewsroomPage() {
           </div>
         </section>
 
+        {/* ENHANCED IMAGE & MEDIA FEATURE SECTION */}
+        <section className="mb-20">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-4">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#8a1d1d]">
+                Featured Media
+              </p>
+              <h2 className="mt-2 text-2xl font-black uppercase tracking-tight text-black md:text-3xl">
+                Featured Coverage
+              </h2>
+            </div>
+            <p className="text-xs text-zinc-500 max-w-xs">
+              Highlights from premier news networks and media publications.
+            </p>
+          </div>
+
+          <div className="relative overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-950 p-6 md:p-10 text-white shadow-xl">
+            {/* Background Image Container with Blur & Overlay */}
+            <div className="absolute inset-0 z-0 opacity-40">
+              <img
+                src="/news_logos.png"
+                alt="Inside the Newsroom"
+                className="h-full w-full object-cover filter blur-sm scale-105 transition-all duration-700 hover:scale-100 hover:blur-none"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+            </div>
+
+            {/* Foreground Content Card */}
+            <div className="relative z-10 grid gap-6 md:grid-cols-12 md:items-center">
+              {/* Image Preview Box */}
+              <div className="md:col-span-7 overflow-hidden rounded-xl border border-white/20 bg-black/50 shadow-2xl backdrop-blur-md">
+                <div className="group relative aspect-[16/9] w-full overflow-hidden">
+                  <img
+                    src="/news_logos.png"
+                    className="h-full w-full object-contain p-4 transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    
+                  </div>
+                </div>
+              </div>
+
+              {/* Text Information Box */}
+              <div className="md:col-span-5 flex flex-col justify-center space-y-4">
+                
+              
+                <div className="pt-2">
+                  <a
+                    href="#sponsors-section"
+                    className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white hover:text-[#8a1d1d] transition-colors"
+                  >
+                    
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Archive Section */}
         <section>
           <p className="text-left text-xs font-bold uppercase tracking-[0.25em] text-[#8a1d1d]">
@@ -310,10 +364,9 @@ export default function NewsroomPage() {
       </main>
 
       {/* CONSTANT FLOATING WHITE LOGO STRIP AT BOTTOM */}
-      <div className="fixed bottom-0 left-0 z-50 w-full overflow-hidden border-t border-zinc-200 bg-zinc-100 py-3 shadow-md">
+      <div id="sponsors-section" className="fixed bottom-0 left-0 z-50 w-full overflow-hidden border-t border-zinc-200 bg-zinc-100 py-3 shadow-md">
         <div className="animate-marquee-slow flex items-center gap-12">
           {[...sponsors, ...sponsors, ...sponsors].map((sponsor, index) => {
-            // Safety check: Skip rendering if item or logo is missing
             if (!sponsor || !sponsor.logo) return null;
 
             return (
@@ -324,8 +377,7 @@ export default function NewsroomPage() {
                 <img
                   src={sponsor.logo}
                   alt={sponsor.name || 'Sponsor Logo'}
-                  
-                  className="max-h-10 max-w-full object-contain grayscale opacity-100 transition duration-300 hover:grayscale-0 hover:opacity-100"
+                  className="max-h-10 max-w-full object-contain grayscale opacity-100 transition duration-300 hover:grayscale-0 hover:opacity-100 mix-blend-multiply"
                 />
               </div>
             );
@@ -333,6 +385,5 @@ export default function NewsroomPage() {
         </div>
       </div>
     </div>
-
   )
 }
