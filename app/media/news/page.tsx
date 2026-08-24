@@ -1,9 +1,29 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 
 export default function NewsroomPage() {
   const [submitted, setSubmitted] = useState(false)
+  const [isStuck, setIsStuck] = useState(false)
+  const featuredRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!featuredRef.current) return
+      const rect = featuredRef.current.getBoundingClientRect()
+
+      if (rect.top <= window.innerHeight - 80) {
+        setIsStuck(true)
+      } else {
+        setIsStuck(false)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -14,7 +34,7 @@ export default function NewsroomPage() {
     {
       title: 'DW news',
       duration: '03:05',
-      thumbnail: 'https://static.dw.com/image/75475114_604.jpg',
+      thumbnail: '/dw news thumbnail.png',
       url: 'https://www.dw.com/en/pakistan-inside-an-ai-powered-driverless-car/video-75475114',
     },
     {
@@ -117,7 +137,6 @@ export default function NewsroomPage() {
     },
   ]
 
-  // News Logos
   const sponsors = [
     { name: '92 News HD Plus', logo: '/news_logo_1.jpg' },
     { name: 'ABN News', logo: '/news_logo_2.jpg' },
@@ -137,23 +156,78 @@ export default function NewsroomPage() {
     { name: 'Times of Karachi', logo: '/news_logo_16.png' },
   ]
 
-  return (
-    <div className="relative w-full bg-white text-black pb-28">
-      <div className="pt-20 pb-16 px-6 text-center">
-        <div className="mx-auto max-w-4xl">
-          <h1 className="mt-10 text-3xl font-black uppercase tracking-tight text-black sm:text-5xl">
-            Get the Latest Updates
-          </h1>
-
-          <p className="mt-6 max-w-2xl text-sm leading-7 text-zinc-600 sm:text-base mx-auto">
-            Join to receive the latest news, event announcements, career opportunities, team updates, and more.
-          </p>
-        </div>
+  const renderSponsorStrip = () => (
+    <div className="w-full overflow-hidden border-y border-zinc-200 bg-white py-3 shadow-md">
+      <div className="animate-marquee-slow flex items-center gap-12">
+        {[...sponsors, ...sponsors, ...sponsors].map((sponsor, index) => {
+          if (!sponsor || !sponsor.logo) return null
+          return (
+            <div
+              key={`${sponsor.name || 'sponsor'}-${index}`}
+              className="flex h-12 w-28 shrink-0 items-center justify-center"
+            >
+              <img
+                src={sponsor.logo}
+                alt={sponsor.name || 'Sponsor Logo'}
+                className="max-h-10 max-w-full object-contain grayscale opacity-100 transition duration-300 hover:grayscale-0 hover:opacity-100 mix-blend-multiply"
+              />
+            </div>
+          )
+        })}
       </div>
+    </div>
+  )
+
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  }
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  }
+
+  return (
+    <div className="relative w-full bg-white text-black pb-0">
+      {/* Hero Header Section */}
+      <motion.div
+        className="pt-20 pb-16 px-6 text-center"
+        initial="hidden"
+        animate="visible"
+        variants={fadeInUp}
+      >
+        <div className="mx-auto max-w-4xl">
+          <motion.h1
+            className="mt-10 text-3xl font-black uppercase tracking-tight text-black sm:text-5xl"
+            variants={fadeInUp}
+          >
+            Get the Latest Updates
+          </motion.h1>
+
+          <motion.p
+            className="mt-6 max-w-2xl text-sm leading-7 text-zinc-600 sm:text-base mx-auto"
+            variants={fadeInUp}
+          >
+            Join to receive the latest news, event announcements, career opportunities, team updates, and more.
+          </motion.p>
+        </div>
+      </motion.div>
 
       <main className="mx-auto max-w-6xl px-6 pb-20 md:px-12">
-        {/* Social Media */}
-        <section className="mb-16 rounded-2xl border border-zinc-200 bg-[#8a1d1d] p-6 md:p-8">
+        {/* Social Media Section */}
+        <motion.section
+          className="mb-16 rounded-2xl border border-zinc-200 bg-[#8a1d1d] p-6 md:p-8"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-50px' }}
+          variants={fadeInUp}
+        >
           <p className="text-xs text-center font-bold uppercase tracking-[0.25em] text-zinc-200">
             Follow Us on Social Media
           </p>
@@ -162,29 +236,41 @@ export default function NewsroomPage() {
             Additional Links
           </h2>
 
-          <div className="mt-6 justify-center flex flex-wrap gap-4">
+          <motion.div
+            className="mt-6 justify-center flex flex-wrap gap-4"
+            variants={staggerContainer}
+          >
             {[
               { label: 'LinkedIn', href: '' },
               { label: 'Instagram', href: '' },
               { label: 'YouTube', href: '' },
               { label: 'Facebook', href: '' },
             ].map((item) => (
-              <a
+              <motion.a
                 key={item.label}
                 href={item.href}
                 target="_blank"
                 rel="noreferrer"
+                variants={fadeInUp}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 className="inline-flex bg-white border border-black px-3 py-3 text-xs 
                 font-bold uppercase tracking-[0.2em] text-black transition hover:bg-zinc-200"
               >
                 {item.label}
-              </a>
+              </motion.a>
             ))}
-          </div>
-        </section>
+          </motion.div>
+        </motion.section>
 
-        {/* Newsletter */}
-        <section className="mb-20 rounded-2xl border border-zinc-200 bg-zinc-200 p-6 md:p-10">
+        {/* Newsletter Section */}
+        <motion.section
+          className="mb-20 rounded-2xl border border-zinc-200 bg-zinc-200 p-6 md:p-10"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-50px' }}
+          variants={fadeInUp}
+        >
           <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-start">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#8a1d1d]">
@@ -232,40 +318,49 @@ export default function NewsroomPage() {
                   />
                 </label>
 
-                <button
+                <motion.button
                   type="submit"
+                  whileHover={{ scale: 1.01 }}
+                  whileTap={{ scale: 0.98 }}
                   className="inline-flex w-full items-center justify-center bg-[#8a1d1d] px-6 py-3.5 text-xs font-bold uppercase tracking-[0.2em] text-white transition hover:bg-[#6d0f0f]"
                 >
                   Subscribe
-                </button>
+                </motion.button>
 
                 {submitted && (
-                  <p className="border border-emerald-200 bg-emerald-50 px-4 py-3 text-center text-xs font-semibold text-emerald-700">
+                  <motion.p
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="border border-emerald-200 bg-emerald-50 px-4 py-3 text-center text-xs font-semibold text-emerald-700"
+                  >
                     Thanks for subscribing.
-                  </p>
+                  </motion.p>
                 )}
               </form>
             </div>
           </div>
-        </section>
+        </motion.section>
 
-        {/* Videos */}
-        <section className="mb-20">
+        {/* Videos Section */}
+        <motion.section
+          className="mb-20"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-50px' }}
+          variants={fadeInUp}
+        >
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#8a1d1d]">
             Media
           </p>
 
-          <h2 className="mt-2 text-2xl font-black uppercase tracking-tight text-black md:text-3xl">
-            Videos
-          </h2>
-
           <div className="mt-6 flex gap-6 overflow-x-auto pb-6 scrollbar-thin scrollbar-thumb-zinc-300">
             {sampleVideos.map((video, idx) => (
-              <a
+              <motion.a
                 key={idx}
                 href={video.url}
                 target="_blank"
                 rel="noreferrer"
+                whileHover={{ y: -5 }}
                 className="group block w-[280px] shrink-0 border border-zinc-200 bg-white p-3 transition hover:border-[#8a1d1d]"
               >
                 <div className="relative h-40 w-full overflow-hidden bg-zinc-100">
@@ -285,72 +380,18 @@ export default function NewsroomPage() {
                 <h3 className="mt-3 text-sm font-bold text-black tracking-tight group-hover:text-[#8a1d1d]">
                   {video.title}
                 </h3>
-              </a>
+              </motion.a>
             ))}
           </div>
-        </section>
-
-        {/* ENHANCED IMAGE & MEDIA FEATURE SECTION */}
-        <section className="mb-20">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-4">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#8a1d1d]">
-                Featured Media
-              </p>
-              <h2 className="mt-2 text-2xl font-black uppercase tracking-tight text-black md:text-3xl">
-                Featured Coverage
-              </h2>
-            </div>
-            <p className="text-xs text-zinc-500 max-w-xs">
-              Highlights from premier news networks and media publications.
-            </p>
-          </div>
-
-          <div className="relative overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-950 p-6 md:p-10 text-white shadow-xl">
-            {/* Background Image Container with Blur & Overlay */}
-            <div className="absolute inset-0 z-0 opacity-40">
-              <img
-                src="/news_logos.png"
-                alt="Inside the Newsroom"
-                className="h-full w-full object-cover filter blur-sm scale-105 transition-all duration-700 hover:scale-100 hover:blur-none"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
-            </div>
-
-            {/* Foreground Content Card */}
-            <div className="relative z-10 grid gap-6 md:grid-cols-12 md:items-center">
-              {/* Image Preview Box */}
-              <div className="md:col-span-7 overflow-hidden rounded-xl border border-white/20 bg-black/50 shadow-2xl backdrop-blur-md">
-                <div className="group relative aspect-[16/9] w-full overflow-hidden">
-                  <img
-                    src="/news_logos.png"
-                    className="h-full w-full object-contain p-4 transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    
-                  </div>
-                </div>
-              </div>
-
-              {/* Text Information Box */}
-              <div className="md:col-span-5 flex flex-col justify-center space-y-4">
-                
-              
-                <div className="pt-2">
-                  <a
-                    href="#sponsors-section"
-                    className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white hover:text-[#8a1d1d] transition-colors"
-                  >
-                    
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        </motion.section>
 
         {/* Archive Section */}
-        <section>
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+        >
           <p className="text-left text-xs font-bold uppercase tracking-[0.25em] text-[#8a1d1d]">
             Newsletter Archive
           </p>
@@ -360,30 +401,36 @@ export default function NewsroomPage() {
               Newsletters coming soon
             </p>
           </div>
-        </section>
+        </motion.section>
       </main>
 
-      {/* CONSTANT FLOATING WHITE LOGO STRIP AT BOTTOM */}
-      <div id="sponsors-section" className="fixed bottom-0 left-0 z-50 w-full overflow-hidden border-t border-zinc-200 bg-zinc-100 py-3 shadow-md">
-        <div className="animate-marquee-slow flex items-center gap-12">
-          {[...sponsors, ...sponsors, ...sponsors].map((sponsor, index) => {
-            if (!sponsor || !sponsor.logo) return null;
+      {/* FEATURED MEDIA COVERAGE SECTION - SPACE REMOVED */}
+      <section className="mb-0">
+        <div
+          ref={featuredRef}
+          className="relative w-full overflow-hidden bg-[#8a1d1d] pt-16 pb-0 sm:pt-20 sm:pb-0 shadow-xl"
+        >
+          {isStuck && (
+            <div className="absolute top-0 left-0 z-20 w-full">
+              {renderSponsorStrip()}
+            </div>
+          )}
 
-            return (
-              <div
-                key={`${sponsor.name || 'sponsor'}-${index}`}
-                className="flex h-12 w-28 shrink-0 items-center justify-center"
-              >
-                <img
-                  src={sponsor.logo}
-                  alt={sponsor.name || 'Sponsor Logo'}
-                  className="max-h-10 max-w-full object-contain grayscale opacity-100 transition duration-300 hover:grayscale-0 hover:opacity-100 mix-blend-multiply"
-                />
-              </div>
-            );
-          })}
+          <div className="w-full flex justify-center items-center">
+            <img
+              src="/news_logos.png"
+              alt="News Logos"
+              className="block w-full h-auto max-h-[430px] object-cover sm:object-contain align-bottom"
+            />
+          </div>
         </div>
-      </div>
+      </section>
+
+      {!isStuck && (
+        <div className="fixed bottom-0 left-0 z-50 w-full">
+          {renderSponsorStrip()}
+        </div>
+      )}
     </div>
   )
 }

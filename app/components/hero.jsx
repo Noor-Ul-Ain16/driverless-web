@@ -1,25 +1,16 @@
 "use client";
 
-import Image from "next/image";
+import { useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 15 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     transition: { duration: 0.5, ease: "easeOut" }
   },
-};
-
-const carDriveIn = {
-  hidden: { opacity: 0, x: 60 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.7, ease: "easeOut", delay: 0.1 }
-  }
 };
 
 const containerVariants = {
@@ -33,111 +24,128 @@ const containerVariants = {
   },
 };
 
-const blurDataURL =
-  "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjUwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iI2U0ZTRlNyIvPjwvc3ZnPg==";
-
 export default function Home() {
+  // Set to true so video is active by default
+  const [showVideo, setShowVideo] = useState(true);
+
   return (
     <main className="w-full bg-white overflow-hidden">
-      {/* Hero Section */}
-      <section className="relative min-h-[calc(100vh-68px)] border-b border-zinc-200 flex items-center justify-center pt-4 pb-12 lg:pt-8 lg:pb-16">
-        
-        {/* Main Container */}
-        <div className="w-full pl-0 pr-6 lg:pl-0 lg:pr-12 flex flex-col-reverse lg:flex-row items-center justify-between gap-6 lg:gap-10">
-          
-          {/* Content Section - -mt-6 sm:-mt-8 lg:-mt-12 for a slight upward boost */}
-          <motion.div
-            className="flex flex-col items-start text-left lg:w-1/2 pl-0 sm:pl-4 lg:pl-6 gap-3 -mt-6 sm:-mt-8 lg:-mt-16"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={containerVariants}
-          >
-            {/* Organization Label */}
-            <motion.p
-              variants={fadeInUp}
-              className="m-0 text-[11px] sm:text-xs font-bold uppercase tracking-[0.2em] text-[#8a1d1d]"
-            >
-              NATIONAL CENTRE OF ARTIFICIAL INTELLIGENCE – NED UNIVERSITY
-            </motion.p>
+      <section className="relative min-h-[calc(100vh-68px)] border-b border-zinc-200 flex flex-col justify-center px-0">
+        {/* Full Hero Card Container */}
+        <div className="w-full max-w-none relative overflow-hidden min-h-[550px] flex items-center">
 
-            {/* Main Heading */}
-            <motion.h1
-              variants={fadeInUp}
-              className="m-0 max-w-2xl font-sans text-3xl font-extrabold leading-[1.1] tracking-tight text-black sm:text-4xl md:text-5xl"
-            >
-              We are{" "}
-              <span className="text-[#8a1d1d]">
-                NCAI Autonomous
-              </span>
-            </motion.h1>
-
-            {/* Description */}
-            <motion.p
-              variants={fadeInUp}
-              className="m-0 max-w-xl text-xs sm:text-sm md:text-base leading-relaxed text-zinc-600"
-            >
-              NCAI Autonomous&apos; mission is to be the home of practical
-              self-driving research at NED University — the place where the
-              brightest engineering students learn to deploy AI on full-scale
-              vehicles, and connect with industry partners looking for their
-              next generation of talent. To do this, we&apos;re building
-              Pakistan&apos;s first autonomous car and taking it to the road.
-            </motion.p>
-
-            {/* Action Buttons */}
-            <motion.div
-              variants={fadeInUp}
-              className="mt-2 flex flex-wrap items-center justify-start gap-2.5 sm:flex-row"
-            >
-              <Link
-                href="/about/who-we-are"
-                className="inline-flex min-w-[120px] items-center justify-center border border-black bg-black px-4 py-2.5 text-xs font-bold uppercase tracking-wider !text-white transition-colors duration-200 hover:border-[#8a1d1d] hover:bg-[#8a1d1d]" 
-              >
-                Learn More
-              </Link>
-
-              <Link
-                href="/get-involved/join-our-team"
-                className="inline-flex min-w-[120px] items-center justify-center border border-zinc-400 bg-white px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-black transition-colors duration-200 hover:border-black hover:bg-zinc-100"
-              >
-                Join the Team
-              </Link>
-
-              <Link
-                href="/get-involved/sponsorship-form"
-                className="inline-flex min-w-[120px] items-center justify-center border border-zinc-400 bg-white px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-black transition-colors duration-200 hover:border-black hover:bg-zinc-100"
-              >
-                Become a Sponsor
-              </Link>
-            </motion.div>
-          </motion.div>
-
-          {/* Car Section */}
-          <motion.div 
-            variants={carDriveIn}
-            initial="hidden"
-            animate="visible"
-            className="relative flex w-full justify-center lg:w-1/2 lg:justify-end"
-          >
-            <div className="relative w-full max-w-[500px] lg:max-w-[580px]">
-              {/* Ground Shadow */}
-              <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-[85%] h-6 bg-black/20 blur-lg rounded-[100%]" />
-              
-              <div className="relative z-10 drop-shadow-xl">
-                <Image
-                  src="/image.webp"
-                  alt="NCAI Autonomous Vehicle Project Hero Image"
-                  width={1200}
-                  height={800}
-                  priority
-                  placeholder="blur"
-                  blurDataURL={blurDataURL}
-                  className="h-auto w-full object-contain"
+          {/* Background Media with Dark Vignette Overlay */}
+          <div className="absolute inset-0 z-0 bg-black">
+            <AnimatePresence mode="wait">
+              {showVideo ? (
+                <motion.video
+                  key="video"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6 }}
+                  src="/av-website-hero-video.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover absolute inset-0"
                 />
-              </div>
-            </div>
-          </motion.div>
+              ) : (
+                /* 
+                <motion.div
+                  key="image"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6 }}
+                  className="w-full h-full bg-[length:900px] bg-no-repeat bg-[position:95%_center] absolute inset-0" style={{ backgroundImage: "url('/image.webp')" }}
+                />
+                */
+                null  /* remove when car image as background also needed */
+              )}
+            </AnimatePresence>
+
+            <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/30 pointer-events-none" />
+          </div>
+
+          {/* Dynamic Toggle Arrow Button (Right Side) */}
+          {/* 
+          <button
+            onClick={() => setShowVideo((prev) => !prev)}
+            aria-label={showVideo ? "Show Background Image" : "Play Background Video"}
+            className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-black/50 hover:bg-[#8a1d1d] text-white rounded-full border border-white/20 backdrop-blur-md transition-all duration-300 hover:scale-110 group shadow-lg cursor-pointer"
+          >
+            <span className="text-xl sm:text-2xl font-black transition-transform duration-300 group-hover:translate-x-0.5">
+              {showVideo ? "‹" : "›"}
+            </span>
+          </button>
+          */}
+
+          {/* Foreground Text Overlay */}
+          <div className="relative z-10 p-8 sm:p-12 lg:p-16 max-w-2xl">
+            <motion.div
+              className="flex flex-col items-start text-left gap-5 text-white"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={containerVariants}
+            >
+              <motion.p
+                variants={fadeInUp}
+                className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.2em] text-[#e05252]"
+              >
+                NATIONAL CENTRE OF ARTIFICIAL INTELLIGENCE – NED UNIVERSITY
+              </motion.p>
+
+              <motion.h1
+                variants={fadeInUp}
+                className="mt-10 font-sans text-3xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-4xl md:text-5xl"
+              >
+                We are{" "}
+                <span className="text-[#e05252]">
+                  NCAI Autonomous
+                </span>
+              </motion.h1>
+
+              <motion.p
+                variants={fadeInUp}
+                className="text-xs sm:text-sm leading-relaxed text-zinc-300"
+              >
+                NCAI Autonomous's aim is to be the home of practical
+                self-driving research at NED University — NCAI Autonomous bridges academic
+                AI engineering with industrial innovation. We empower bright
+                minds to deploy autonomous software on full-scale vehicles as
+                we build Pakistan's first self-driving car.
+              </motion.p>
+
+              <motion.div
+                variants={fadeInUp}
+                className="mt-2 flex flex-wrap items-center gap-2.5 sm:flex-row"
+              >
+                <Link
+                  href="/about/who-we-are"
+                  className="inline-flex min-w-[120px] items-center justify-center border border-[#8a1d1d] bg-[#8a1d1d] px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition-all duration-200 hover:bg-red-700"
+                >
+                  Discover More
+                </Link>
+
+                <Link
+                  href="/get-involved/join-our-team"
+                  className="inline-flex min-w-[120px] items-center justify-center border border-white/30 bg-black/40 backdrop-blur-md px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition-all duration-200 hover:bg-black"
+                >
+                  Let's Work Together
+                </Link>
+
+                <Link
+                  href="/get-involved/sponsorship-form"
+                  className="inline-flex min-w-[120px] items-center justify-center border border-white/30 bg-black/40 backdrop-blur-md px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition-all duration-200 hover:bg-black"
+                >
+                  Become a Sponsor
+                </Link>
+              </motion.div>
+            </motion.div>
+          </div>
 
         </div>
       </section>

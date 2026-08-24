@@ -59,7 +59,7 @@ export default function PublicationsPage() {
           >
             <div className="w-full sm:w-40 h-28 relative flex-shrink-0 bg-zinc-200 rounded overflow-hidden">
               <Image 
-                src="/images/pub1.jpg" 
+                src="/1_Advancing Road Safety.png" 
                 alt="Advancing Road Safety publication thumbnail" 
                 fill 
                 className="object-cover" 
@@ -91,7 +91,7 @@ export default function PublicationsPage() {
           >
             <div className="w-full sm:w-40 h-28 relative flex-shrink-0 bg-zinc-200 rounded overflow-hidden">
               <Image 
-                src="/images/pub2.jpg" 
+                src="/2_Lightweight Convolutional Neural Network.png" 
                 alt="Predict Steering Angle publication thumbnail" 
                 fill 
                 className="object-cover" 
@@ -146,7 +146,7 @@ export default function PublicationsPage() {
           >
             <div className="w-full sm:w-40 h-28 relative flex-shrink-0 bg-zinc-200 rounded overflow-hidden">
               <Image 
-                src="/images/pub3.jpg"
+                src="/high-definition maps.png"
                 alt="Autonomous vehicle navigation publication thumbnail" 
                 fill 
                 className="object-cover" 
@@ -180,7 +180,7 @@ export default function PublicationsPage() {
           >
             <div className="w-full sm:w-40 h-28 relative flex-shrink-0 bg-zinc-200 rounded overflow-hidden">
               <Image 
-                src="/images/pub4.jpg"
+                src="/An Integrated Vision-Based Automated Detection.png"
                 alt="Out-Cabin ADAS publication thumbnail" 
                 fill 
                 className="object-cover" 

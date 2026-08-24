@@ -1,8 +1,77 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+
+// Custom Cursor Glow Component
+const CursorGlow = () => {
+  const [cursorPosition, setCursorPosition] = useState({ x: -100, y: -100 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setCursorPosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  return (
+    <div
+      className="pointer-events-none fixed inset-0 z-50 transition-opacity duration-300"
+      style={{
+        background: `radial-gradient(200px circle at ${cursorPosition.x}px ${cursorPosition.y}px,
+         #c2bebe, transparent 20%)`,
+      }}
+    />
+  );
+};
+
+// Visible Grey Floating Particles Component
+const ParticleBackground = () => {
+  const particles = Array.from({ length: 99 });
+
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+      {particles.map((_, i) => {
+        const size = Math.random() * 3 + 2; // 2px to 5px for good visibility
+        // Shades of grey for particle visibility on light background
+        const isDarkGrey = i % 2 === 0;
+        const color = isDarkGrey ? "#475569" : "#64748b"; 
+        const initialX = Math.random() * 100;
+        const initialY = Math.random() * 100;
+        const duration = Math.random() * 12 + 8;
+
+        return (
+          <motion.div
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              top: `${initialY}%`,
+              left: `${initialX}%`,
+              width: `${size}px`,
+              height: `${size}px`,
+              backgroundColor: color,
+              boxShadow: `0 0 6px ${color}80`,
+            }}
+            animate={{
+              y: [0, Math.random() * -60 - 20, 0],
+              x: [0, Math.random() * 40 - 20, 0],
+              opacity: [0.35, 0.85, 0.35],
+              scale: [0.9, 1.3, 0.9],
+            }}
+            transition={{
+              duration: duration/2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        );
+      })}
+    </div>
+  );
+};
 
 export default function TechnologyPage() {
   const [activeTab, setActiveTab] = useState<"lidar" | "cameras" | "gps">("lidar");
@@ -49,215 +118,22 @@ export default function TechnologyPage() {
   };
 
   const listItem = {
-    hidden: { opacity: 0, x: -15 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.4 } },
+    hidden: { opacity: 0, y: 15 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
   };
 
   return (
-    <main className="relative min-h-screen w-full bg-[#020813] text-white overflow-hidden">
+    <main className="relative min-h-screen w-full bg-[#f1f5f9] text-slate-900 overflow-hidden">
+      {/* Cursor Glow Overlay */}
+      <CursorGlow />
+
       {/* --- REGION 1: OVERVIEW SECTION --- */}
       <section
         id="overview"
-        className="relative z-10 scroll-mt-24 overflow-hidden py-14 md:py-20 bg-white text-slate-900"
+        className="relative z-10 scroll-mt-24 overflow-hidden py-14 md:py-20 bg-[#f1f5f9] text-slate-900 text-center"
       >
-        {/* Soft radial glow for light background */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_90%_70%_at_50%_35%,rgba(14,116,144,0.08),rgba(255,255,255,1))]" />
-
-        {/* Ambient fine grid overlay */}
-        <div
-          className="absolute inset-0 opacity-15 pointer-events-none"
-          style={{
-            backgroundImage: `radial-gradient(#0284c7 1px, transparent 1px), linear-gradient(to right, rgba(2,132,199,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(2,132,199,0.08) 1px, transparent 1px)`,
-            backgroundSize: `40px 40px, 20px 20px, 20px 20px`,
-          }}
-        />
-
-        {/* Dynamic Animated Constellation Network - Compact & Fine Scale */}
-        <div className="absolute inset-0 pointer-events-none z-0">
-          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
-            <defs>
-              <filter id="nodeGlow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="1.5" result="blur" />
-                <feComposite in="SourceGraphic" in2="blur" operator="over" />
-              </filter>
-            </defs>
-
-            {/* --- LEFT CONSTELLATION CLUSTER (SCALED DOWN) --- */}
-            <motion.g
-              animate={{
-                y: [0, -4, 3, 0],
-                x: [0, 3, -3, 0],
-              }}
-              transition={{
-                duration: 12,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              {/* Thinner Network Lines */}
-              <g stroke="rgba(2,132,199,0.35)" strokeWidth="0.5">
-                <line x1="30" y1="220" x2="70" y2="160" />
-                <line x1="70" y1="160" x2="130" y2="200" />
-                <line x1="30" y1="220" x2="80" y2="270" />
-                <line x1="70" y1="160" x2="80" y2="270" />
-                <line x1="130" y1="200" x2="80" y2="270" />
-
-                <line x1="130" y1="200" x2="180" y2="245" />
-                <line x1="80" y1="270" x2="150" y2="330" />
-                <line x1="130" y1="200" x2="150" y2="330" />
-                <line x1="180" y1="245" x2="150" y2="330" />
-
-                <line x1="30" y1="220" x2="35" y2="350" />
-                <line x1="80" y1="270" x2="35" y2="350" />
-                <line x1="35" y1="350" x2="90" y2="450" />
-                <line x1="80" y1="270" x2="90" y2="450" />
-                <line x1="150" y1="330" x2="90" y2="450" />
-
-                <line x1="150" y1="330" x2="140" y2="420" />
-                <line x1="90" y1="450" x2="140" y2="420" />
-                <line x1="140" y1="420" x2="195" y2="380" />
-                <line x1="150" y1="330" x2="195" y2="380" />
-                <line x1="180" y1="245" x2="195" y2="380" />
-
-                <line x1="70" y1="160" x2="105" y2="100" opacity="0.35" />
-                <line x1="130" y1="200" x2="210" y2="150" opacity="0.35" />
-                <line x1="35" y1="350" x2="15" y2="420" opacity="0.35" />
-                <line x1="90" y1="450" x2="55" y2="505" opacity="0.35" />
-                <line x1="140" y1="420" x2="180" y2="490" opacity="0.35" />
-              </g>
-
-              {/* Smaller Glowing Nodes */}
-              <g fill="#0284c7" filter="url(#nodeGlow)">
-                <circle cx="30" cy="220" r="1.5" />
-                <circle cx="70" cy="160" r="2" />
-                <circle cx="130" cy="200" r="2.2" />
-                <circle cx="80" cy="270" r="2" />
-                <circle cx="180" cy="245" r="1.5" />
-
-                {/* Primary Left Focal Node */}
-                <motion.circle
-                  cx="150"
-                  cy="330"
-                  r="3.2"
-                  fill="#0369a1"
-                  animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                />
-
-                <circle cx="35" cy="350" r="1.2" />
-                <circle cx="90" cy="450" r="2.2" />
-                <circle cx="140" cy="420" r="2" />
-                <circle cx="195" cy="380" r="1.2" />
-                <circle cx="105" cy="100" r="1" />
-                <circle cx="210" cy="150" r="1" />
-                <circle cx="15" cy="420" r="1" />
-                <circle cx="55" cy="505" r="1.2" />
-                <circle cx="180" cy="490" r="1.2" />
-              </g>
-            </motion.g>
-
-            {/* --- RIGHT CONSTELLATION CLUSTER (SCALED DOWN) --- */}
-            <motion.g
-              animate={{
-                y: [0, 5, -3, 0],
-                x: [0, -3, 3, 0],
-              }}
-              transition={{
-                duration: 14,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              {/* Thinner Network Lines */}
-              <g stroke="rgba(2,132,199,0.35)" strokeWidth="0.5">
-                <line x1="860" y1="80" x2="900" y2="135" />
-                <line x1="900" y1="135" x2="960" y2="90" />
-                <line x1="900" y1="135" x2="865" y2="200" />
-                <line x1="960" y1="90" x2="975" y2="170" />
-                <line x1="900" y1="135" x2="975" y2="170" />
-
-                <line x1="865" y1="200" x2="930" y2="250" />
-                <line x1="975" y1="170" x2="930" y2="250" />
-                <line x1="900" y1="135" x2="930" y2="250" />
-                <line x1="865" y1="200" x2="815" y2="245" />
-                <line x1="930" y1="250" x2="815" y2="245" />
-
-                <line x1="975" y1="170" x2="985" y2="290" />
-                <line x1="930" y1="250" x2="985" y2="290" />
-                <line x1="930" y1="250" x2="905" y2="350" />
-                <line x1="815" y1="245" x2="905" y2="350" />
-
-                <line x1="905" y1="350" x2="960" y2="370" />
-                <line x1="985" y1="290" x2="960" y2="370" />
-                <line x1="905" y1="350" x2="865" y2="440" />
-                <line x1="960" y1="370" x2="920" y2="480" />
-                <line x1="865" y1="440" x2="920" y2="480" />
-
-                <line x1="815" y1="245" x2="760" y2="210" opacity="0.35" />
-                <line x1="860" y1="80" x2="810" y2="55" opacity="0.35" />
-                <line x1="960" y1="370" x2="990" y2="440" opacity="0.35" />
-              </g>
-
-              {/* Smaller Glowing Nodes */}
-              <g fill="#0284c7" filter="url(#nodeGlow)">
-                <circle cx="860" cy="80" r="2" />
-                <circle cx="900" cy="135" r="2.2" />
-                <circle cx="960" cy="90" r="1.5" />
-                <circle cx="975" cy="170" r="2" />
-                <circle cx="865" cy="200" r="1.5" />
-
-                {/* Primary Right Focal Node */}
-                <motion.circle
-                  cx="930"
-                  cy="250"
-                  r="3.2"
-                  fill="#0369a1"
-                  animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
-                  transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-                />
-
-                <circle cx="815" cy="245" r="1.5" />
-                <circle cx="985" cy="290" r="1.2" />
-                <circle cx="905" cy="350" r="2.2" />
-                <circle cx="960" cy="370" r="2" />
-                <circle cx="865" cy="440" r="1.2" />
-                <circle cx="920" cy="480" r="1.2" />
-                <circle cx="760" cy="210" r="1" />
-                <circle cx="810" cy="55" r="1" />
-                <circle cx="990" cy="440" r="1" />
-              </g>
-            </motion.g>
-
-            {/* --- FINE TWINKLING BACKGROUND DUST --- */}
-            {[
-              { cx: 280, cy: 190, r: 0.8, d: 2.8 },
-              { cx: 250, cy: 420, r: 0.7, d: 4.1 },
-              { cx: 340, cy: 250, r: 1, d: 3.2 },
-              { cx: 420, cy: 90, r: 0.7, d: 2.4 },
-              { cx: 640, cy: 110, r: 0.8, d: 3.6 },
-              { cx: 750, cy: 180, r: 1, d: 2.2 },
-              { cx: 710, cy: 410, r: 0.7, d: 4.5 },
-              { cx: 780, cy: 480, r: 0.8, d: 3.0 },
-            ].map((star, idx) => (
-              <motion.circle
-                key={idx}
-                cx={star.cx}
-                cy={star.cy}
-                r={star.r}
-                fill="#0284c7"
-                animate={{
-                  opacity: [0.25, 0.85, 0.25],
-                  scale: [0.8, 1.3, 0.8],
-                }}
-                transition={{
-                  duration: star.d,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              />
-            ))}
-          </svg>
-        </div>
+        {/* Dynamic Moving Grey Tiny Particles Overlay */}
+        <ParticleBackground />
 
         {/* --- SECTION CONTENT --- */}
         <div className="relative z-10 mx-auto max-w-4xl px-6 text-center scale-90 transform-gpu origin-center">
@@ -275,21 +151,21 @@ export default function TechnologyPage() {
 
             <motion.p
               variants={fadeInUp}
-              className="mt-3 text-[15px] font-bold uppercase tracking-[0.25em] text-[#d32f2f]"
+              className="mt-3 text-[15px] font-bold uppercase tracking-[0.25em] text-[#8a1d1d]"
             >
               In Road Testing – NED University Main Campus
             </motion.p>
 
             <motion.p
               variants={fadeInUp}
-              className="mx-auto mt-7 max-w-3xl text-base leading-7 text-slate-600 md:text-[18px]"
+              className="mx-auto mt-7 max-w-3xl text-base leading-7 text-slate-700 md:text-[18px]"
             >
               The Autonomous Drive System is NCAI&apos;s flagship platform, in
-              active development with NED University&apos;s engineering teams[cite: 1]. It
+              active development with NED University&apos;s engineering teams. It
               pairs LiDAR, radar, and camera perception with a deep-learning
               navigation stack, giving the vehicle a continuous read on the road
               around it — tuned for the unpredictable mix of traffic found on
-              Pakistani streets, not just a closed test track[cite: 1].
+              Pakistani streets, not just a closed test track.
             </motion.p>
           </motion.div>
 
@@ -309,7 +185,7 @@ export default function TechnologyPage() {
               "V2X connectivity for smart-city integration",
             ].map((capability, index) => (
               <motion.li key={index} variants={listItem} className="flex items-center gap-3.5">
-                <span className="flex h-7 w-7 items-center justify-center rounded-full border border-sky-200 bg-sky-50 text-sky-600 shadow-[0_0_10px_rgba(2,132,199,0.15)]">
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm">
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
@@ -321,16 +197,20 @@ export default function TechnologyPage() {
         </div>
       </section>
 
-      {/* --- REGION 2: OUR SETUP SECTION --- */}
-      <section className="relative w-full bg-[#1e1e20] py-16 md:py-20">
+      {/* --- REGION 2: OUR SETUP SECTION (Background matched to Light Grey with Grey Particles) --- */}
+      <section className="relative w-full bg-[#f1f5f9] py-16 md:py-20 overflow-hidden">
+        {/* Same floating grey particles background */}
+        <ParticleBackground />
+
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
           transition={{ staggerChildren: 0.15 }}
-          className="relative mx-auto max-w-6xl px-4 sm:px-6"
+          className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6"
         >
-          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-zinc-700/50 bg-[#1e1e20] shadow-2xl">
+          {/* Main GIF Container - GIF Image content is untouched */}
+          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-slate-300 bg-black shadow-2xl">
             <AnimatePresence mode="wait">
               {activeMedia === "default" && (
                 <motion.div
@@ -473,7 +353,7 @@ export default function TechnologyPage() {
       </section>
 
       {/* --- REGION 3: 3-COLUMN SENSOR VIDEO SYSTEM --- */}
-      <section className="relative w-full bg-[#1e1e20]">
+      <section className="mt-30 relative w-full bg-[#f1f5f9] pb-12">
         <motion.div
           initial={{ opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -491,10 +371,10 @@ export default function TechnologyPage() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    className={`group relative flex flex-col justify-between overflow-hidden rounded-xl border p-6 text-left transition-all duration-300 shadow-xl backdrop-blur-sm ${
+                    className={`group relative flex flex-col justify-between overflow-hidden rounded-xl border p-6 text-left transition-all duration-300 shadow-lg ${
                       isActive
-                        ? "border-[#d32f2f] bg-zinc-900 text-white ring-2 ring-zinc-800"
-                        : "border-zinc-700/80 bg-zinc-900/90 text-zinc-200 hover:border-zinc-500 hover:bg-zinc-800"
+                        ? "border-[#d32f2f] bg-white text-slate-900 ring-2 #8a1d1d"
+                        : "border-slate-300 bg-slate-50 text-slate-700 hover:border-slate-400 hover:bg-white"
                     }`}
                   >
                     <div>
@@ -503,7 +383,7 @@ export default function TechnologyPage() {
                       </h3>
                       <p
                         className={`mt-1 text-xs font-medium ${
-                          isActive ? "text-[#38bdf8]" : "text-zinc-400"
+                          isActive ? "text-[#8a1d1d]" : "text-slate-500"
                         }`}
                       >
                         {sensor.subtitle}
@@ -514,7 +394,7 @@ export default function TechnologyPage() {
                       <span>{isActive ? "Active Feed" : "Select Feed"}</span>
                       <svg
                         className={`h-4 w-4 transition-transform ${
-                          isActive ? "translate-x-1 text-[#d32f2f]" : "text-zinc-400 group-hover:translate-x-1"
+                          isActive ? "translate-x-1 text-[#8a1d1d]" : "text-slate-400 group-hover:translate-x-1"
                         }`}
                         fill="none"
                         viewBox="0 0 24 24"
@@ -534,7 +414,7 @@ export default function TechnologyPage() {
             </div>
           </div>
 
-          <div className="relative w-full bg-[#d32f2f] -mt-24 pt-32 pb-16">
+          <div className="relative w-full bg-[#8a1d1d] -mt-24 pt-32 pb-16">
             <div className="mx-auto max-w-5xl px-6 md:px-12">
               <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 p-4 shadow-2xl md:p-6">
                 <AnimatePresence mode="wait">
@@ -553,7 +433,7 @@ export default function TechnologyPage() {
                     </div>
 
                     <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-zinc-900 flex items-center justify-center">
-                      <p className="text-sm text-zinc-500">Feed content for {activeSensor.title}</p>
+                      <p className="text-sm text-zinc-400">Feed content for {activeSensor.title}</p>
                     </div>
                   </motion.div>
                 </AnimatePresence>

@@ -69,7 +69,7 @@ export default function WhoWeArePage() {
               <img
                 src="/Dr. Muhammad Khurram"  
                 alt="Prof. Dr. Muhammad Khurram"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               />
             </div>
 
@@ -111,7 +111,7 @@ export default function WhoWeArePage() {
               {[
                 { name: "Ansharah Mobeen", role: "Team Lead", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
                 { name: "Fatima Saud", role: "Project Manager, Computer Vision Engineer, Research Associate", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
-                { name: "Hamid Raza", role: "Embedded Systems Engineer, Research Assistant", image: "Hamid Raza.jpeg" },
+                { name: "Hamid Raza", role: "Embedded Systems Engineer, Research Assistant", image: "/Hamid Raza.jpeg" },
                 { name: "Salim", role: "Embedded Systems Engineer, Research Assistant", image: "/Saleem.jpg" }
               ].map((member) => (
                 <motion.div 
@@ -123,7 +123,7 @@ export default function WhoWeArePage() {
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="w-20 h-20 rounded-full object-cover mb-4 border border-gray-300"
+                    className="w-20 h-20 rounded-full object-contain mb-4 border border-gray-300"
                   />
                   <h4 className="font-bold text-black text-lg">{member.name}</h4>
                   <p className="text-xs text-gray-600 mt-1 font-medium">{member.role}</p>
@@ -144,7 +144,7 @@ export default function WhoWeArePage() {
             >
               {[
                 { name: "Tehreem Raza Khan", role: "Hardware Lead", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
-                { name: "Eshal Kashif", role: "Software Lead", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" }
+                { name: "Eshal Kashif", role: "Software Lead", image: "/eshal.jpeg" }
               ].map((member) => (
                 <motion.div 
                   key={member.name} 
@@ -155,7 +155,7 @@ export default function WhoWeArePage() {
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="w-20 h-20 rounded-full object-cover mb-4 border border-gray-300"
+                    className="w-20 h-20 rounded-full object-contain mb-4 border border-gray-300"
                   />
                   <h4 className="font-bold text-black text-lg">{member.name}</h4>
                   <p className="text-xs text-gray-600 mt-1 font-medium">{member.role}</p>
@@ -175,12 +175,12 @@ export default function WhoWeArePage() {
               viewport={{ once: true, amount: 0.1 }}
             >
               {[
-                { name: "Muhammad Hussnain Mansoor", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
-                { name: "Syed Hussain Sajjad", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
-                { name: "Muhammad Haris", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
-                { name: "Hamdan", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
-                { name: "Mazna Noman Khan", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
-                { name: "Anam Jafar", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" }
+                { name: "Muhammad Hussnain Mansoor", image: "/hussnain.jpeg" },
+                { name: "Syed Hussain Sajjad", image: "/hussain.jpeg" },
+                { name: "Muhammad Haris", image: "/haris.png" },
+                { name: "Hamdan", image: "/hamdan.jpeg" },
+                { name: "Mazna Noman Khan", image: "/mazna.jpeg" },
+                { name: "Anam Jafar", image: "/anam.jpeg" }
               ].map((member) => (
                 <motion.div 
                   key={member.name} 
@@ -210,12 +210,12 @@ export default function WhoWeArePage() {
               viewport={{ once: true, amount: 0.1 }}
             >
               {[
-                { name: "Sumbal Zehra", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
-                { name: "Abdul Moiz", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
-                { name: "Muhammad Areeb", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
-                { name: "Muhammad Ubaid", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
-                { name: "Farhan Raza", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
-                { name: "Shaheer Azmat Khan", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" }
+                { name: "Sumbal Zehra", image: "/Sumbal_Zehra.jpeg" },
+                { name: "Abdul Moiz", image: "/Abdul_Muiz.jpeg" },
+                { name: "Muhammad Areeb", image: "/Areeb_Sohail.jpeg" },
+                { name: "Muhammad Ubaid", image: "Muhammad Ubaid.jpeg" },
+                { name: "Farhan Raza", image: "/Farhan_Raza.png" },
+                { name: "Shaheer Azmat Khan", image: "/" }
               ].map((member) => (
                 <motion.div 
                   key={member.name} 
