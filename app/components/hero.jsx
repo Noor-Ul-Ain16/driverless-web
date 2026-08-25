@@ -25,7 +25,7 @@ const containerVariants = {
 };
 
 export default function Home() {
-  // Set to true so video is active by default
+  // Set to true so the video is active by default
   const [showVideo, setShowVideo] = useState(true);
 
   return (
