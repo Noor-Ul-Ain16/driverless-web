@@ -112,7 +112,7 @@ export default function WhoWeArePage() {
                 { name: "Ansharah Mobeen", role: "Team Lead", image: "/Ansharah_Mobeen.jpeg" },
                 { name: "Fatima Saud", role: "Project Manager, Computer Vision Engineer, Research Associate", image: "/Fatima_Saud.jpeg" },
                 { name: "Hamid Raza", role: "Embedded Systems Engineer, Research Assistant", image: "/Hamid Raza.jpeg" },
-                { name: "Salim", role: "Embedded Systems Engineer, Research Assistant", image: "/Saleem.jpg" }
+                { name: "Saleem", role: "Embedded Systems Engineer, Research Assistant", image: "/Saleem.jpg" }
               ].map((member) => (
                 <motion.div 
                   key={member.name} 
