@@ -127,7 +127,7 @@ export default function TechnologySection() {
           viewport={{ once: true, amount: 0.2 }}
         >
           {[
-            { src: '/images/autonomous-car.gif', alt: 'Autonomous vehicle interior' },
+            { src: '/AV interior (Autonomous Vehicle Interior).png', alt: 'Autonomous vehicle interior' },
             { src: '/images/autonomous-research.gif', alt: 'AI control panel' },
             { src: '/images/autonomous-car.gif', alt: 'GPS and Localization' },
             { src: '/images/autonomous-car.gif', alt: 'Live perception visualization' },
@@ -136,14 +136,14 @@ export default function TechnologySection() {
               key={idx}
               variants={fadeInUp}
               transition={{ duration: 0.5 }}
-              className="relative min-h-[280px] overflow-hidden border border-zinc-200 bg-zinc-100"
+              className="relative min-h-[180px] overflow-hidden border border-zinc-200 bg-zinc-100"
             >
               <Image
                 src={media.src}
                 alt={media.alt}
                 fill
                 unoptimized
-                className="object-cover transition-transform duration-500 hover:scale-105"
+                className="object-contain transition-transform duration-500 hover:scale-105"
               />
             </motion.div>
           ))}

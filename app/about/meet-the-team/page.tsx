@@ -109,8 +109,8 @@ export default function WhoWeArePage() {
               viewport={{ once: true, amount: 0.2 }}
             >
               {[
-                { name: "Ansharah Mobeen", role: "Team Lead", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
-                { name: "Fatima Saud", role: "Project Manager, Computer Vision Engineer, Research Associate", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
+                { name: "Ansharah Mobeen", role: "Team Lead", image: "/Ansharah_Mobeen.jpeg" },
+                { name: "Fatima Saud", role: "Project Manager, Computer Vision Engineer, Research Associate", image: "/Fatima_Saud.jpeg" },
                 { name: "Hamid Raza", role: "Embedded Systems Engineer, Research Assistant", image: "/Hamid Raza.jpeg" },
                 { name: "Salim", role: "Embedded Systems Engineer, Research Assistant", image: "/Saleem.jpg" }
               ].map((member) => (
@@ -143,7 +143,7 @@ export default function WhoWeArePage() {
               viewport={{ once: true, amount: 0.2 }}
             >
               {[
-                { name: "Tehreem Raza Khan", role: "Hardware Lead", image: "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" },
+                { name: "Tehreem Raza Khan", role: "Hardware Lead", image: "/Tehreem_Raza_Khan.jpg" },
                 { name: "Eshal Kashif", role: "Software Lead", image: "/eshal.jpeg" }
               ].map((member) => (
                 <motion.div 
@@ -191,7 +191,7 @@ export default function WhoWeArePage() {
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="w-10 h-10 rounded-full object-cover border border-gray-200"
+                    className="w-10 h-10 rounded-full object-contain border border-gray-200"
                   />
                   <p className="font-medium text-black text-sm">{member.name}</p>
                 </motion.div>
@@ -213,9 +213,9 @@ export default function WhoWeArePage() {
                 { name: "Sumbal Zehra", image: "/Sumbal_Zehra.jpeg" },
                 { name: "Abdul Moiz", image: "/Abdul_Muiz.jpeg" },
                 { name: "Muhammad Areeb", image: "/Areeb_Sohail.jpeg" },
-                { name: "Muhammad Ubaid", image: "Muhammad Ubaid.jpeg" },
+                { name: "Muhammad Ubaid", image: "/Muhammad_Ubaid.jpg" },
                 { name: "Farhan Raza", image: "/Farhan_Raza.png" },
-                { name: "Shaheer Azmat Khan", image: "/" }
+                { name: "Shaheer Azmat Khan", image: "/Shaheer_Azmat_Khan.jpeg" }
               ].map((member) => (
                 <motion.div 
                   key={member.name} 
@@ -226,7 +226,7 @@ export default function WhoWeArePage() {
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="w-10 h-10 rounded-full object-cover border border-gray-200"
+                    className="w-10 h-10 rounded-full object-contain border border-gray-200"
                   />
                   <p className="font-medium text-black text-sm">{member.name}</p>
                 </motion.div>

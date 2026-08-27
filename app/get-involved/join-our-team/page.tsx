@@ -5,9 +5,9 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 const socialLinks = [
-  { label: "LinkedIn", href: "#", iconPath: "/linkedin_icon__.png" },
-  { label: "YouTube", href: "", iconPath: "/youtube_icon.png" },
-  { label: "Facebook", href: "#", iconPath: "/facebook_icon.png" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/smart-city-lab-ncai-ned-uet/home/ ", iconPath: "/linkedin_icon__.png" },
+  { label: "YouTube", href: "https://www.youtube.com/@SmartCityLab ", iconPath: "/youtube_icon.png" },
+  { label: "Facebook", href: "https://www.facebook.com/SMARTCITYLAB.NCAI/ #", iconPath: "/facebook_icon.png" },
 ];
 
 export default function ContactPage() {
@@ -151,7 +151,7 @@ export default function ContactPage() {
                   EMAIL
                 </p>
                 <p className="text-gray-700 text-sm">
-                  Please contact us through the form.
+                  smartcitylabncained@gmail.com.
                 </p>
               </motion.div>
 
@@ -164,7 +164,7 @@ export default function ContactPage() {
                   PHONE
                 </p>
                 <p className="text-gray-700 text-sm">
-                  Please contact us by email
+                  +92 335 3046110
                 </p>
               </motion.div>
 
@@ -177,7 +177,9 @@ export default function ContactPage() {
                   LOCATION
                 </p>
                 <p className="text-gray-700 text-sm">
-                  NED University of Engineering &amp; Technology
+                  1st Floor, CIS Department, NED University of Engineering and Technology, 
+                  University Road, Karachi, Sindh - 75270, Pakistan
+
                 </p>
               </motion.div>
             </div>

@@ -51,7 +51,7 @@ export default function NewsLink() {
 
           <motion.div variants={fadeInUp} transition={{ duration: 0.6 }}>
             <Link
-              href="/newsroom"
+              href="/media/news"
               style={{ color: '#8a1d1d' }}
               className="mt-10 font-bold hover:opacity-80 inline-flex items-center gap-1"
             >
@@ -93,7 +93,7 @@ export default function NewsLink() {
 
           {/* Right Image Container - Slides in from Right */}
           <motion.div 
-            className="relative min-h-[300px] w-full overflow-hidden rounded-sm bg-zinc-200 md:min-h-[340px]"
+            className="relative min-h-[300px] w-full overflow-hidden md:min-h-[340px]"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
@@ -101,10 +101,10 @@ export default function NewsLink() {
             transition={{ duration: 0.6 }}
           >
             <Image
-              src="/images/press-featured.jpg"
+              src="/The People's Autonomous Revolution.png"
               alt="The People's Autonomous Revolution - NCAI NED University"
               fill
-              className="object-cover transition-transform duration-500 hover:scale-105"
+              className="object-contain transition-transform duration-500 hover:scale-105"
             />
           </motion.div>
 
@@ -125,7 +125,7 @@ export default function NewsLink() {
           transition={{ duration: 0.6 }}
         >
           <Link
-            href="/about/who-we-are" 
+            href="/about/meet-the-team" 
             className="group flex flex-col justify-between gap-6 bg-[#8a1d1d] p-8 text-white transition-all duration-300 hover:bg-[#721818] hover:shadow-xl md:flex-row md:items-center md:p-12"
           >
             {/* Left Text Block */}

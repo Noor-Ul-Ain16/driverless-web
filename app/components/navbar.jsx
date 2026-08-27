@@ -24,7 +24,7 @@ export default function Navbar() {
     { label: "Be Part of It", href: "/get-involved", dropdown: "involved" },
   ]
 
-  const be_part_of_itSubmenu = [
+  const be_part_of_it_Submenu = [
     { label: "Join Our Team", href: "/get-involved/join-our-team" },
     { label: "Sponsorship Opportunity", href: "/get-involved/sponsorship-form" },
   ]
@@ -145,7 +145,7 @@ export default function Navbar() {
   }
 
   const getSubmenuItems = (type) => {
-    if (type === "involved") return be_part_of_itSubmenu
+    if (type === "involved") return be_part_of_it_Submenu
     if (type === "technology") return technologySubmenu
     if (type === "media") return mediaSubmenu
     return []
@@ -311,11 +311,11 @@ export default function Navbar() {
 
             {/* CTA Button */}
             <Link
-              href="/be-part-of-it/contact-sjoin-our-team"
+              href="/get-involved/join-our-team"
               className={
                 isTransparent
                   ? "border border-white bg-white/20 backdrop-blur-md !text-white hover:bg-white hover:!text-black transition px-4 py-2 text-xs font-bold uppercase tracking-wider shadow-md"
-                  : pathname === "/be-part-of-it/contact-sjoin-our-team"
+                  : pathname === "/get-involved/join-our-team"
                     ? "border border-[#8a1d1d] bg-[#8a1d1d] text-white transition px-4 py-2 text-xs font-bold uppercase tracking-wider"
                     : "border border-zinc-900 bg-white text-zinc-900 hover:border-black hover:bg-zinc-100 transition px-4 py-2 text-xs font-bold uppercase tracking-wider"
               }
@@ -377,6 +377,7 @@ export default function Navbar() {
               </div>
             )
           })}
+          
           <Link
             href="/get-involved/join-our-team"
             className="mt-2 block w-full text-center border border-zinc-900 bg-zinc-900 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-zinc-800"
