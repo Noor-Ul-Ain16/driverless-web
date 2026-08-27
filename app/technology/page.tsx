@@ -153,19 +153,25 @@ export default function TechnologyPage() {
               variants={fadeInUp}
               className="mt-3 text-[15px] font-bold uppercase tracking-[0.25em] text-[#8a1d1d]"
             >
-              In Road Testing – NED University Main Campus
+              In Campus Road Testing – NED University Main Campus
             </motion.p>
 
             <motion.p
               variants={fadeInUp}
               className="mx-auto mt-7 max-w-3xl text-base leading-7 text-slate-700 md:text-[18px]"
             >
-              The Autonomous Drive System is NCAI&apos;s flagship platform, in
-              active development with NED University&apos;s engineering teams. It
-              pairs LiDAR, radar, and camera perception with a deep-learning
-              navigation stack, giving the vehicle a continuous read on the road
-              around it — tuned for the unpredictable mix of traffic found on
-              Pakistani streets, not just a closed test track.
+              {/* The Autonomous Drive System is NCAI’s flagship platform, in actice development 
+              with NED University’s engineering teams. It pairs LiDAR, radar, and camera-based 
+              perception with a deep-learning navigation stack, enabling the vehicle to continuously 
+              understand and navigate its surroundings within the NED University Main Campus. The system 
+              is being refined and tested in real campus environments to support robust autonomous driving
+              performance under varied and dynamic conditions. */}
+
+              The Autonomous Drive System is NCAI's flagship platform, in active development with 
+              NED University's engineering teams. It pairs LiDAR, radar, and camera perception with a 
+              deep-learning navigation stack, giving the vehicle a continuous read on the road 
+              around it — tuned for the unpredictable mix of traffic found on Pakistani streets, not just
+               a closed test track.
             </motion.p>
           </motion.div>
 

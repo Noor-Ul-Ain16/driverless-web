@@ -6,124 +6,132 @@ import { motion, AnimatePresence } from 'framer-motion'
 interface GalleryItem {
   id: number
   title: string
-  category:
-    | 'Autonomous Car Design'
-    | 'Simulation and Real-World Testing'
-    | 'Visual Data Processing'
-    | 'Mapping and Data Collection'
+  category: string
   image: string
   caption: string
 }
 
 export default function GalleryPage() {
-  const [activeCategory, setActiveCategory] = useState<string>('Autonomous Car Design')
   const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null)
 
-  // Driverless Car Project Gallery Data
+  // Complete Driverless Car Project Gallery Data
   const galleryItems: GalleryItem[] = [
     {
       id: 1,
-      title: 'Driverless Car',
-      caption: 'Driverless Car',
+      title: 'Autonomous Vehicle Architecture',
+      caption: 'Main sensor-integrated electric vehicle platform for autonomous navigation.',
       category: 'Autonomous Car Design',
       image: '/project_car_image1.jpg',
     },
     {
       id: 2,
-      title: 'Driverless Car',
-      caption: 'Driverless Car',
+      title: 'Solid-State LiDAR Integration',
+      caption: 'Roof-mounted RoboSense RubyPlus LiDAR configuration for 360-degree point-cloud perception.',
       category: 'Autonomous Car Design',
       image: '/project_car_image2.jpg',
     },
     {
       id: 3,
-      title: 'Driverless Car',
-      caption: 'Driverless Car',
+      title: 'Drive-By-Wire Actuation Control',
+      caption: 'Low-level electronic throttle and steering system interface.',
       category: 'Autonomous Car Design',
       image: '/project_car_image3.jpg',
     },
     {
       id: 4,
-      title: 'Driverless Car',
-      caption: 'Driverless Car',      
+      title: 'Field Testing & Calibration',
+      caption: 'Sensor calibration and real-time path execution tests on track.',
       category: 'Autonomous Car Design',
       image: '/project_car_image4.jpg',
     },
     {
       id: 5,
-      title: 'Driverless Car',
-      caption: 'Driverless Car',      
+      title: 'On-Board Processing Rig',
+      caption: 'High-performance GPU cluster processing ROS 2 node communications.',
       category: 'Autonomous Car Design',
       image: '/project_car_image5.jpg',
     },
     {
       id: 6,
-      title: 'Driverless Car',
-      caption: 'Driverless Car',      
+      title: 'Campus Trial Operations',
+      caption: 'Real-world trajectory evaluation on main campus roadways.',
       category: 'Autonomous Car Design',
       image: '/project_car_image6.jpg',
     },
     {
       id: 7,
-      title: 'Driverless Car',
-      caption: 'Driverless Car',        
+      title: 'Object Detection & Lane Tracking',
+      caption: 'Real-time computer vision perception pipeline using YOLOv5m.',
       category: 'Visual Data Processing',
       image: '/visual data processing (object and lane detection) image1.PNG',
     },
     {
       id: 8,
-      title: 'Driverless Car',
-      caption: 'Driverless Car',        
+      title: 'Obstacle Avoidance Logic',
+      caption: 'Dynamic ROI extraction and emergency braking thresholds.',
       category: 'Visual Data Processing',
       image: '/visual data processing (object detection_or_avoidance) image2.PNG',
     },
     {
       id: 9,
-      title: 'Driverless Car',
-      caption: 'Driverless Car',        
+      title: 'CARLA Environment Simulation',
+      caption: 'Model Predictive Control (MPC) verification inside synthetic virtual environment.',
       category: 'Simulation and Real-World Testing',
-      image: '/simulation-image1.PNG',
+      image: '/simulation_image1.PNG',
     },
     {
       id: 10,
-      title: 'Driverless Car',
-      caption: 'Driverless Car',        
+      title: 'Trajectory Optimization',
+      caption: 'Lattice planner simulation showing smooth collision-free paths.',
       category: 'Simulation and Real-World Testing',
       image: '/simulation-image2.PNG',
     },
     {
       id: 11,
-      title: 'Driverless Car',
-      caption: 'Driverless Car',        
+      title: 'CARLA Environment Simulation',
+      caption: 'Model Predictive Control (MPC) verification inside synthetic virtual environment.',
+      category: 'Simulation and Real-World Testing',
+      image: '/simulation-image3.PNG',
+    },
+    {
+      id: 12,
+      title: 'GPS , RTK GPS',
+      caption: 'GPS: High-precision systems like Reach Rover RS2 pinpoint location down to centimeter accuracy.RTK (Real-Time Kinematic) GPS :Enhances precision using base station corrections to eliminate satellite atmospheric distortion..',
+      category: 'Coordinate Tracking',
+      image: '/GPS image1.png',
+    },
+    {
+      id: 13,
+      title: '3D Point Cloud SLAM Map',
+      caption: 'High-definition 3D spatial mapping generated via RTK-GPS and LiDAR.',
       category: 'Mapping and Data Collection',
       image: '/mapping and data collection image1.PNG',
     },
     {
-      id: 12,
-      title: 'Driverless Car',
-      caption: 'Driverless Car',        
+      id: 14,
+      title: 'GNSS & RTK Coordinate Log',
+      caption: 'Centimeter-level precision position logs for autonomous route planning.',
       category: 'Mapping and Data Collection',
       image: '/mapping and data collection image2.PNG',
     },
   ]
 
-  const categories = [
-    { label: 'Autonomous Car Design', value: 'Autonomous Car Design' },
-    { label: 'Simulation and Real-World Testing', value: 'Simulation and Real-World Testing' },
-    { label: 'Visual Data Processing', value: 'Visual Data Processing' },
-    { label: 'Mapping and Data Collection', value: 'Mapping and Data Collection' },
-  ]
+  // Top 3 Featured Cards for Overlapping Showcase
+  const featuredLeft = galleryItems[0]
+  const featuredCenter = galleryItems[1]
+  const featuredRight = galleryItems[2]
 
-  const filteredItems = galleryItems.filter((item) => item.category === activeCategory)
+  // Remaining Items for Collage Grid
+  const gridCollageItems = galleryItems.slice(3)
 
   return (
-    <div className="relative min-h-screen bg-white text-black">
-      {/* Header Section with Background Image */}
+    <div className="relative min-h-screen bg-slate-100 text-slate-900 selection:bg-[#8a1d1d] selection:text-white">
+      
+      {/* HEADER SECTION */}
       <section
         className="relative overflow-hidden bg-cover bg-center bg-no-repeat pt-20 pb-20 px-6 text-center"
         style={{ backgroundImage: "url('/image.webp')" }}
       >
-        {/* Dark Overlay for Readability */}
         <div className="absolute inset-0 bg-black/60" />
 
         <div className="relative z-10 mx-auto max-w-4xl">
@@ -145,106 +153,234 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      {/* Category Filter Tabs */}
-      <section className="px-6 my-10">
-        <div className="mx-auto max-w-6xl flex flex-wrap justify-center gap-2 sm:gap-4">
-          {categories.map((cat) => (
-            <button
-              key={cat.value}
-              onClick={() => setActiveCategory(cat.value)}
-              className={`px-4 py-2.5 text-xs font-bold uppercase tracking-[0.15em] transition-all duration-200 border ${
-                activeCategory === cat.value
-                  ? 'bg-[#8a1d1d] text-white border-[#8a1d1d]'
-                  : 'bg-zinc-100 text-black border-zinc-200 hover:border-black'
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
-      </section>
+      {/* GALLERY CONTAINER */}
+      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 space-y-20">
 
-      {/* Gallery Grid */}
-      <section className="mx-auto max-w-6xl px-6 pb-24">
-        <motion.div
-          layout
-          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-        >
-          <AnimatePresence>
-            {filteredItems.map((item) => (
+        {/* 1. HIGHLIGHTED OVERLAPPING CARDS HERO SHOWCASE WITH COLLAGE BACKGROUND */}
+        <section className="relative overflow-hidden rounded-3xl border border-slate-300/80 bg-slate-200/50 p-6 sm:p-10 shadow-inner">
+          
+          {/* BACKGROUND COLLAGE GRID WITH BLUR & OVERLAY */}
+          <div className="absolute inset-0 z-0 grid grid-cols-3 sm:grid-cols-4 gap-2 opacity-150 filter blur-[2px] scale-105 pointer-events-none select-none">
+            {galleryItems.map((item) => (
+              <div key={`bg-collage-${item.id}`} className="relative h-full w-full overflow-hidden">
+                <img
+                  src={item.image}
+                  alt=""
+                  className="h-full w-full object-contain"
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* GRADIENT OVERLAY TO MAINTAIN FOREGROUND READABILITY */}
+          <div className="absolute inset-0 z-0 bg-gradient-to-b from-slate-100/80 via-slate-100/40 to-slate-100/90 pointer-events-none" />
+
+          {/* FOREGROUND CONTENT */}
+          <div className="relative z-10">
+            <div className="text-center mb-10">
+              <span className="inline-block rounded-full bg-[#8a1d1d]/57 border border-[#8a1d1d]/20 px-3 py-1 text-xs font-bold uppercase tracking-widest text-[#8a1d1d]">
+                Featured Highlights
+              </span>
+              <h2 className="mt-2 text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                Primary Project Vehicles & Telemetry
+              </h2>
+            </div>
+
+            <div className="relative flex items-center justify-center min-h-[380px] sm:min-h-[460px] max-w-5xl mx-auto px-4 overflow-visible">
+              
+              {/* LEFT CARD */}
               <motion.div
-                key={item.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3 }}
-                className="group relative cursor-pointer overflow-hidden border border-zinc-200 bg-zinc-50"
-                onClick={() => setSelectedImage(item)}
+                initial={{ opacity: 0, x: -60 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
+                onClick={() => setSelectedImage(featuredLeft)}
+                className="absolute left-4 sm:left-12 z-10 w-[60%] sm:w-[48%] aspect-[4/3] rounded-2xl border-2 border-slate-300 bg-white p-2 shadow-xl cursor-pointer transition-transform duration-300 hover:scale-105 hover:z-30"
               >
-                <div className="relative aspect-[4/3] w-full overflow-hidden bg-zinc-900">
+                <div className="relative h-full w-full overflow-hidden rounded-xl bg-slate-900 group">
                   <img
-                    src={item.image}
-                    alt={item.title}
+                    src={featuredLeft.image}
+                    alt={featuredLeft.title}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                    <span className="text-xs font-bold text-white uppercase tracking-wider">
-                      Click to Expand ↗
+                  {/* HOVER ONLY TEXT OVERLAY */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-5 flex flex-col justify-end">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-rose-400 font-bold">
+                      {featuredLeft.category}
                     </span>
+                    <h3 className="text-sm sm:text-base font-black text-white leading-snug">
+                      {featuredLeft.title}
+                    </h3>
+                    <p className="text-xs text-slate-300 line-clamp-2 mt-1">
+                      {featuredLeft.caption}
+                    </p>
                   </div>
                 </div>
-                <div className="p-4 border-t border-zinc-200">
-                  <h3 className="text-sm font-bold uppercase tracking-wide text-black group-hover:text-[#8a1d1d] transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="mt-1 text-xs text-zinc-500 line-clamp-2">
-                    {item.caption}
-                  </p>
+              </motion.div>
+
+              {/* RIGHT CARD */}
+              <motion.div
+                initial={{ opacity: 0, x: 60 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
+                onClick={() => setSelectedImage(featuredRight)}
+                className="absolute right-4 sm:right-12 z-10 w-[60%] sm:w-[48%] aspect-[4/3] rounded-2xl border-2 border-slate-300 bg-white p-2 shadow-xl cursor-pointer transition-transform duration-300 hover:scale-105 hover:z-30"
+              >
+                <div className="relative h-full w-full overflow-hidden rounded-xl bg-slate-900 group">
+                  <img
+                    src={featuredRight.image}
+                    alt={featuredRight.title}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  {/* HOVER ONLY TEXT OVERLAY */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-5 flex flex-col justify-end">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-rose-400 font-bold">
+                      {featuredRight.category}
+                    </span>
+                    <h3 className="text-sm sm:text-base font-black text-white leading-snug">
+                      {featuredRight.title}
+                    </h3>
+                    <p className="text-xs text-slate-300 line-clamp-2 mt-1">
+                      {featuredRight.caption}
+                    </p>
+                  </div>
                 </div>
               </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
-      </section>
 
-      {/* Lightbox / Modal View */}
+              {/* CENTER CARD */}
+              <motion.div
+                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                onClick={() => setSelectedImage(featuredCenter)}
+                className="relative z-20 w-[72%] sm:w-[54%] aspect-[4/3] rounded-2xl border-4 border-[#8a1d1d] bg-white p-2 shadow-2xl cursor-pointer transition-transform duration-300 hover:scale-105"
+              >
+                <div className="relative h-full w-full overflow-hidden rounded-xl bg-slate-900 group">
+                  <img
+                    src={featuredCenter.image}
+                    alt={featuredCenter.title}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  {/* HOVER ONLY TEXT OVERLAY */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                    <span className="text-xs font-mono uppercase tracking-widest text-rose-300 font-bold">
+                      {featuredCenter.category}
+                    </span>
+                    <h3 className="text-lg sm:text-xl font-black text-white mt-0.5">
+                      {featuredCenter.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-300 line-clamp-2 mt-1">
+                      {featuredCenter.caption}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* 2. MODERN MASONRY COLLAGE GRID FOR ALL OTHER IMAGES */}
+        <section className="space-y-6">
+          <div className="border-b border-slate-300 pb-4">
+            <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+              Complete Project Media Archive
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-600 font-medium">
+              Comprehensive collection of design, perception modeling, SLAM mapping & simulations
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 auto-rows-[240px]">
+            {gridCollageItems.map((item, idx) => {
+              const isTall = idx % 4 === 0;
+
+              return (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: idx * 0.05 }}
+                  onClick={() => setSelectedImage(item)}
+                  className={`group relative overflow-hidden rounded-2xl border border-slate-300 bg-white p-2 shadow-sm transition-all duration-300 hover:border-[#8a1d1d] hover:shadow-xl cursor-pointer ${
+                    isTall ? "sm:row-span-2" : "row-span-1"
+                  }`}
+                >
+                  <div className="relative h-full w-full overflow-hidden rounded-xl bg-slate-900">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    
+                    {/* HOVER ONLY TEXT OVERLAY */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-5 flex flex-col justify-end">
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-rose-400 font-bold">
+                        {item.category}
+                      </span>
+                      <h4 className="text-base font-extrabold text-white mt-0.5">
+                        {item.title}
+                      </h4>
+                      <p className="text-xs text-slate-300 line-clamp-3 mt-1 font-normal leading-relaxed">
+                        {item.caption}
+                      </p>
+                      <div className="mt-3 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-rose-300">
+                        <span>Expand Image</span>
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </div>
+                    </div>
+
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </section>
+
+      </main>
+
+      {/* LIGHTBOX / MODAL VIEW */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 sm:p-8"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 sm:p-8 backdrop-blur-sm"
             onClick={() => setSelectedImage(null)}
           >
             <motion.div
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
-              className="relative max-w-4xl w-full bg-zinc-900 overflow-hidden border border-zinc-700"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="relative max-w-5xl w-full bg-slate-900 overflow-hidden rounded-2xl border border-slate-700 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setSelectedImage(null)}
-                className="absolute top-4 right-4 z-10 bg-[#8a1d1d] text-white px-3 py-1 text-xs font-bold uppercase tracking-wider hover:bg-[#6d0f0f]"
+                className="absolute top-4 right-4 z-10 bg-[#8a1d1d] text-white px-3.5 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-[#6d0f0f] transition-colors shadow-md"
               >
                 Close ✕
               </button>
 
-              <div className="relative max-h-[70vh] w-full flex items-center justify-center bg-black">
+              <div className="relative max-h-[72vh] w-full flex items-center justify-center bg-black">
                 <img
                   src={selectedImage.image}
                   alt={selectedImage.title}
-                  className="max-h-[70vh] w-full object-contain"
+                  className="max-h-[72vh] w-full object-contain"
                 />
               </div>
 
-              <div className="p-6 bg-zinc-900 text-white">
-                <h2 className="text-lg font-black uppercase tracking-wide text-white">
+              <div className="p-6 bg-slate-900 border-t border-slate-800 text-white">
+                <span className="text-xs font-mono uppercase tracking-widest text-rose-400 font-bold">
+                  {selectedImage.category}
+                </span>
+                <h2 className="text-xl font-black uppercase tracking-wide text-white mt-1">
                   {selectedImage.title}
                 </h2>
-                <p className="mt-2 text-xs text-zinc-300 sm:text-sm">
+                <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
                   {selectedImage.caption}
                 </p>
               </div>
@@ -252,6 +388,7 @@ export default function GalleryPage() {
           </motion.div>
         )}
       </AnimatePresence>
+
     </div>
   )
 }

@@ -42,7 +42,7 @@ export default function WhoWeArePage() {
             variants={fadeInUp}
             className="mt-10 text-4xl sm:text-5xl font-extrabold text-black"
           >
-            Who We Are
+            Meet The Team
           </motion.h1>
         </motion.div>
 

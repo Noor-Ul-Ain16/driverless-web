@@ -9,32 +9,49 @@ export default function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [currentHash, setCurrentHash] = useState("")
+  const [isScrolled, setIsScrolled] = useState(false)
 
   const dropdownTimeout = useRef(null)
   const navRef = useRef(null)
 
+  const isHomePage = pathname === "/"
+
   const links = [
     { label: "Home", href: "/" },
-    { label: "About Us", href: "/about/who-we-are" },
+    { label: "About Us", href: "/about/meet-the-team" },
     { label: "Technology", href: "/technology", dropdown: "technology" },
     { label: "Media", href: "/media", dropdown: "media" },
-    { label: "Get Involved", href: "/get-involved", dropdown: "involved" },
+    { label: "Be Part of It", href: "/get-involved", dropdown: "involved" },
   ]
 
-  const getInvolvedSubmenu = [
+  const be_part_of_itSubmenu = [
     { label: "Join Our Team", href: "/get-involved/join-our-team" },
     { label: "Sponsorship Opportunity", href: "/get-involved/sponsorship-form" },
   ]
 
   const technologySubmenu = [
-    { label: "Overview & Stack", href: "/technology#overview" },
+    { label: "Overview & Stack", href: "/technology/overview" },
     { label: "Publications", href: "/technology/publications" },
+    { label: "Insights", href: "/technology/insights" },
   ]
 
   const mediaSubmenu = [
     { label: "News", href: "/media/news" },
     { label: "Gallery", href: "/media/gallery" },
   ]
+
+  // Track scroll position for transparent -> solid transition
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 80) {
+        setIsScrolled(true)
+      } else {
+        setIsScrolled(false)
+      }
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   // Track hash changes on client
   useEffect(() => {
@@ -48,7 +65,7 @@ export default function Navbar() {
     }
   }, [])
 
-  // Submenu items ke liye strict match check
+  // Submenu items exact match check
   const isExactActive = (href) => {
     if (!href || !pathname) return false
     const [cleanHref, hash] = href.split("#")
@@ -60,23 +77,14 @@ export default function Navbar() {
     return pathname === cleanHref && !currentHash
   }
 
-  // Parent Navigation Links ke liye Active Check
+  // Parent Navigation Links Active Check
   const isParentActive = (link) => {
     if (!link.href || !pathname) return false
-
-    // Home Page Check
-    if (link.href === "/") {
-      return pathname === "/"
-    }
+    if (link.href === "/") return pathname === "/"
 
     const [cleanHref] = link.href.split("#")
+    if (pathname === cleanHref) return true
 
-    // Direct Exact Match
-    if (pathname === cleanHref) {
-      return true
-    }
-
-    // Base route matching for parent category (e.g., /technology matches /technology/publications)
     const baseRoute = cleanHref.split("/")[1]
     const currentBaseRoute = pathname.split("/")[1]
 
@@ -137,7 +145,7 @@ export default function Navbar() {
   }
 
   const getSubmenuItems = (type) => {
-    if (type === "involved") return getInvolvedSubmenu
+    if (type === "involved") return be_part_of_itSubmenu
     if (type === "technology") return technologySubmenu
     if (type === "media") return mediaSubmenu
     return []
@@ -187,21 +195,38 @@ export default function Navbar() {
     )
   }
 
+  const isTransparent = isHomePage && !isScrolled
+
   return (
-    <nav ref={navRef} className="relative z-50 border-b border-zinc-200 bg-white">
+    <nav
+      ref={navRef}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isTransparent
+          ? "bg-transparent border-b border-white/10"
+          : "bg-white border-b border-zinc-200 shadow-sm"
+      }`}
+    >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-2 text-zinc-900" aria-label="NCAI Autonomous home">
-          <span className="text-xl font-black tracking-tight text-[#8a1d1d]">NED</span>
-          <span className="text-zinc-400">/</span>
-          <span className="text-xs font-bold tracking-widest text-zinc-600 uppercase">DRIVERLESS</span>
+        <Link href="/" className="flex items-center gap-2" aria-label="NCAI Autonomous home">
+          <span className={`text-xl font-black tracking-tight ${isTransparent ? "text-[#8a1d1d] drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" : "text-[#8a1d1d]"}`}>
+            NED
+          </span>
+          <span className={isTransparent ? "text-white/60" : "text-zinc-400"}>/</span>
+          <span className={`text-xs font-bold tracking-widest uppercase ${isTransparent ? "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" : "text-zinc-600"}`}>
+            AUTONOMOUS TECHNOLOGY
+          </span>
         </Link>
 
         {/* Mobile Menu Toggle */}
         <div className="flex items-center gap-3">
           <button
             type="button"
-            className="inline-flex items-center justify-center rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm font-semibold text-zinc-800 transition hover:bg-zinc-100 md:hidden"
+            className={`inline-flex items-center justify-center rounded-md border px-3 py-2 text-sm font-semibold transition md:hidden ${
+              isTransparent
+                ? "border-white/30 bg-black/50 text-white backdrop-blur-md hover:bg-black/70"
+                : "border-zinc-300 bg-white text-zinc-800 hover:bg-zinc-100"
+            }`}
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
             onClick={() => setMobileMenuOpen((current) => !current)}
@@ -222,6 +247,13 @@ export default function Navbar() {
               const active = isParentActive(link)
               const isOpen = activeDropdown === link.dropdown
 
+              // Active state tab hamesha maroon (#8a1d1d) aur bold rahega all the time
+              const linkTextColor = active
+                ? "!text-[#8a1d1d] font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]"
+                : isTransparent
+                ? "!text-white font-semibold hover:!text-[#8a1d1d] drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                : "text-zinc-700 font-medium hover:text-[#8a1d1d]"
+
               return (
                 <div
                   key={link.href}
@@ -233,9 +265,7 @@ export default function Navbar() {
                     <>
                       <button
                         type="button"
-                        className={`inline-flex items-center gap-1 text-sm transition ${
-                          active ? "!text-[#8a1d1d] font-bold" : "text-zinc-700 font-medium hover:text-zinc-900"
-                        }`}
+                        className={`inline-flex items-center gap-1 text-sm transition ${linkTextColor}`}
                         aria-expanded={isOpen}
                         aria-haspopup="true"
                         onClick={() => toggleDropdown(link.dropdown)}
@@ -270,9 +300,7 @@ export default function Navbar() {
                   ) : (
                     <Link
                       href={link.href}
-                      className={`text-sm transition ${
-                        active ? "!text-[#8a1d1d] font-bold" : "text-zinc-700 font-medium hover:text-zinc-900"
-                      }`}
+                      className={`text-sm transition ${linkTextColor}`}
                     >
                       {link.label}
                     </Link>
@@ -283,12 +311,14 @@ export default function Navbar() {
 
             {/* CTA Button */}
             <Link
-              href="/get-involved/join-our-team"
-              className={`border px-4 py-2 text-xs font-bold uppercase tracking-wider transition ${
-                pathname === "/get-involved/join-our-team"
-                  ? "border-[#8a1d1d] bg-[#8a1d1d] text-white"
-                  : "border-zinc-900 bg-white text-zinc-900 hover:border-black hover:bg-zinc-100"
-              }`}
+              href="/be-part-of-it/contact-sjoin-our-team"
+              className={
+                isTransparent
+                  ? "border border-white bg-white/20 backdrop-blur-md !text-white hover:bg-white hover:!text-black transition px-4 py-2 text-xs font-bold uppercase tracking-wider shadow-md"
+                  : pathname === "/be-part-of-it/contact-sjoin-our-team"
+                    ? "border border-[#8a1d1d] bg-[#8a1d1d] text-white transition px-4 py-2 text-xs font-bold uppercase tracking-wider"
+                    : "border border-zinc-900 bg-white text-zinc-900 hover:border-black hover:bg-zinc-100 transition px-4 py-2 text-xs font-bold uppercase tracking-wider"
+              }
             >
               Get In Touch
             </Link>
@@ -297,7 +327,7 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Menu */}
-      <div className={`${mobileMenuOpen ? "block" : "hidden"} border-t border-zinc-200 bg-white md:hidden`}>
+      <div className={`${mobileMenuOpen ? "block" : "hidden"} border-t border-zinc-200 bg-white text-zinc-900 md:hidden`}>
         <div className="space-y-1 px-4 py-4">
           {links.map((link) => {
             const active = isParentActive(link)
@@ -310,7 +340,7 @@ export default function Navbar() {
                     <button
                       type="button"
                       className={`flex w-full items-center justify-between rounded-md px-4 py-3 text-left text-xs uppercase tracking-[0.15em] transition ${
-                        active ? "!text-[#8a1d1d] font-bold bg-zinc-50" : "text-zinc-700 font-semibold hover:bg-zinc-100 hover:text-zinc-900"
+                        active ? "text-[#8a1d1d] font-bold bg-zinc-50" : "text-zinc-700 font-semibold hover:bg-zinc-100 hover:text-[#8a1d1d]"
                       }`}
                       onClick={() => toggleDropdown(link.dropdown)}
                       aria-expanded={isOpen}
@@ -337,7 +367,7 @@ export default function Navbar() {
                   <Link
                     href={link.href}
                     className={`block rounded-md px-4 py-3 text-xs uppercase tracking-[0.15em] transition ${
-                      active ? "!text-[#8a1d1d] font-bold bg-zinc-50" : "text-zinc-700 font-semibold hover:bg-zinc-100 hover:text-zinc-900"
+                      active ? "text-[#8a1d1d] font-bold bg-zinc-50" : "text-zinc-700 font-semibold hover:bg-zinc-100 hover:text-[#8a1d1d]"
                     }`}
                     onClick={() => setMobileMenuOpen(false)}
                   >

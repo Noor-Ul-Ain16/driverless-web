@@ -25,16 +25,15 @@ const containerVariants = {
 };
 
 export default function Home() {
-  // Set to true so the video is active by default
-  const [showVideo, setShowVideo] = useState(true);
+  const [showVideo] = useState(true);
 
   return (
     <main className="w-full bg-white overflow-hidden">
-      <section className="relative min-h-[calc(100vh-68px)] border-b border-zinc-200 flex flex-col justify-center px-0">
-        {/* Full Hero Card Container */}
-        <div className="w-full max-w-none relative overflow-hidden min-h-[550px] flex items-center">
+      {/* Min-h-screen hero section */}
+      <section className="relative min-h-screen border-b border-zinc-200 flex flex-col justify-center px-0">
+        <div className="w-full max-w-none relative overflow-hidden min-h-screen flex items-center pt-20">
 
-          {/* Background Media with Dark Vignette Overlay */}
+          {/* Background Video starting at top screen boundary */}
           <div className="absolute inset-0 z-0 bg-black">
             <AnimatePresence mode="wait">
               {showVideo ? (
@@ -51,36 +50,11 @@ export default function Home() {
                   playsInline
                   className="w-full h-full object-cover absolute inset-0"
                 />
-              ) : (
-                /* 
-                <motion.div
-                  key="image"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.6 }}
-                  className="w-full h-full bg-[length:900px] bg-no-repeat bg-[position:95%_center] absolute inset-0" style={{ backgroundImage: "url('/image.webp')" }}
-                />
-                */
-                null  /* remove when car image as background also needed */
-              )}
+              ) : null}
             </AnimatePresence>
 
             <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/30 pointer-events-none" />
           </div>
-
-          {/* Dynamic Toggle Arrow Button (Right Side) */}
-          {/* 
-          <button
-            onClick={() => setShowVideo((prev) => !prev)}
-            aria-label={showVideo ? "Show Background Image" : "Play Background Video"}
-            className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-black/50 hover:bg-[#8a1d1d] text-white rounded-full border border-white/20 backdrop-blur-md transition-all duration-300 hover:scale-110 group shadow-lg cursor-pointer"
-          >
-            <span className="text-xl sm:text-2xl font-black transition-transform duration-300 group-hover:translate-x-0.5">
-              {showVideo ? "‹" : "›"}
-            </span>
-          </button>
-          */}
 
           {/* Foreground Text Overlay */}
           <div className="relative z-10 p-8 sm:p-12 lg:p-16 max-w-2xl">
@@ -100,11 +74,11 @@ export default function Home() {
 
               <motion.h1
                 variants={fadeInUp}
-                className="mt-10 font-sans text-3xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-4xl md:text-5xl"
+                className="mt-4 font-sans text-3xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-4xl md:text-5xl"
               >
-                We are{" "}
-                <span className="text-[#e05252]">
-                  NCAI Autonomous
+                NCAI - {" "}
+                <span className="text-[#e05252] text-[45px]">
+                  Autonomous Intelligence. Driverless Innovation.
                 </span>
               </motion.h1>
 
@@ -112,11 +86,7 @@ export default function Home() {
                 variants={fadeInUp}
                 className="text-xs sm:text-sm leading-relaxed text-zinc-300"
               >
-                NCAI Autonomous's aim is to be the home of practical
-                self-driving research at NED University — NCAI Autonomous bridges academic
-                AI engineering with industrial innovation. We empower bright
-                minds to deploy autonomous software on full-scale vehicles as
-                we build Pakistan's first self-driving car.
+                NCAI Autonomous's aim is to be the home of practical self-driving research at NED University — NCAI Autonomous bridges academic AI engineering with industrial innovation. We empower bright minds to deploy autonomous software on full-scale vehicles as we build Pakistan's first self-driving car.
               </motion.p>
 
               <motion.div
@@ -124,7 +94,7 @@ export default function Home() {
                 className="mt-2 flex flex-wrap items-center gap-2.5 sm:flex-row"
               >
                 <Link
-                  href="/about/who-we-are"
+                  href="/about/meet-the-team"
                   className="inline-flex min-w-[120px] items-center justify-center border border-[#8a1d1d] bg-[#8a1d1d] px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition-all duration-200 hover:bg-red-700"
                 >
                   Discover More

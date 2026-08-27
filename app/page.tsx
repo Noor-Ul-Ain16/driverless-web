@@ -1,18 +1,18 @@
 import Hero from "./components/hero";
-import AnnouncementSection from "./components/announcement";
-import CompetitionsSection from "./components/competitions";
-import PreviousCompetitionsSection from "./components/previous-competitions";
+import CuurentProgram_LandingpageSection from "./components/currentprogram_landingpage";
+import Technology_landingpageSection from "./components/technology_landingpage";
+import News_and_Meet_theteamSection from "./components/news_section_and_meet-the-team_landingpage";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-white">
       <Hero />
 
-      <AnnouncementSection />
+      <CuurentProgram_LandingpageSection />
 
-      <CompetitionsSection />
+      <Technology_landingpageSection />
 
-      <PreviousCompetitionsSection />
+      <News_and_Meet_theteamSection />
     </main>
   );
 }

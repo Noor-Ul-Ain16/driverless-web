@@ -1,11 +1,12 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function NewsroomPage() {
-  const [submitted, setSubmitted] = useState(false)
   const [isStuck, setIsStuck] = useState(false)
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [activeModalVideo, setActiveModalVideo] = useState<{ title: string; url: string } | null>(null)
   const featuredRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -25,9 +26,32 @@ export default function NewsroomPage() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setSubmitted(true)
+  // Helper function to convert YouTube / Shorts / Facebook links into Embed URLs
+  const getEmbedUrl = (url: string) => {
+    if (!url) return ''
+
+    // 1. YouTube Shorts check
+    if (url.includes('youtube.com/shorts/')) {
+      const videoId = url.split('youtube.com/shorts/')[1]?.split('?')[0]
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1`
+    }
+    // 2. YouTube standard links check
+    if (url.includes('youtu.be/')) {
+      const videoId = url.split('youtu.be/')[1]?.split('?')[0]
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1`
+    }
+    if (url.includes('youtube.com/watch')) {
+      const urlParams = new URLSearchParams(url.split('?')[1])
+      const videoId = urlParams.get('v')
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1`
+    }
+    // 3. Facebook Video Embed
+    if (url.includes('facebook.com')) {
+      return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&autoplay=true`
+    }
+
+    // Default return original URL for direct web embeds
+    return url
   }
 
   const sampleVideos = [
@@ -36,6 +60,18 @@ export default function NewsroomPage() {
       duration: '03:05',
       thumbnail: '/dw news thumbnail.png',
       url: 'https://www.dw.com/en/pakistan-inside-an-ai-powered-driverless-car/video-75475114',
+    },
+    {
+      title: 'Morning Asia',
+      duration: '10:20',
+      thumbnail: '/video-image3.jpg',
+      url: 'https://www.facebook.com/AsiaOneNewsOfficial/videos/morning-asia-pakistans-first-ai-driverless-car-test-drive-ned-university-dr-muha/1435405401627968/',
+    },
+    {
+      title: 'TOK (times of karachi)',
+      duration: '06:13',
+      thumbnail: 'https://img.youtube.com/vi/3546aRgtk8Q/hqdefault.jpg',
+      url: 'https://youtu.be/3546aRgtk8Q?si=s5M75v5d2ZDOiLwF',
     },
     {
       title: 'Express live news',
@@ -107,12 +143,6 @@ export default function NewsroomPage() {
       url: 'https://youtu.be/VMucmTK9c1Q?si=faf48oLxvA7wRgVT',
     },
     {
-      title: 'TOK (times of karachi)',
-      duration: '06:13',
-      thumbnail: 'https://img.youtube.com/vi/3546aRgtk8Q/hqdefault.jpg',
-      url: 'https://youtu.be/3546aRgtk8Q?si=s5M75v5d2ZDOiLwF',
-    },
-    {
       title: 'ABN news',
       duration: '07:48',
       thumbnail: 'https://img.youtube.com/vi/zdakGkhKZJk/hqdefault.jpg',
@@ -125,17 +155,22 @@ export default function NewsroomPage() {
       url: 'https://www.youtube.com/watch?v=f-Y8yNjKhNc',
     },
     {
-      title: 'Morning Asia',
-      duration: '10:20',
-      thumbnail: '/video-image3.jpg',
-      url: 'https://www.facebook.com/AsiaOneNewsOfficial/videos/morning-asia-pakistans-first-ai-driverless-car-test-drive-ned-university-dr-muha/1435405401627968/',
-    },
-    {
       title: 'Dawn',
       thumbnail: '/news_logo_6.png',
       url: 'https://www.facebook.com/dawndotcom/videos/pakistans-first-ai-driverless-car-is-taking-shape-at-the-university-of-karachi-c/1875616206396455/',
     },
   ]
+
+  const featuredVideos = sampleVideos.slice(0, 3)
+  const remainingVideos = sampleVideos.slice(3)
+
+  const handleNext = () => {
+    setActiveIndex((prev) => (prev + 1) % featuredVideos.length)
+  }
+
+  const handlePrev = () => {
+    setActiveIndex((prev) => (prev - 1 + featuredVideos.length) % featuredVideos.length)
+  }
 
   const sponsors = [
     { name: '92 News HD Plus', logo: '/news_logo_1.jpg' },
@@ -195,26 +230,71 @@ export default function NewsroomPage() {
 
   return (
     <div className="relative w-full bg-white text-black pb-0">
+      {/* Video Modal Overlay */}
+      <AnimatePresence>
+        {activeModalVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 sm:p-6"
+            onClick={() => setActiveModalVideo(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="relative w-full max-w-4xl overflow-hidden rounded-2xl bg-black border border-zinc-800 shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="flex items-center justify-between border-b border-zinc-800 px-6 py-4 bg-zinc-900/80">
+                <h3 className="text-sm sm:text-base font-bold text-white line-clamp-1">
+                  {activeModalVideo.title}
+                </h3>
+                <button
+                  onClick={() => setActiveModalVideo(null)}
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-800 text-zinc-400 hover:bg-[#8a1d1d] hover:text-white transition"
+                >
+                  ✕
+                </button>
+              </div>
+
+              {/* Video Frame */}
+              <div className="relative aspect-video w-full bg-black">
+                <iframe
+                  src={getEmbedUrl(activeModalVideo.url)}
+                  title={activeModalVideo.title}
+                  className="h-full w-full border-0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Hero Header Section */}
       <motion.div
-        className="pt-20 pb-16 px-6 text-center"
+        className="pt-20 pb-12 px-6 text-center"
         initial="hidden"
         animate="visible"
         variants={fadeInUp}
       >
         <div className="mx-auto max-w-4xl">
           <motion.h1
-            className="mt-10 text-3xl font-black uppercase tracking-tight text-black sm:text-5xl"
+            className="mt-6 text-3xl font-black uppercase tracking-tight text-black sm:text-5xl"
             variants={fadeInUp}
           >
-            Get the Latest Updates
+            Media & Newsroom
           </motion.h1>
 
           <motion.p
-            className="mt-6 max-w-2xl text-sm leading-7 text-zinc-600 sm:text-base mx-auto"
+            className="mt-4 max-w-2xl text-sm leading-7 text-zinc-600 sm:text-base mx-auto"
             variants={fadeInUp}
           >
-            Join to receive the latest news, event announcements, career opportunities, team updates, and more.
+            Explore our latest media coverages, news highlights, and official announcements across platforms.
           </motion.p>
         </div>
       </motion.div>
@@ -222,18 +302,18 @@ export default function NewsroomPage() {
       <main className="mx-auto max-w-6xl px-6 pb-20 md:px-12">
         {/* Social Media Section */}
         <motion.section
-          className="mb-16 rounded-2xl border border-zinc-200 bg-[#8a1d1d] p-6 md:p-8"
+          className="mb-16 rounded-2xl border border-zinc-200 bg-[#8a1d1d] p-6 md:p-8 text-center"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-50px' }}
           variants={fadeInUp}
         >
-          <p className="text-xs text-center font-bold uppercase tracking-[0.25em] text-zinc-200">
+          <p className="text-xs font-bold uppercase tracking-[0.25em] text-zinc-200">
             Follow Us on Social Media
           </p>
 
-          <h2 className="mt-10 text-2xl text-center font-black uppercase tracking-tight text-white md:text-3xl">
-            Additional Links
+          <h2 className="mt-3 text-2xl font-black uppercase tracking-tight text-white md:text-3xl">
+            Official Channels
           </h2>
 
           <motion.div
@@ -254,7 +334,7 @@ export default function NewsroomPage() {
                 variants={fadeInUp}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="inline-flex bg-white border border-black px-3 py-3 text-xs 
+                className="inline-flex bg-white border border-black px-4 py-3 text-xs 
                 font-bold uppercase tracking-[0.2em] text-black transition hover:bg-zinc-200"
               >
                 {item.label}
@@ -263,85 +343,160 @@ export default function NewsroomPage() {
           </motion.div>
         </motion.section>
 
-        {/* Newsletter Section */}
+        {/* Highlighted Top 3 Videos Swipeable Carousel Section (ENLARGED) */}
         <motion.section
-          className="mb-20 rounded-2xl border border-zinc-200 bg-zinc-200 p-6 md:p-10"
+          className="mb-16"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-50px' }}
           variants={fadeInUp}
         >
-          <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-start">
+          <div className="mb-6 flex items-center justify-between border-b border-zinc-200 pb-4">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#8a1d1d]">
-                Newsletter
+                Featured Media
               </p>
-
-              <h2 className="mt-3 text-2xl font-black uppercase tracking-tight text-black sm:text-3xl leading-tight text-left">
-                Fill out this form to stay connected and receive our latest news/updates.
+              <h2 className="text-2xl font-black uppercase tracking-tight text-black sm:text-3xl">
+                Top Highlights
               </h2>
             </div>
 
-            <div>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <label className="block">
-                  <span className="mb-2 block text-xs font-bold uppercase tracking-[0.25em] text-black">
-                    Name
-                  </span>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Your name"
-                    className="w-full border border-zinc-300 bg-white px-4 py-3 text-sm text-black placeholder-zinc-400 outline-none transition focus:border-[#8a1d1d]"
-                  />
-                </label>
-
-                <label className="block">
-                  <span className="mb-2 block text-xs font-bold uppercase tracking-[0.25em] text-black">
-                    Email
-                  </span>
-                  <input
-                    type="email"
-                    required
-                    placeholder="you@example.com"
-                    className="w-full border border-zinc-300 bg-white px-4 py-3 text-sm text-black placeholder-zinc-400 outline-none transition focus:border-[#8a1d1d]"
-                  />
-                </label>
-
-                <label className="block">
-                  <span className="mb-2 block text-xs font-bold uppercase tracking-[0.25em] text-black">
-                    Message
-                  </span>
-                  <textarea
-                    placeholder="Optional"
-                    className="h-28 w-full border border-zinc-300 bg-white px-4 py-3 text-sm text-black placeholder-zinc-400 outline-none transition focus:border-[#8a1d1d]"
-                  />
-                </label>
-
-                <motion.button
-                  type="submit"
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="inline-flex w-full items-center justify-center bg-[#8a1d1d] px-6 py-3.5 text-xs font-bold uppercase tracking-[0.2em] text-white transition hover:bg-[#6d0f0f]"
-                >
-                  Subscribe
-                </motion.button>
-
-                {submitted && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="border border-emerald-200 bg-emerald-50 px-4 py-3 text-center text-xs font-semibold text-emerald-700"
-                  >
-                    Thanks for subscribing.
-                  </motion.p>
-                )}
-              </form>
+            {/* Carousel Navigation Buttons */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handlePrev}
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-300 bg-white text-black transition hover:border-[#8a1d1d] hover:bg-[#8a1d1d] hover:text-white"
+                aria-label="Previous Video"
+              >
+                &#8592;
+              </button>
+              <button
+                onClick={handleNext}
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-300 bg-white text-black transition hover:border-[#8a1d1d] hover:bg-[#8a1d1d] hover:text-white"
+                aria-label="Next Video"
+              >
+                &#8594;
+              </button>
             </div>
+          </div>
+
+          {/* Carousel Stack Container - Increased Height */}
+          <div className="relative flex min-h-[420px] sm:min-h-[480px] w-full items-center justify-center overflow-hidden py-6">
+            {featuredVideos.map((video, idx) => {
+              const total = featuredVideos.length
+              let position = (idx - activeIndex + total) % total
+
+              let xOffset = 0
+              let scale = 1
+              let zIndex = 0
+
+              if (position === 0) {
+                // Center item - Significantly bigger
+                xOffset = 0
+                scale = 1.1
+                zIndex = 30
+              } else if (position === 1) {
+                // Right item
+                xOffset = 300
+                scale = 0.85
+                zIndex = 20
+              } else if (position === 2) {
+                // Left item
+                xOffset = -300
+                scale = 0.85
+                zIndex = 10
+              }
+
+              return (
+                <motion.div
+                  key={idx}
+                  className="absolute w-[85%] max-w-[360px] sm:max-w-[480px] cursor-pointer"
+                  animate={{
+                    x: xOffset,
+                    scale: scale,
+                    opacity: 1,
+                    zIndex: zIndex,
+                  }}
+                  transition={{
+                    duration: 0.5,
+                    ease: 'easeInOut',
+                  }}
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  onDragEnd={(e, { offset }) => {
+                    if (offset.x < -40) handleNext()
+                    if (offset.x > 40) handlePrev()
+                  }}
+                  onClick={() => {
+                    if (position === 0) {
+                      setActiveModalVideo(video)
+                    } else {
+                      setActiveIndex(idx)
+                    }
+                  }}
+                >
+                  <div
+                    className={`group relative flex flex-col overflow-hidden rounded-2xl border bg-white shadow-md transition-all duration-300 ${
+                      position === 0
+                        ? 'border-[#8a1d1d] shadow-2xl ring-4 ring-[#8a1d1d]/20'
+                        : 'border-zinc-300 shadow-lg hover:border-[#8a1d1d]'
+                    }`}
+                  >
+                    {/* Increased Thumbnail Height */}
+                    <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-zinc-900">
+                      <img
+                        src={video.thumbnail || '/placeholder.jpg'}
+                        alt={video.title || 'Video Thumbnail'}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+
+                      {/* Play Button Overlay */}
+                      <div className="absolute inset-0 bg-black/30 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-center justify-center">
+                        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#8a1d1d] text-white shadow-xl">
+                          <svg
+                            className="h-7 w-7 fill-current ml-1"
+                            viewBox="0 0 24 24"
+                          >
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </div>
+                      </div>
+
+                      {video.duration && (
+                        <span className="absolute bottom-3 right-3 rounded-md bg-black/80 px-2.5 py-1 text-xs font-bold text-white">
+                          {video.duration}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Video Title Block */}
+                    <div className="flex flex-1 flex-col justify-between bg-white p-5">
+                      <h3 className="text-base sm:text-lg font-bold text-black group-hover:text-[#8a1d1d] transition-colors line-clamp-2">
+                        {video.title}
+                      </h3>
+                    </div>
+                  </div>
+                </motion.div>
+              )
+            })}
+          </div>
+
+          {/* Carousel Dots */}
+          <div className="mt-4 flex justify-center gap-2">
+            {featuredVideos.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveIndex(idx)}
+                className={`h-2.5 rounded-full transition-all ${
+                  activeIndex === idx ? 'w-8 bg-[#8a1d1d]' : 'w-2.5 bg-zinc-300'
+                }`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
           </div>
         </motion.section>
 
-        {/* Videos Section */}
+        {/* All Remaining Videos Section Grid */}
         <motion.section
           className="mb-20"
           initial="hidden"
@@ -349,38 +504,52 @@ export default function NewsroomPage() {
           viewport={{ once: true, margin: '-50px' }}
           variants={fadeInUp}
         >
-          <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#8a1d1d]">
-            Media
-          </p>
+          <div className="mb-6 border-b border-zinc-200 pb-4">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#8a1d1d]">
+              Media Archive
+            </p>
+            <h2 className="text-xl font-black uppercase tracking-tight text-black sm:text-2xl">
+              More Coverage & Videos
+            </h2>
+          </div>
 
-          <div className="mt-6 flex gap-6 overflow-x-auto pb-6 scrollbar-thin scrollbar-thumb-zinc-300">
-            {sampleVideos.map((video, idx) => (
-              <motion.a
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {remainingVideos.map((video, idx) => (
+              <motion.div
                 key={idx}
-                href={video.url}
-                target="_blank"
-                rel="noreferrer"
-                whileHover={{ y: -5 }}
-                className="group block w-[280px] shrink-0 border border-zinc-200 bg-white p-3 transition hover:border-[#8a1d1d]"
+                onClick={() => setActiveModalVideo(video)}
+                whileHover={{ y: -4 }}
+                className="group flex flex-col overflow-hidden rounded-xl border border-zinc-200 bg-white transition hover:border-[#8a1d1d] hover:shadow-md cursor-pointer"
               >
-                <div className="relative h-40 w-full overflow-hidden bg-zinc-100">
+                <div className="relative h-44 w-full overflow-hidden bg-zinc-900">
                   <img
                     src={video.thumbnail || '/placeholder.jpg'}
                     alt={video.title || 'Video Thumbnail'}
                     className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
 
+                  {/* Play Overlay */}
+                  <div className="absolute inset-0 bg-black/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-center justify-center">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#8a1d1d] text-white shadow-md">
+                      <svg className="h-4 w-4 fill-current ml-0.5" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
+                  </div>
+
                   {video.duration && (
-                    <span className="absolute bottom-2 right-2 bg-black/80 px-2 py-0.5 text-[10px] font-bold text-white">
+                    <span className="absolute bottom-2 right-2 rounded bg-black/80 px-1.5 py-0.5 text-[10px] font-bold text-white">
                       {video.duration}
                     </span>
                   )}
                 </div>
 
-                <h3 className="mt-3 text-sm font-bold text-black tracking-tight group-hover:text-[#8a1d1d]">
-                  {video.title}
-                </h3>
-              </motion.a>
+                <div className="p-3.5">
+                  <h3 className="text-xs sm:text-sm font-bold text-black group-hover:text-[#8a1d1d] transition-colors line-clamp-2">
+                    {video.title}
+                  </h3>
+                </div>
+              </motion.div>
             ))}
           </div>
         </motion.section>
@@ -396,7 +565,7 @@ export default function NewsroomPage() {
             Newsletter Archive
           </p>
 
-          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <p className="max-w-2xl text-left text-[11px] leading-5 text-zinc-600 sm:text-sm sm:leading-6">
               Newsletters coming soon
             </p>
@@ -404,7 +573,7 @@ export default function NewsroomPage() {
         </motion.section>
       </main>
 
-      {/* FEATURED MEDIA COVERAGE SECTION - SPACE REMOVED */}
+      {/* FEATURED MEDIA COVERAGE SECTION */}
       <section className="mb-0">
         <div
           ref={featuredRef}
@@ -415,14 +584,6 @@ export default function NewsroomPage() {
               {renderSponsorStrip()}
             </div>
           )}
-
-          <div className="w-full flex justify-center items-center">
-            <img
-              src="/news_logos.png"
-              alt="News Logos"
-              className="block w-full h-auto max-h-[430px] object-cover sm:object-contain align-bottom"
-            />
-          </div>
         </div>
       </section>
 

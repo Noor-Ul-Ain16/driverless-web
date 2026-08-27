@@ -104,7 +104,7 @@ export default function SponsorshipPage() {
           animate="visible"
           variants={fadeInUp}
         >
-          <span className="inline-block rounded-full bg-[#8a1d1d]/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-[#8a1d1d]">
+          <span className="mt-10 inline-block rounded-full bg-[#8a1d1d]/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-[#8a1d1d]">
             NCAI & NED Driverless
           </span>
           <h1 className="mt-10 text-2xl font-extrabold uppercase tracking-tight text-zinc-900 sm:text-4xl md:text-5xl">
