@@ -16,8 +16,8 @@ const bodyFont = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "NED Driverless",
-  description: "NED Driverless official website",
+  title: "NED Autonomous-Self Driving-Driverless Car",
+  description: "NED Autonomous-Self Driving-Driverless Car official website",
 };
 
 export default function RootLayout({

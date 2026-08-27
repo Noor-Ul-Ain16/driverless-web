@@ -30,7 +30,7 @@ export default function Navbar() {
   ]
 
   const technologySubmenu = [
-    { label: "Overview & Stack", href: "/technology/overview" },
+    { label: "Overview & Stack", href: "/technology#overview" },
     { label: "Publications", href: "/technology/publications" },
     { label: "Insights", href: "/technology/insights" },
   ]

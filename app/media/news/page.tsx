@@ -309,7 +309,7 @@ export default function NewsroomPage() {
           variants={fadeInUp}
         >
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-zinc-200">
-            Follow Us on Social Media
+            Find Us on Social Media
           </p>
 
           <h2 className="mt-3 text-2xl font-black uppercase tracking-tight text-white md:text-3xl">
@@ -321,10 +321,9 @@ export default function NewsroomPage() {
             variants={staggerContainer}
           >
             {[
-              { label: 'LinkedIn', href: '' },
-              { label: 'Instagram', href: '' },
-              { label: 'YouTube', href: '' },
-              { label: 'Facebook', href: '' },
+              { label: 'LinkedIn', href: 'https://www.linkedin.com/company/smart-city-lab-ncai-ned-uet/home/' },
+              { label: 'YouTube', href: 'https://www.youtube.com/@SmartCityLab ' },
+              { label: 'Facebook', href: 'https://www.facebook.com/SMARTCITYLAB.NCAI/' },
             ].map((item) => (
               <motion.a
                 key={item.label}
