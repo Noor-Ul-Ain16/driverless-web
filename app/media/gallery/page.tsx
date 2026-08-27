@@ -98,7 +98,7 @@ export default function GalleryPage() {
       title: 'GPS , RTK GPS',
       caption: 'GPS: High-precision systems like Reach Rover RS2 pinpoint location down to centimeter accuracy.RTK (Real-Time Kinematic) GPS :Enhances precision using base station corrections to eliminate satellite atmospheric distortion..',
       category: 'Coordinate Tracking',
-      image: '/GPS image1.png',
+      image: '/gps-image1.png',
     },
     {
       id: 13,

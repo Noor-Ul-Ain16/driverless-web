@@ -70,9 +70,9 @@ export default function TechnologyInsightsPage() {
       description:
         "Self-driving cars rely on a combination of technologies to collect accurate location coordinates. Sub-centimeter coordinate tracking guarantees pinpoint lane guidance, dynamic trajectory alignment, and resilient dead reckoning during signal loss.",
       images: [
-        "/GPS image1.png",
-        "/GPS image2.png",
-        "/GPS image3.png",          
+        "/gps-image1.png",
+        "/gps-image2.png",
+        "/gps-image3.png",
       ],
       subsections: [
         {
