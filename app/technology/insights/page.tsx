@@ -231,7 +231,7 @@ export default function TechnologyInsightsPage() {
         {/* BACK LINK */}
         <div className="mb-8 mt-10">
           <Link
-            href="/technology"
+            href="/technology/overview_and_stack"
             className="group inline-flex items-center gap-2.5 rounded-full border border-slate-300 bg-white px-4 py-2 text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-800 shadow-sm transition-all duration-300 hover:border-[#8a1d1d] hover:bg-[#8a1d1d] hover:text-white hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#8a1d1d]"
           >
             <svg

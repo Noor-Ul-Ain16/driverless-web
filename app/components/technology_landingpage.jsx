@@ -77,7 +77,7 @@ export default function TechnologySection() {
           >
             Everything the vehicle does traces back to how it senses, decides, and moves.{' '}
             <Link
-              href="/technology"
+              href="/technology/overview_and_stack"
               style={{ color: '#8a1d1d' }}
               className="font-bold hover:opacity-80 inline-flex items-center gap-1"
             >

@@ -101,14 +101,14 @@ export default function Home() {
                 </Link>
 
                 <Link
-                  href="/get-involved/join-our-team"
+                  href="/be-part-of-it/join-our-team"
                   className="inline-flex min-w-[120px] items-center justify-center border border-white/30 bg-black/40 backdrop-blur-md px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition-all duration-200 hover:bg-black"
                 >
                   Let's Work Together
                 </Link>
 
                 <Link
-                  href="/get-involved/sponsorship-form"
+                  href="/be-part-of-it/sponsorship-form"
                   className="inline-flex min-w-[120px] items-center justify-center border border-white/30 bg-black/40 backdrop-blur-md px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition-all duration-200 hover:bg-black"
                 >
                   Become a Sponsor

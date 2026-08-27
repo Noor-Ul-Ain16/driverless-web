@@ -21,16 +21,16 @@ export default function Navbar() {
     { label: "About Us", href: "/about/meet-the-team" },
     { label: "Technology", href: "/technology", dropdown: "technology" },
     { label: "Media", href: "/media", dropdown: "media" },
-    { label: "Be Part of It", href: "/get-involved", dropdown: "involved" },
+    { label: "Be Part of It", href: "/be-part-of-it", dropdown: "involved" },
   ]
 
   const be_part_of_it_Submenu = [
-    { label: "Join Our Team", href: "/get-involved/join-our-team" },
-    { label: "Sponsorship Opportunity", href: "/get-involved/sponsorship-form" },
+    { label: "Join Our Team", href: "/be-part-of-it/contact-join-our-team" },
+    { label: "Sponsorship Opportunity", href: "/be-part-of-it/sponsorship-form" },
   ]
 
   const technologySubmenu = [
-    { label: "Overview & Stack", href: "/technology#overview" },
+    { label: "Overview & Stack", href: "/technology/overview_and_stack" },
     { label: "Publications", href: "/technology/publications" },
     { label: "Insights", href: "/technology/insights" },
   ]
@@ -311,11 +311,11 @@ export default function Navbar() {
 
             {/* CTA Button */}
             <Link
-              href="/get-involved/join-our-team"
+              href="/be-part-of-it/contact-join-our-team"
               className={
                 isTransparent
                   ? "border border-white bg-white/20 backdrop-blur-md !text-white hover:bg-white hover:!text-black transition px-4 py-2 text-xs font-bold uppercase tracking-wider shadow-md"
-                  : pathname === "/get-involved/join-our-team"
+                  : pathname === "/be-part-of-it/contact-join-our-team"
                     ? "border border-[#8a1d1d] bg-[#8a1d1d] text-white transition px-4 py-2 text-xs font-bold uppercase tracking-wider"
                     : "border border-zinc-900 bg-white text-zinc-900 hover:border-black hover:bg-zinc-100 transition px-4 py-2 text-xs font-bold uppercase tracking-wider"
               }
@@ -379,7 +379,7 @@ export default function Navbar() {
           })}
           
           <Link
-            href="/get-involved/join-our-team"
+            href="/be-part-of-it/contact-join-our-team"
             className="mt-2 block w-full text-center border border-zinc-900 bg-zinc-900 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-zinc-800"
             onClick={() => setMobileMenuOpen(false)}
           >

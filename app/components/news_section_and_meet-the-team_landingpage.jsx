@@ -38,7 +38,7 @@ export default function NewsLink() {
             transition={{ duration: 0.5 }}
             className="text-xs font-bold uppercase tracking-[0.25em] text-[#8a1d1d]"
           >
-            NEWSROOM
+            NEWS STUDIO
           </motion.p>
 
           <motion.h2 
@@ -55,7 +55,7 @@ export default function NewsLink() {
               style={{ color: '#8a1d1d' }}
               className="mt-10 font-bold hover:opacity-80 inline-flex items-center gap-1"
             >
-              Full Newsroom overview
+              Full News Studio overview
               <span aria-hidden="true">→</span>
             </Link>
           </motion.div>
