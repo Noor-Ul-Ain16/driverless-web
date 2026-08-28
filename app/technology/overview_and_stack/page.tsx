@@ -433,7 +433,20 @@ export default function TechnologyPage() {
                     </div>
 
                     <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-zinc-900 flex items-center justify-center">
-                      <p className="text-sm text-zinc-400">Feed content for {activeSensor.title}</p>
+                      {activeSensor.videoUrl ? (
+                        <video
+                          key={activeSensor.videoUrl}
+                          src={activeSensor.videoUrl}
+                          className="h-full w-full object-cover"
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          controls
+                        />
+                      ) : (
+                        <p className="text-sm text-zinc-400">Feed content for {activeSensor.title}</p>
+                      )}
                     </div>
                   </motion.div>
                 </AnimatePresence>

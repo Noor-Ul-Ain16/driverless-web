@@ -16,8 +16,8 @@ export default function TechnologyInsightsPage() {
       description:
         "Data collection and mapping are fundamental processes in the development of self-driving cars, enabling the vehicle to perceive its surroundings, make decisions, and navigate autonomously. These processes involve gathering vast amounts of sensor data, building detailed maps of the environment, and continuously updating that information to ensure safe and efficient driving.",
       images: [
-        "/mapping and data collection image1.png",
-        "/mapping and data collection image2.png",
+        "/mapping and data collection image1.PNG",
+        "/mapping and data collection image2.PNG",
       ],
       subsections: [
         {
@@ -121,8 +121,8 @@ export default function TechnologyInsightsPage() {
       description:
         "Computer vision pipelines identify objects, lanes, and signals, driving automated ROS state publishing and depth-based braking scenarios for obstacle avoidance.",
       images: [
-        "/visual data processing (object and lane detection) image1.png",
-        "/visual data processing (object detection_or_avoidance) image2.png",
+        "/visual data processing (object and lane detection) image1.PNG",
+        "/visual data processing (object detection_or_avoidance) image2.PNG",
       ],
       subsections: [
         {
@@ -175,9 +175,9 @@ export default function TechnologyInsightsPage() {
       description:
         "Deployment of cutting-edge solid-state LiDAR sensors, AI integration, CARLA MPC control, and real-world campus testing on electric vehicles.",
       images: [
-        "/simulation_image1.png",
-        "/simulation-image3.png",
-        "/simulation-image2.png",
+        "/simulation_image1.PNG",
+        "/simulation-image3.PNG",
+        "/simulation-image2.PNG",
       ],
       subsections: [
         {
