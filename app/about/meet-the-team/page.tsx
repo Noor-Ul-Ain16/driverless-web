@@ -80,7 +80,7 @@ export default function WhoWeArePage() {
 
               <p className="text-sm font-medium">Department of Computer & Information Systems Engineering</p>
               <p className="text-sm font-medium">Director, Research Center for Artificial Intelligence (RCAI)</p>
-              <p className="text-sm font-medium">Focal Person, National Center of Artificial Intelligence (NCAI) & Head, Smart City Lab</p>
+              <p className="text-sm font-medium">Director, National Center of Artificial Intelligence (NCAI) NEDUET &  PI, Smart City Lab</p>
               <p className="text-sm font-medium">Ph.D. (IC Design), Massey University, New Zealand, 2012</p>
             </div>
           </motion.div>
