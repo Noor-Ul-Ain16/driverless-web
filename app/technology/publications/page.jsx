@@ -21,7 +21,7 @@ export default function PublicationsPage() {
   }
 
   return (
-    <main id="publications" className="mx-auto max-w-4xl px-6 py-16 text-zinc-900 overflow-hidden">
+    <main id="publications" className="mx-auto max-w-4xl px-6 pt-28 pb-16 text-zinc-900 overflow-hidden">
       {/* Page Title */}
       <motion.h1 
         initial={{ opacity: 0, y: -20 }}

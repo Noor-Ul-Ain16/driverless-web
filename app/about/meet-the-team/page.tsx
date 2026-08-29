@@ -21,7 +21,7 @@ export default function WhoWeArePage() {
   }
 
   return (
-    <div className="w-full bg-white py-16 px-6 md:px-12 text-zinc-900 overflow-hidden">
+    <div className="w-full bg-white pt-28 pb-16 px-6 md:px-12 text-zinc-900 overflow-hidden">
       <div className="max-w-6xl mx-auto">
         
         {/* Page Header */}
@@ -38,9 +38,9 @@ export default function WhoWeArePage() {
           >
             About Us
           </motion.p>
-          <motion.h1 
+          <motion.h1
             variants={fadeInUp}
-            className="mt-10 text-4xl sm:text-5xl font-extrabold text-black"
+            className="mt-6 text-4xl sm:text-5xl font-extrabold text-black"
           >
             Meet The Team
           </motion.h1>
