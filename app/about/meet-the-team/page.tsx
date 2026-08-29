@@ -15,7 +15,7 @@ export default function WhoWeArePage() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1, // Items ek ke baad ek animated honge
+        staggerChildren: 0.1,
       },
     },
   }
@@ -63,13 +63,13 @@ export default function WhoWeArePage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6 }}
-            className="grid md:grid-cols-[280px_1fr] gap-8 items-start bg-zinc-50 p-8 rounded-3xl border border-gray-200"
+            className="grid md:grid-cols-[280px_1fr] gap-8 items-start bg-zinc-50 p-8 rounded-3xl border border-gray-200 shadow-xl shadow-zinc-200/40 overflow-hidden"
           >
-            <div className="aspect-[4/5] rounded-2xl bg-zinc-200 border border-gray-300 overflow-hidden flex items-center justify-center">
+            <div className="aspect-[4/5] rounded-2xl bg-zinc-200 border border-gray-300 overflow-hidden flex items-center justify-center shadow-inner relative group">
               <img
                 src="/Dr. Muhammad Khurram"  
                 alt="Prof. Dr. Muhammad Khurram"
-                className="w-full h-full object-contain"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
             </div>
 
@@ -80,7 +80,7 @@ export default function WhoWeArePage() {
 
               <p className="text-sm font-medium">Department of Computer & Information Systems Engineering</p>
               <p className="text-sm font-medium">Director, Research Center for Artificial Intelligence (RCAI)</p>
-              <p className="text-sm font-medium">Director, National Center of Artificial Intelligence (NCAI) NEDUET &  PI, Smart City Lab</p>
+              <p className="text-sm font-medium">Director, National Center of Artificial Intelligence (NCAI) NEDUET & PI, Smart City Lab</p>
               <p className="text-sm font-medium">Ph.D. (IC Design), Massey University, New Zealand, 2012</p>
             </div>
           </motion.div>
@@ -118,15 +118,28 @@ export default function WhoWeArePage() {
                   key={member.name} 
                   variants={fadeInUp}
                   transition={{ duration: 0.4 }}
-                  className="p-6 rounded-2xl border border-gray-200 bg-zinc-50 flex flex-col items-center text-center hover:shadow-md transition-shadow"
+                  className="group relative rounded-2xl border border-zinc-200/80 bg-white overflow-hidden flex flex-col transition-all duration-300 hover:shadow-xl hover:shadow-zinc-200/50 hover:-translate-y-1.5 w-full"
                 >
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-20 h-20 rounded-full object-contain mb-4 border border-gray-300"
-                  />
-                  <h4 className="font-bold text-black text-lg">{member.name}</h4>
-                  <p className="text-xs text-gray-600 mt-1 font-medium">{member.role}</p>
+                  <div className="w-full aspect-[4/3] bg-zinc-100 overflow-hidden relative">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
+                  <div className="p-5 bg-white flex flex-col flex-1 justify-between">
+                    <div>
+                      <h4 className="font-bold text-zinc-900 text-base group-hover:text-[#8a1d1d] transition-colors">
+                        {member.name}
+                      </h4>
+                      {member.role && (
+                        <p className="text-xs text-zinc-500 mt-1.5 font-medium leading-relaxed">
+                          {member.role}
+                        </p>
+                      )}
+                    </div>
+                  </div>
                 </motion.div>
               ))}
             </motion.div>
@@ -136,29 +149,42 @@ export default function WhoWeArePage() {
           <div className="mb-12">
             <h3 className="text-xl font-bold text-[#8a1d1d] mb-6">Undergraduate Students</h3>
             <motion.div 
-              className="grid gap-6 sm:grid-cols-2 max-w-2xl"
+              className="grid gap-6 sm:grid-cols-2 max-w-xl"
               variants={staggerGrid}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.2 }}
             >
               {[
-                { name: "Tehreem Raza Khan", role: "Hardware Lead", image: "/Tehreem_Raza_Khan.jpg" },
-                { name: "Eshal Kashif", role: "Software Lead", image: "/eshal.jpeg" }
+                { name: "Tehreem Raza Khan", role: "Hardware Lead", image: "/Tehreem_Raza_Khan1.jpg" },
+                { name: "Eshal Kashif", role: "Software Lead", image: "/eshal1.jpeg" }
               ].map((member) => (
                 <motion.div 
                   key={member.name} 
                   variants={fadeInUp}
                   transition={{ duration: 0.4 }}
-                  className="p-6 rounded-2xl border border-gray-200 bg-zinc-50 flex flex-col items-center text-center hover:shadow-md transition-shadow"
+                  className="group relative rounded-2xl border border-zinc-200/80 bg-white overflow-hidden flex flex-col transition-all duration-300 hover:shadow-xl hover:shadow-zinc-200/50 hover:-translate-y-1.5 w-full"
                 >
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-20 h-20 rounded-full object-contain mb-4 border border-gray-300"
-                  />
-                  <h4 className="font-bold text-black text-lg">{member.name}</h4>
-                  <p className="text-xs text-gray-600 mt-1 font-medium">{member.role}</p>
+                  <div className="w-full aspect-[4/3] bg-zinc-100 overflow-hidden relative">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
+                  <div className="p-5 bg-white flex flex-col flex-1 justify-between">
+                    <div>
+                      <h4 className="font-bold text-zinc-900 text-base group-hover:text-[#8a1d1d] transition-colors">
+                        {member.name}
+                      </h4>
+                      {member.role && (
+                        <p className="text-xs text-zinc-500 mt-1.5 font-medium leading-relaxed">
+                          {member.role}
+                        </p>
+                      )}
+                    </div>
+                  </div>
                 </motion.div>
               ))}
             </motion.div>
@@ -166,9 +192,9 @@ export default function WhoWeArePage() {
 
           {/* Software Team */}
           <div className="mb-12">
-            <h3 className="text-lg font-bold text-zinc-900 mb-4 border-b border-gray-100 pb-2">Software</h3>
+            <h3 className="text-lg font-bold text-zinc-900 mb-6 border-b border-gray-100 pb-2">Software</h3>
             <motion.div 
-              className="grid gap-4 sm:grid-cols-2 md:grid-cols-3"
+              className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
               variants={staggerGrid}
               initial="hidden"
               whileInView="visible"
@@ -186,14 +212,20 @@ export default function WhoWeArePage() {
                   key={member.name} 
                   variants={fadeInUp}
                   transition={{ duration: 0.3 }}
-                  className="p-4 rounded-xl border border-gray-200 bg-white shadow-xs flex items-center gap-3 hover:shadow-sm transition-shadow"
+                  className="group rounded-xl border border-zinc-200/80 bg-white overflow-hidden flex flex-col transition-all duration-300 hover:shadow-md hover:border-zinc-300 hover:-translate-y-1 w-full"
                 >
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-10 h-10 rounded-full object-contain border border-gray-200"
-                  />
-                  <p className="font-medium text-black text-sm">{member.name}</p>
+                  <div className="w-full aspect-square bg-zinc-100 overflow-hidden relative">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="p-3 bg-white flex flex-col justify-center flex-1">
+                    <h4 className="font-semibold text-zinc-900 text-xs leading-snug group-hover:text-[#8a1d1d] transition-colors">
+                      {member.name}
+                    </h4>
+                  </div>
                 </motion.div>
               ))}
             </motion.div>
@@ -201,19 +233,19 @@ export default function WhoWeArePage() {
 
           {/* Embedded/Hardware Team */}
           <div>
-            <h3 className="text-lg font-bold text-zinc-900 mb-4 border-b border-gray-100 pb-2">Embedded / Hardware</h3>
+            <h3 className="text-lg font-bold text-zinc-900 mb-6 border-b border-gray-100 pb-2">Embedded / Hardware</h3>
             <motion.div 
-              className="grid gap-4 sm:grid-cols-2 md:grid-cols-3"
+              className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
               variants={staggerGrid}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.1 }}
             >
               {[
-                { name: "Sumbal Zehra", image: "/Sumbal_Zehra.jpeg" },
+                { name: "Sumbal Zehra", image: "/Sumbal_Zehra1.jpeg" },
                 { name: "Abdul Moiz", image: "/Abdul_Muiz.jpeg" },
                 { name: "Muhammad Areeb", image: "/Areeb_Sohail.jpeg" },
-                { name: "Muhammad Ubaid", image: "/Muhammad_Ubaid.jpg" },
+                { name: "Muhammad Ubaid", image: "/Muhammad_Ubaid1.jpeg" },
                 { name: "Farhan Raza", image: "/Farhan_Raza.png" },
                 { name: "Shaheer Azmat Khan", image: "/Shaheer_Azmat_Khan.jpeg" }
               ].map((member) => (
@@ -221,14 +253,20 @@ export default function WhoWeArePage() {
                   key={member.name} 
                   variants={fadeInUp}
                   transition={{ duration: 0.3 }}
-                  className="p-4 rounded-xl border border-gray-200 bg-white shadow-xs flex items-center gap-3 hover:shadow-sm transition-shadow"
+                  className="group rounded-xl border border-zinc-200/80 bg-white overflow-hidden flex flex-col transition-all duration-300 hover:shadow-md hover:border-zinc-300 hover:-translate-y-1 w-full"
                 >
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-10 h-10 rounded-full object-contain border border-gray-200"
-                  />
-                  <p className="font-medium text-black text-sm">{member.name}</p>
+                  <div className="w-full aspect-square bg-zinc-100 overflow-hidden relative">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="p-3 bg-white flex flex-col justify-center flex-1">
+                    <h4 className="font-semibold text-zinc-900 text-xs leading-snug group-hover:text-[#8a1d1d] transition-colors">
+                      {member.name}
+                    </h4>
+                  </div>
                 </motion.div>
               ))}
             </motion.div>
