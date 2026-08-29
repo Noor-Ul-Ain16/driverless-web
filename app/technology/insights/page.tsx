@@ -2,12 +2,27 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 export default function TechnologyInsightsPage() {
   const fadeInUp = {
     hidden: { opacity: 0, y: 16 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
   };
+
+  // Laptop layout is the reference. Above ~1440px we uniformly "zoom" the page
+  // so larger screens show the exact same view, just bigger. Mobile/laptop untouched.
+  const LAPTOP_WIDTH = 1440;
+  const [zoom, setZoom] = useState(1);
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth;
+      setZoom(w > LAPTOP_WIDTH ? Math.min(w / LAPTOP_WIDTH, 1.9) : 1);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
 
   const sections = [
     {
@@ -227,7 +242,10 @@ export default function TechnologyInsightsPage() {
       {/* SUBTLE VERY LIGHT GREY TECHNICAL GRID */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#cbd5e140_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e140_1px,transparent_1px)] bg-[size:3rem_3rem] pointer-events-none" />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div
+        className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+        style={{ zoom } as React.CSSProperties}
+      >
         {/* BACK LINK */}
         <div className="mb-8 mt-10">
           <Link
@@ -253,7 +271,7 @@ export default function TechnologyInsightsPage() {
 
         {/* HEADER HERO BANNER WITH CIRCUIT BOARD TRACES BACKGROUND */}
         <div className="relative mx-auto max-w-4xl mb-14 overflow-hidden rounded-3xl border border-slate-300 bg-white p-8 sm:p-12 shadow-xl text-center">
-          
+
           {/* Subtle Glow Background Gradient */}
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-rose-100/60 via-transparent to-transparent pointer-events-none" />
 

@@ -159,7 +159,7 @@ export default function Navbar() {
           href={item.href}
           target="_blank"
           rel="noreferrer"
-          className="block px-5 py-3 text-xs font-semibold uppercase tracking-[0.15em] text-white transition hover:bg-[#6e1717]"
+          className="block px-5 py-3 text-xs font-semibold uppercase tracking-[0.15em] !text-white transition hover:bg-[#6e1717]"
           onClick={onClick}
           role="menuitem"
         >
@@ -176,8 +176,8 @@ export default function Navbar() {
         href={item.href}
         className={`block px-5 py-3 text-xs font-semibold uppercase tracking-[0.15em] transition ${
           active
-            ? "bg-[#6e1717] font-bold text-white underline underline-offset-4"
-            : "text-white hover:bg-[#6e1717]"
+            ? "bg-[#6e1717] font-bold !text-white underline underline-offset-4"
+            : "!text-white hover:bg-[#6e1717]"
         }`}
         onClick={() => {
           if (item.href.includes("#")) {
@@ -206,23 +206,23 @@ export default function Navbar() {
           : "bg-white border-b border-zinc-200 shadow-sm"
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+      <div className="flex w-full items-center justify-between px-4 py-3 sm:px-6 lg:px-8 2xl:px-10 min-[1920px]:px-14">
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-2" aria-label="NCAI Autonomous home">
-          <span className={`text-xl font-black tracking-tight ${isTransparent ? "text-[#8a1d1d] drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" : "text-[#8a1d1d]"}`}>
+        <Link href="/" className="zoom-responsive flex items-center gap-2" aria-label="NCAI Autonomous home">
+          <span className={`text-lg sm:text-xl font-black tracking-tight ${isTransparent ? "text-[#8a1d1d] drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" : "text-[#8a1d1d]"}`}>
             NED
           </span>
           <span className={isTransparent ? "text-white/60" : "text-zinc-400"}>/</span>
-          <span className={`text-xs font-bold tracking-widest uppercase ${isTransparent ? "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" : "text-zinc-600"}`}>
+          <span className={`text-[10px] sm:text-xs font-bold tracking-widest uppercase ${isTransparent ? "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" : "text-zinc-600"}`}>
             AUTONOMOUS TECHNOLOGY
           </span>
         </Link>
 
-        {/* Mobile Menu Toggle */}
-        <div className="flex items-center gap-3">
+        {/* Desktop & Mobile Toggle Wrapper */}
+        <div className="zoom-responsive flex items-center gap-3">
           <button
             type="button"
-            className={`inline-flex items-center justify-center rounded-md border px-3 py-2 text-sm font-semibold transition md:hidden ${
+            className={`inline-flex items-center justify-center rounded-md border px-2.5 py-1.5 sm:px-3 sm:py-2 text-sm font-semibold transition md:hidden ${
               isTransparent
                 ? "border-white/30 bg-black/50 text-white backdrop-blur-md hover:bg-black/70"
                 : "border-zinc-300 bg-white text-zinc-800 hover:bg-zinc-100"
@@ -241,13 +241,12 @@ export default function Navbar() {
             </svg>
           </button>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Nav */}
           <div className="hidden md:flex md:items-center md:gap-7">
             {links.map((link) => {
               const active = isParentActive(link)
               const isOpen = activeDropdown === link.dropdown
 
-              // Active state tab hamesha maroon (#8a1d1d) aur bold rahega all the time
               const linkTextColor = active
                 ? "!text-[#8a1d1d] font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]"
                 : isTransparent
@@ -309,7 +308,7 @@ export default function Navbar() {
               )
             })}
 
-            {/* CTA Button */}
+            {/* Desktop CTA Button */}
             <Link
               href="/be-part-of-it/contact-join-our-team"
               className={
@@ -326,12 +325,26 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      <div className={`${mobileMenuOpen ? "block" : "hidden"} border-t border-zinc-200 bg-white text-zinc-900 md:hidden`}>
+      {/* Mobile Menu Dropdown */}
+      <div
+        className={`${
+          mobileMenuOpen ? "block" : "hidden"
+        } border-t md:hidden transition-all duration-300 ${
+          isTransparent
+            ? "bg-black/90 border-white/10 text-white backdrop-blur-md"
+            : "bg-white border-zinc-200 text-zinc-900 shadow-lg"
+        }`}
+      >
         <div className="space-y-1 px-4 py-4">
           {links.map((link) => {
             const active = isParentActive(link)
             const isOpen = activeDropdown === link.dropdown
+
+            const mobileLinkStyle = active
+              ? "!text-[#8a1d1d] font-bold bg-zinc-50/10"
+              : isTransparent
+              ? "text-white/90 font-semibold hover:bg-white/10 hover:text-white"
+              : "text-zinc-700 font-semibold hover:bg-zinc-100 hover:text-[#8a1d1d]"
 
             return (
               <div key={link.href}>
@@ -339,9 +352,7 @@ export default function Navbar() {
                   <div className="space-y-1">
                     <button
                       type="button"
-                      className={`flex w-full items-center justify-between rounded-md px-4 py-3 text-left text-xs uppercase tracking-[0.15em] transition ${
-                        active ? "text-[#8a1d1d] font-bold bg-zinc-50" : "text-zinc-700 font-semibold hover:bg-zinc-100 hover:text-[#8a1d1d]"
-                      }`}
+                      className={`flex w-full items-center justify-between rounded-md px-4 py-3 text-left text-xs uppercase tracking-[0.15em] transition ${mobileLinkStyle}`}
                       onClick={() => toggleDropdown(link.dropdown)}
                       aria-expanded={isOpen}
                     >
@@ -366,9 +377,7 @@ export default function Navbar() {
                 ) : (
                   <Link
                     href={link.href}
-                    className={`block rounded-md px-4 py-3 text-xs uppercase tracking-[0.15em] transition ${
-                      active ? "text-[#8a1d1d] font-bold bg-zinc-50" : "text-zinc-700 font-semibold hover:bg-zinc-100 hover:text-[#8a1d1d]"
-                    }`}
+                    className={`block rounded-md px-4 py-3 text-xs uppercase tracking-[0.15em] transition ${mobileLinkStyle}`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {link.label}
@@ -377,10 +386,11 @@ export default function Navbar() {
               </div>
             )
           })}
-          
+
+          {/* Fixed Mobile CTA Button: White background with outlined border and black text */}
           <Link
             href="/be-part-of-it/contact-join-our-team"
-            className="mt-2 block w-full text-center border border-zinc-900 bg-zinc-900 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-zinc-800"
+            className="mt-3 block w-full text-center border-2 border-white bg-white px-4 py-2.5 text-xs font-bold uppercase tracking-wider !text-black transition hover:bg-zinc-200 hover:border-zinc-200 shadow-sm"
             onClick={() => setMobileMenuOpen(false)}
           >
             Get In Touch

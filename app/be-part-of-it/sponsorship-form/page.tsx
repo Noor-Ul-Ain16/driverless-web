@@ -96,7 +96,7 @@ export default function SponsorshipPage() {
 
   return (
     <main className="min-h-screen w-full bg-zinc-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-4xl">
+      <div className="zoom-responsive mx-auto max-w-4xl">
         {/* Header Section */}
         <motion.div
           className="text-center mb-10"

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 interface GalleryItem {
@@ -13,6 +13,20 @@ interface GalleryItem {
 
 export default function GalleryPage() {
   const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null)
+
+  // Laptop layout is the reference. Above ~1440px we uniformly "zoom" the page
+  // so larger screens show the exact same view, just bigger. Mobile/laptop untouched.
+  const LAPTOP_WIDTH = 1440
+  const [zoom, setZoom] = useState(1)
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth
+      setZoom(w > LAPTOP_WIDTH ? Math.min(w / LAPTOP_WIDTH, 1.9) : 1)
+    }
+    update()
+    window.addEventListener('resize', update)
+    return () => window.removeEventListener('resize', update)
+  }, [])
 
   // Complete Driverless Car Project Gallery Data
   const galleryItems: GalleryItem[] = [
@@ -134,7 +148,7 @@ export default function GalleryPage() {
       >
         <div className="absolute inset-0 bg-black/60" />
 
-        <div className="relative z-10 mx-auto max-w-4xl">
+        <div className="relative z-10 mx-auto max-w-4xl" style={{ zoom } as React.CSSProperties}>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -154,7 +168,7 @@ export default function GalleryPage() {
       </section>
 
       {/* GALLERY CONTAINER */}
-      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 space-y-20">
+      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 space-y-20" style={{ zoom } as React.CSSProperties}>
 
         {/* 1. HIGHLIGHTED OVERLAPPING CARDS HERO SHOWCASE WITH COLLAGE BACKGROUND */}
         <section className="relative overflow-hidden rounded-3xl border border-slate-300/80 bg-slate-200/50 p-6 sm:p-10 shadow-inner">
@@ -187,7 +201,7 @@ export default function GalleryPage() {
             </div>
 
             <div className="relative flex items-center justify-center min-h-[380px] sm:min-h-[460px] max-w-5xl mx-auto px-4 overflow-visible">
-              
+
               {/* LEFT CARD */}
               <motion.div
                 initial={{ opacity: 0, x: -60 }}

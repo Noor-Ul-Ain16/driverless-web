@@ -130,13 +130,13 @@ export default function TechnologyPage() {
       {/* --- REGION 1: OVERVIEW SECTION --- */}
       <section
         id="overview"
-        className="relative z-10 scroll-mt-24 overflow-hidden py-14 md:py-20 bg-[#f1f5f9] text-slate-900 text-center"
+        className="relative z-10 scroll-mt-24 overflow-hidden flex flex-col items-center pt-28 pb-12 md:min-h-[100svh] md:justify-center md:pt-20 md:pb-20 bg-[#f1f5f9] text-slate-900 text-center"
       >
         {/* Dynamic Moving Grey Tiny Particles Overlay */}
         <ParticleBackground />
 
         {/* --- SECTION CONTENT --- */}
-        <div className="relative z-10 mx-auto max-w-4xl px-6 text-center scale-90 transform-gpu origin-center">
+        <div className="zoom-responsive relative z-10 w-full mx-auto max-w-4xl px-6 text-center sm:scale-90 min-[1441px]:scale-100 transform-gpu origin-center">
           <motion.div
             initial="hidden"
             animate="visible"
@@ -198,7 +198,7 @@ export default function TechnologyPage() {
       </section>
 
       {/* --- REGION 2: OUR SETUP SECTION (Background matched to Light Grey with Grey Particles) --- */}
-      <section className="relative w-full bg-[#f1f5f9] py-16 md:py-20 overflow-hidden">
+      <section className="relative w-full bg-[#f1f5f9] pt-6 pb-14 md:py-20 overflow-hidden">
         {/* Same floating grey particles background */}
         <ParticleBackground />
 
@@ -207,7 +207,7 @@ export default function TechnologyPage() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
           transition={{ staggerChildren: 0.15 }}
-          className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6"
+          className="zoom-responsive relative z-10 mx-auto max-w-6xl px-4 sm:px-6"
         >
           {/* Main GIF Container - GIF Image content is untouched */}
           <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-slate-300 bg-black shadow-2xl">
@@ -353,15 +353,15 @@ export default function TechnologyPage() {
       </section>
 
       {/* --- REGION 3: 3-COLUMN SENSOR VIDEO SYSTEM --- */}
-      <section className="mt-30 relative w-full bg-[#f1f5f9] pb-12">
+      <section className="mt-16 md:mt-30 relative w-full bg-[#f1f5f9] pb-12">
         <motion.div
           initial={{ opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="relative z-10 mx-auto max-w-5xl px-6 md:px-12">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          <div className="zoom-responsive relative z-10 mx-auto max-w-5xl px-6 md:px-12">
+            <div className="grid grid-cols-3 gap-2 sm:gap-6">
               {Object.values(sensors).map((sensor) => {
                 const isActive = activeTab === sensor.id;
                 return (
@@ -371,18 +371,18 @@ export default function TechnologyPage() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    className={`group relative flex flex-col justify-between overflow-hidden rounded-xl border p-6 text-left transition-all duration-300 shadow-lg ${
+                    className={`group relative flex flex-col justify-between overflow-hidden rounded-xl border p-2.5 sm:p-6 text-left transition-all duration-300 shadow-lg ${
                       isActive
                         ? "border-[#d32f2f] bg-white text-slate-900 ring-2 #8a1d1d"
                         : "border-slate-300 bg-slate-50 text-slate-700 hover:border-slate-400 hover:bg-white"
                     }`}
                   >
                     <div>
-                      <h3 className="text-xl font-bold tracking-tight">
+                      <h3 className="text-[11px] leading-tight sm:text-xl font-bold tracking-tight">
                         {sensor.title}
                       </h3>
                       <p
-                        className={`mt-1 text-xs font-medium ${
+                        className={`mt-1 hidden sm:block text-xs font-medium ${
                           isActive ? "text-[#8a1d1d]" : "text-slate-500"
                         }`}
                       >
@@ -390,10 +390,11 @@ export default function TechnologyPage() {
                       </p>
                     </div>
 
-                    <div className="mt-6 flex items-center gap-2 text-xs font-bold uppercase tracking-wider">
-                      <span>{isActive ? "Active Feed" : "Select Feed"}</span>
+                    <div className="mt-3 sm:mt-6 flex items-center gap-2 text-[9px] sm:text-xs font-bold uppercase tracking-wider">
+                      <span className="hidden sm:inline">{isActive ? "Active Feed" : "Select Feed"}</span>
+                      <span className="sm:hidden">{isActive ? "Active" : "Select"}</span>
                       <svg
-                        className={`h-4 w-4 transition-transform ${
+                        className={`h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0 transition-transform ${
                           isActive ? "translate-x-1 text-[#8a1d1d]" : "text-slate-400 group-hover:translate-x-1"
                         }`}
                         fill="none"
@@ -414,8 +415,8 @@ export default function TechnologyPage() {
             </div>
           </div>
 
-          <div className="relative w-full bg-[#8a1d1d] -mt-24 pt-32 pb-16">
-            <div className="mx-auto max-w-5xl px-6 md:px-12">
+          <div className="relative w-full bg-[#8a1d1d] mt-10 pt-12 pb-16 md:-mt-24 md:pt-32">
+            <div className="zoom-responsive mx-auto max-w-5xl px-6 md:px-12">
               <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 p-4 shadow-2xl md:p-6">
                 <AnimatePresence mode="wait">
                   <motion.div

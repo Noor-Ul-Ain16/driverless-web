@@ -92,13 +92,13 @@ export default function ContactPage() {
   return (
     <div className="overflow-hidden">
       {/* Page Header */}
-      <motion.div 
+      <motion.div
         className="px-6 bg-[#8a1d1d] pb-16 pt-20 text-center"
         initial="hidden"
         animate="visible"
         transition={{ staggerChildren: 0.15, duration: 0.5 }}
       >
-        <div className="mx-auto max-w-4xl">
+        <div className="zoom-responsive mx-auto max-w-4xl">
           
           <motion.h1 
             variants={fadeInUp}
@@ -119,7 +119,7 @@ export default function ContactPage() {
 
       {/* Main Content */}
       <main className="mx-auto px-6 py-16 md:px-12">
-        <div className="grid gap-12 lg:grid-cols-[0.7fr_1.1fr] lg:items-start max-w-6xl mx-auto">
+        <div className="zoom-responsive grid gap-12 lg:grid-cols-[0.7fr_1.1fr] lg:items-start max-w-6xl mx-auto">
           {/* Left Section - Info */}
           <motion.section 
             initial={{ opacity: 0, x: -40 }}
