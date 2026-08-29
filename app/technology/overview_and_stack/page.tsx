@@ -90,13 +90,13 @@ export default function TechnologyPage() {
       id: "cameras",
       title: "Vision & Cameras",
       subtitle: "Multi-View Deep Learning Computer Vision",
-      videoUrl: "",
+      videoUrl: "/Camera-Vision.mp4",
     },
     gps: {
       id: "gps",
       title: "GPS & IMU Localization",
       subtitle: "Sub-Centimeter Positioning & Odometry",
-      videoUrl: "",
+      videoUrl: "/GPS.mp4",
     },
   };
 
