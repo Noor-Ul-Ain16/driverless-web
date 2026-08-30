@@ -51,7 +51,7 @@ export default function TechnologySection() {
       initialWidth: '20%' 
     },
     { 
-      src: '/Live Perception.png', 
+      src: '/Live Perception.PNG',
       alt: 'Live perception', 
       initialWidth: '60%' 
     },
