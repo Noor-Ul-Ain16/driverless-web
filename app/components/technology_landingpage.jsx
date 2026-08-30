@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 
 export default function TechnologySection() {
   const pillars = [
@@ -37,9 +38,41 @@ export default function TechnologySection() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2, // Items ek ke baad ek animate honge
+        staggerChildren: 0.2,
       },
     },
+  }
+
+  // Limited to 3 images with distinct default widths (50%, 30%, 20%)
+  const mediaItems = [
+    { 
+      src: '/AV interior (Autonomous Vehicle Interior).png', 
+      alt: 'Autonomous vehicle interior', 
+      initialWidth: '20%' 
+    },
+    { 
+      src: '/Live Perception.png', 
+      alt: 'Live perception', 
+      initialWidth: '60%' 
+    },
+    { 
+      src: '/images/autonomous-car.gif', 
+      alt: 'GPS and Localization', 
+      initialWidth: '20%' 
+    },
+  ]
+
+  const [hoveredIndex, setHoveredIndex] = useState(null)
+
+  // Dynamic width calculation on hover
+  const getWidth = (idx) => {
+    if (hoveredIndex === null) {
+      return mediaItems[idx].initialWidth // Different default sizes before hover
+    }
+    if (hoveredIndex === idx) {
+      return '60%' // Active image expands to 60%
+    }
+    return '20%' // Inactive images contract to 20%
   }
 
   return (
@@ -118,36 +151,32 @@ export default function TechnologySection() {
           ))}
         </motion.div>
 
-        {/* Media Showcase Grid */}
-        <motion.div 
-          className="grid gap-6 md:grid-cols-4"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          {[
-            { src: '/AV interior (Autonomous Vehicle Interior).png', alt: 'Autonomous vehicle interior' },
-            { src: '/images/autonomous-research.gif', alt: 'AI control panel' },
-            { src: '/images/autonomous-car.gif', alt: 'GPS and Localization' },
-            { src: '/images/autonomous-car.gif', alt: 'Live perception visualization' },
-          ].map((media, idx) => (
-            <motion.div 
+        {/* 3 Joined Images Layout with Asymmetric Sizes & Hover Sliding */}
+        <div className="flex w-full overflow-hidden border border-zinc-200 bg-zinc-100 h-[300px]">
+          {mediaItems.map((media, idx) => (
+            <motion.div
               key={idx}
-              variants={fadeInUp}
-              transition={{ duration: 0.5 }}
-              className="relative min-h-[180px] overflow-hidden border border-zinc-200 bg-zinc-100"
+              className="relative h-full cursor-pointer overflow-hidden border-r border-zinc-200 last:border-r-0"
+              initial={{ width: media.initialWidth }}
+              animate={{ width: getWidth(idx) }}
+              transition={{
+                type: 'spring',
+                stiffness: 200,
+                damping: 24,
+              }}
+              onHoverStart={() => setHoveredIndex(idx)}
+              onHoverEnd={() => setHoveredIndex(null)}
             >
               <Image
                 src={media.src}
                 alt={media.alt}
                 fill
                 unoptimized
-                className="object-contain transition-transform duration-500 hover:scale-105"
+                className="object-cover"
               />
             </motion.div>
           ))}
-        </motion.div>
+        </div>
 
       </div>
     </section>
