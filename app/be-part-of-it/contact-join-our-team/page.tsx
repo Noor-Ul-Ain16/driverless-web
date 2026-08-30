@@ -118,15 +118,15 @@ export default function ContactPage() {
       </motion.div>
 
       {/* Main Content */}
-      <main className="mx-auto px-6 py-16 md:px-12">
-        <div className="zoom-responsive grid gap-12 lg:grid-cols-[0.7fr_1.1fr] lg:items-start max-w-6xl mx-auto">
+      <main className="zoom-responsive mx-auto max-w-6xl px-4 py-16 sm:px-6 md:px-12">
+        <div className="grid w-full gap-10 sm:gap-12 lg:grid-cols-[0.7fr_1.1fr] lg:items-start">
           {/* Left Section - Info */}
-          <motion.section 
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
+          <motion.section
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6 }}
-            className="space-y-8 rounded-[2rem] border border-gray-200 bg-zinc-50 p-8 shadow-sm"
+            className="w-full min-w-0 space-y-8 rounded-[2rem] border border-gray-200 bg-zinc-50 p-6 shadow-sm sm:p-8"
           >
             <div>
               <h2 className="text-3xl font-bold text-black">
@@ -150,7 +150,7 @@ export default function ContactPage() {
                 <p className="mb-2 text-xs font-bold uppercase text-[#8a1d1d]">
                   EMAIL
                 </p>
-                <p className="text-gray-700 text-sm">
+                <p className="text-gray-700 text-sm break-words">
                   smartcitylabncained@gmail.com.
                 </p>
               </motion.div>
@@ -216,11 +216,12 @@ export default function ContactPage() {
           </motion.section>
 
           {/* Right Section - Contact Form */}
-          <motion.section 
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
+          <motion.section
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6 }}
-            className="rounded-[2rem] border border-gray-200 bg-white p-8 shadow-sm sm:p-10"
+            className="w-full min-w-0 rounded-[2rem] border border-gray-200 bg-white p-6 shadow-sm sm:p-10"
           >
             <h2 className="text-3xl font-bold text-black">
               Send us a message

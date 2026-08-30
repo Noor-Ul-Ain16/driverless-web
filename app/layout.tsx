@@ -30,7 +30,7 @@ export default function RootLayout({
       lang="en"
       className={`${headingFont.variable} ${bodyFont.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-white text-zinc-900">
+      <body className="min-h-full flex flex-col overflow-x-hidden bg-white text-zinc-900">
         <Navbar />
         {children}
         <Footer />
