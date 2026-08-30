@@ -22,7 +22,7 @@ export default function WhoWeArePage() {
 
   return (
     <div className="w-full bg-white pt-28 pb-16 px-6 md:px-12 text-zinc-900 overflow-hidden">
-      <div className="max-w-6xl mx-auto">
+      <div className="zoom-responsive max-w-6xl mx-auto">
         
         {/* Page Header */}
         <motion.div 
@@ -110,9 +110,9 @@ export default function WhoWeArePage() {
             >
               {[
                 { name: "Ansharah Mobeen", role: "Team Lead", image: "/Ansharah_Mobeen.jpeg" },
-                { name: "Fatima Saud", role: "Project Manager, Computer Vision Engineer, Research Associate", image: "/Fatima_Saud.jpeg" },
+                { name: "Fatima Saud", role: "Project Manager, Computer Vision Engineer, Research Associate", image: "/Fatima_Saud1.jpeg" },
                 { name: "Hamid Raza", role: "Embedded Systems Engineer, Research Assistant", image: "/Hamid Raza.jpeg" },
-                { name: "Saleem", role: "Embedded Systems Engineer, Research Assistant", image: "/Saleem.jpg" }
+                { name: "Saleem", role: "Embedded Systems Engineer, Research Assistant", image: "/Saleem1.jpeg" }
               ].map((member) => (
                 <motion.div 
                   key={member.name} 
@@ -202,7 +202,7 @@ export default function WhoWeArePage() {
             >
               {[
                 { name: "Muhammad Hussnain Mansoor", image: "/hussnain.jpeg" },
-                { name: "Syed Hussain Sajjad", image: "/hussain.jpeg" },
+                { name: "Syed Hussain Sajjad", image: "/hussain1.jpeg" },
                 { name: "Muhammad Haris", image: "/haris.png" },
                 { name: "Hamdan", image: "/hamdan.jpeg" },
                 { name: "Mazna Noman Khan", image: "/mazna.jpeg" },
@@ -244,10 +244,10 @@ export default function WhoWeArePage() {
               {[
                 { name: "Sumbal Zehra", image: "/Sumbal_Zehra1.jpeg" },
                 { name: "Abdul Moiz", image: "/Abdul_Muiz.jpeg" },
-                { name: "Muhammad Areeb", image: "/Areeb_Sohail.jpeg" },
+                { name: "Muhammad Areeb", image: "/Areeb_Sohail1.jpeg" },
                 { name: "Muhammad Ubaid", image: "/Muhammad_Ubaid1.jpeg" },
-                { name: "Farhan Raza", image: "/Farhan_Raza.png" },
-                { name: "Shaheer Azmat Khan", image: "/Shaheer_Azmat_Khan.jpeg" }
+                { name: "Farhan Raza", image: "/Farhan_Raza1.jpeg" },
+                { name: "Shaheer Azmat Khan", image: "/Shaheer_Azmat_Khan1.jpeg" }
               ].map((member) => (
                 <motion.div 
                   key={member.name} 

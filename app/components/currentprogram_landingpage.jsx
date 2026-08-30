@@ -52,7 +52,7 @@ export default function AutonomyStats() {
 
   return (
     <section className="bg-white py-12 px-4 sm:px-6">
-      <div className="mx-auto max-w-6xl">
+      <div className="zoom-responsive mx-auto max-w-6xl">
         {/* Sub-header Animation */}
         <motion.div
           className="mb-4 text-center"
@@ -75,7 +75,7 @@ export default function AutonomyStats() {
           transition={{ duration: 0.6 }}
         >
           <motion.div
-            className="grid grid-cols-1 divide-y divide-zinc-200 bg-[#8a1d1d] px-6 py-6 md:grid-cols-3 md:divide-x md:divide-y-0 md:px-12"
+            className="grid grid-cols-3 divide-x divide-zinc-200 bg-[#8a1d1d] px-0 py-10 sm:px-6 sm:py-6 md:px-12"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -85,13 +85,13 @@ export default function AutonomyStats() {
             <motion.div
               variants={fadeInUp}
               transition={{ duration: 0.5 }}
-              className="px-6 py-5 text-center"
+              className="px-1 py-6 text-center sm:px-6 sm:py-5"
             >
-              <p className="text-4xl font-bold tracking-tight text-[#ffffff] md:text-5xl">
+              <p className="whitespace-nowrap text-sm font-bold leading-tight tracking-tight text-[#ffffff] sm:whitespace-normal sm:text-4xl md:text-5xl">
                 SAE Level <SinglePassCounter targetValue={2} steps={10} speed={50} />
               </p>
 
-              <p className="mt-10 text-lg font-semibold text-[#ffffff]">
+              <p className="mt-5 text-xs font-semibold leading-tight text-[#ffffff] sm:mt-10 sm:text-lg">
                 Autonomy Achieved
               </p>
             </motion.div>
@@ -100,13 +100,13 @@ export default function AutonomyStats() {
             <motion.div
               variants={fadeInUp}
               transition={{ duration: 0.5 }}
-              className="px-6 py-5 text-center"
+              className="px-1 py-6 text-center sm:px-6 sm:py-5"
             >
-              <p className="text-4xl font-bold tracking-tight text-[#ffffff] md:text-5xl">
+              <p className="whitespace-nowrap text-sm font-bold leading-tight tracking-tight text-[#ffffff] sm:whitespace-normal sm:text-4xl md:text-5xl">
                 Level <SinglePassCounter targetValue={3} steps={14} speed={50} />
               </p>
 
-              <p className="mt-10 text-lg font-semibold text-[#ffffff]">
+              <p className="mt-5 text-xs font-semibold leading-tight text-[#ffffff] sm:mt-10 sm:text-lg">
                 In Progress
               </p>
             </motion.div>
@@ -115,13 +115,13 @@ export default function AutonomyStats() {
             <motion.div
               variants={fadeInUp}
               transition={{ duration: 0.5 }}
-              className="px-6 py-5 text-center"
+              className="px-1 py-6 text-center sm:px-6 sm:py-5"
             >
-              <p className="text-4xl font-bold tracking-tight text-[#ffffff] md:text-5xl">
+              <p className="whitespace-nowrap text-sm font-bold leading-tight tracking-tight text-[#ffffff] sm:whitespace-normal sm:text-4xl md:text-5xl">
                 <SinglePassCounter targetValue={3} steps={18} speed={50} />
               </p>
 
-              <p className="mt-10 text-lg font-semibold text-[#ffffff]">
+              <p className="mt-5 text-xs font-semibold leading-tight text-[#ffffff] sm:mt-10 sm:text-lg">
                 Sensor Modalities Fused
               </p>
             </motion.div>

@@ -23,7 +23,7 @@ export default function NewsLink() {
 
   return (
     <section className="bg-white px-6 py-16 md:px-12 md:py-20 overflow-hidden">
-      <div className="mx-auto max-w-6xl">
+      <div className="zoom-responsive mx-auto max-w-6xl">
 
         {/* Top Centered Header */}
         <motion.div 
@@ -115,7 +115,7 @@ export default function NewsLink() {
 
       </div>
 
-      <div className="mx-auto max-w-6xl mt-12 md:mt-16">
+      <div className="zoom-responsive mx-auto max-w-6xl mt-12 md:mt-16">
 
         {/* Clickable Red Card Container with Scale/Fade-up Animation */}
         <motion.div

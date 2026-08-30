@@ -55,10 +55,10 @@ export default function TechnologySection() {
       alt: 'Live perception', 
       initialWidth: '60%' 
     },
-    { 
-      src: '/images/autonomous-car.gif', 
-      alt: 'GPS and Localization', 
-      initialWidth: '20%' 
+    {
+      src: '/GPS and Localization.jpeg',
+      alt: 'GPS and Localization',
+      initialWidth: '20%'
     },
   ]
 
@@ -77,7 +77,7 @@ export default function TechnologySection() {
 
   return (
     <section className="bg-white px-6 py-16 md:px-12 md:py-20 overflow-hidden">
-      <div className="mx-auto max-w-6xl space-y-16">
+      <div className="zoom-responsive mx-auto max-w-6xl space-y-16">
 
         {/* Top Header Section */}
         <motion.div 
@@ -166,6 +166,7 @@ export default function TechnologySection() {
               }}
               onHoverStart={() => setHoveredIndex(idx)}
               onHoverEnd={() => setHoveredIndex(null)}
+              onClick={() => setHoveredIndex((prev) => (prev === idx ? null : idx))}
             >
               <Image
                 src={media.src}

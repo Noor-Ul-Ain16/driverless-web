@@ -57,7 +57,7 @@ export default function Home() {
           </div>
 
           {/* Foreground Text Overlay */}
-          <div className="relative z-10 p-8 sm:p-12 lg:p-16 max-w-2xl">
+          <div className="zoom-responsive relative z-10 p-8 sm:p-12 lg:p-16 max-w-2xl">
             <motion.div
               className="flex flex-col items-start text-left gap-5 text-white"
               initial="hidden"
@@ -91,25 +91,25 @@ export default function Home() {
 
               <motion.div
                 variants={fadeInUp}
-                className="mt-2 flex flex-wrap items-center gap-2.5 sm:flex-row"
+                className="mt-2 flex w-full flex-row flex-nowrap items-stretch gap-2 sm:w-auto sm:flex-wrap sm:items-center sm:gap-2.5"
               >
                 <Link
                   href="/about/meet-the-team"
-                  className="inline-flex min-w-[120px] items-center justify-center border border-[#8a1d1d] bg-[#8a1d1d] px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition-all duration-200 hover:bg-red-700"
+                  className="inline-flex flex-1 items-center justify-center border border-[#8a1d1d] bg-[#8a1d1d] px-1.5 py-2 text-center text-xs font-bold uppercase leading-tight tracking-normal text-white sm:tracking-wider transition-all duration-200 hover:bg-red-700 sm:flex-initial sm:min-w-[120px] sm:px-4 sm:py-2.5 sm:text-xs"
                 >
                   Discover More
                 </Link>
 
                 <Link
                   href="/be-part-of-it/contact-join-our-team"
-                  className="inline-flex min-w-[120px] items-center justify-center border border-white/30 bg-black/40 backdrop-blur-md px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition-all duration-200 hover:bg-black"
+                  className="inline-flex flex-1 items-center justify-center border border-white/30 bg-black/40 px-1.5 py-2 text-center text-xs font-bold uppercase leading-tight tracking-normal text-white sm:tracking-wider backdrop-blur-md transition-all duration-200 hover:bg-black sm:flex-initial sm:min-w-[120px] sm:px-4 sm:py-2.5 sm:text-xs"
                 >
                   Let's Work Together
                 </Link>
 
                 <Link
                   href="/be-part-of-it/sponsorship-form"
-                  className="inline-flex min-w-[120px] items-center justify-center border border-white/30 bg-black/40 backdrop-blur-md px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition-all duration-200 hover:bg-black"
+                  className="inline-flex flex-1 items-center justify-center border border-white/30 bg-black/40 px-1.5 py-2 text-center text-xs font-bold uppercase leading-tight tracking-normal text-white sm:tracking-wider backdrop-blur-md transition-all duration-200 hover:bg-black sm:flex-initial sm:min-w-[120px] sm:px-4 sm:py-2.5 sm:text-xs"
                 >
                   Become a Sponsor
                 </Link>

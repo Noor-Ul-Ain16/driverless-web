@@ -282,7 +282,7 @@ export default function NewsroomPage() {
         animate="visible"
         variants={fadeInUp}
       >
-        <div className="mx-auto max-w-4xl">
+        <div className="zoom-responsive mx-auto max-w-4xl">
           <motion.h1
             className="mt-6 text-3xl font-black uppercase tracking-tight text-black sm:text-5xl"
             variants={fadeInUp}
@@ -299,7 +299,7 @@ export default function NewsroomPage() {
         </div>
       </motion.div>
 
-      <main className="mx-auto max-w-6xl px-6 pb-20 md:px-12">
+      <main className="zoom-responsive mx-auto max-w-6xl px-6 pb-20 md:px-12">
         {/* Social Media Section */}
         <motion.section
           className="mb-16 rounded-2xl border border-zinc-200 bg-[#8a1d1d] p-6 md:p-8 text-center"
