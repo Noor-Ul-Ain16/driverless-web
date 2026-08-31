@@ -132,11 +132,11 @@ export default function TechnologyInsightsPage() {
     },
     {
       tag: "Visual Sensors & Processing",
-      title: "Cameras, Visual Data Processing & ROS Scenarios",
+      title: "Cameras, Visual Data Processing & ROS2 Scenarios",
       description:
-        "Computer vision pipelines identify objects, lanes, and signals, driving automated ROS state publishing and depth-based braking scenarios for obstacle avoidance.",
+        "Computer vision pipelines identify objects, lanes, and signals, driving automated ROS2 state publishing and depth-based braking scenarios for obstacle avoidance.",
       images: [
-        "/visual data processing (object and lane detection) image1.PNG",
+        "/object_detection_image.PNG",
         "/visual data processing (object detection_or_avoidance) image2.PNG",
       ],
       subsections: [
@@ -190,9 +190,9 @@ export default function TechnologyInsightsPage() {
       description:
         "Deployment of cutting-edge solid-state LiDAR sensors, AI integration, CARLA MPC control, and real-world campus testing on electric vehicles.",
       images: [
+        "/simulation-image2.PNG",
         "/simulation_image1.PNG",
         "/simulation-image3.PNG",
-        "/simulation-image2.PNG",
       ],
       subsections: [
         {
@@ -338,7 +338,7 @@ export default function TechnologyInsightsPage() {
             </motion.span>
             <motion.h1
               variants={fadeInUp}
-              className="mt-5 text-3xl sm:text-4xl md:text-[2.75rem] font-black tracking-tight text-slate-900 leading-[1.1]"
+              className="mt-5 text-3xl sm:text-4xl md:text-[2.75rem] font-black tracking-tight text-slate-900 leading-snug sm:leading-[1.5]"
             >
               Technology Insights & System Deep Dive
             </motion.h1>
