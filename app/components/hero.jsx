@@ -94,7 +94,7 @@ export default function Home() {
                 className="mt-2 flex w-full flex-row flex-nowrap items-stretch gap-2 sm:w-auto sm:flex-wrap sm:items-center sm:gap-2.5"
               >
                 <Link
-                  href="/about/meet-the-team"
+                  href="/technology/overview_and_stack"
                   className="inline-flex flex-1 items-center justify-center border border-[#8a1d1d] bg-[#8a1d1d] px-1.5 py-2 text-center text-xs font-bold uppercase leading-tight tracking-normal text-white sm:tracking-wider transition-all duration-200 hover:bg-red-700 sm:flex-initial sm:min-w-[120px] sm:px-4 sm:py-2.5 sm:text-xs"
                 >
                   Discover More

@@ -360,10 +360,10 @@ export default function GalleryPage() {
         <section className="space-y-6">
           <div className="border-b border-slate-300 pb-4">
             <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-              Complete Project Media Archive
+              Work Behind the Drive
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 font-medium">
-              Comprehensive collection of design, perception modeling, SLAM mapping & simulations
+              A closer look at experiments, the breakthroughs, and everything in between
             </p>
           </div>
 

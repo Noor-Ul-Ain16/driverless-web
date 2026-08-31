@@ -27,23 +27,25 @@ export default function NewsroomPage() {
   }, [])
 
   // Helper function to convert YouTube / Shorts / Facebook links into Embed URLs
-  const getEmbedUrl = (url: string) => {
+  const getEmbedUrl = (url: string, muted = false) => {
     if (!url) return ''
+
+    const muteParam = muted ? '&mute=1' : ''
 
     // 1. YouTube Shorts check
     if (url.includes('youtube.com/shorts/')) {
       const videoId = url.split('youtube.com/shorts/')[1]?.split('?')[0]
-      return `https://www.youtube.com/embed/${videoId}?autoplay=1`
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1${muteParam}&playsinline=1`
     }
     // 2. YouTube standard links check
     if (url.includes('youtu.be/')) {
       const videoId = url.split('youtu.be/')[1]?.split('?')[0]
-      return `https://www.youtube.com/embed/${videoId}?autoplay=1`
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1${muteParam}&playsinline=1`
     }
     if (url.includes('youtube.com/watch')) {
       const urlParams = new URLSearchParams(url.split('?')[1])
       const videoId = urlParams.get('v')
-      return `https://www.youtube.com/embed/${videoId}?autoplay=1`
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1${muteParam}&playsinline=1`
     }
     // 3. Facebook Video Embed
     if (url.includes('facebook.com')) {
@@ -53,6 +55,10 @@ export default function NewsroomPage() {
     // Default return original URL for direct web embeds
     return url
   }
+
+  // Only YouTube / Facebook links can be embedded & autoplayed inline
+  const isInlinePlayable = (url: string) =>
+    !!url && (url.includes('youtu') || url.includes('facebook.com'))
 
   const sampleVideos = [
     {
@@ -161,8 +167,14 @@ export default function NewsroomPage() {
     },
   ]
 
-  const featuredVideos = sampleVideos.slice(0, 3)
-  const remainingVideos = sampleVideos.slice(3)
+  // Featured carousel: pick specific YouTube uploads whose owners allow embedding
+  // (Express News clips have embedding disabled, so they can't autoplay inline)
+  const featuredTitles = ['TOK (times of karachi)', '92 news', 'Aaj news']
+  const featuredVideos = featuredTitles
+    .map((t) => sampleVideos.find((v) => v.title === t))
+    .filter((v): v is (typeof sampleVideos)[number] => Boolean(v))
+  const featuredSet = new Set(featuredVideos)
+  const remainingVideos = sampleVideos.filter((v) => !featuredSet.has(v))
 
   const handleNext = () => {
     setActiveIndex((prev) => (prev + 1) % featuredVideos.length)
@@ -380,7 +392,7 @@ export default function NewsroomPage() {
           </div>
 
           {/* Carousel Stack Container - Increased Height */}
-          <div className="relative flex min-h-[420px] sm:min-h-[480px] w-full items-center justify-center overflow-hidden py-6">
+          <div className="relative flex min-h-[400px] sm:min-h-[560px] w-full items-center justify-center overflow-hidden py-6">
             {featuredVideos.map((video, idx) => {
               const total = featuredVideos.length
               let position = (idx - activeIndex + total) % total
@@ -441,38 +453,40 @@ export default function NewsroomPage() {
                         : 'border-zinc-300 shadow-lg hover:border-[#8a1d1d]'
                     }`}
                   >
-                    {/* Increased Thumbnail Height */}
-                    <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-zinc-900">
-                      <img
-                        src={video.thumbnail || '/placeholder.jpg'}
-                        alt={video.title || 'Video Thumbnail'}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
+                    {/* Video Frame / Thumbnail */}
+                    <div className="relative h-72 sm:h-[420px] w-full overflow-hidden bg-zinc-900">
+                      {position === 0 && isInlinePlayable(video.url) ? (
+                        <iframe
+                          src={getEmbedUrl(video.url, true)}
+                          title={video.title || 'Video'}
+                          className="h-full w-full border-0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowFullScreen
+                        ></iframe>
+                      ) : (
+                        <>
+                          <img
+                            src={video.thumbnail || '/placeholder.jpg'}
+                            alt={video.title || 'Video Thumbnail'}
+                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
 
-                      {/* Play Button Overlay */}
-                      <div className="absolute inset-0 bg-black/30 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-center justify-center">
-                        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#8a1d1d] text-white shadow-xl">
-                          <svg
-                            className="h-7 w-7 fill-current ml-1"
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M8 5v14l11-7z" />
-                          </svg>
-                        </div>
-                      </div>
+                          {/* Play Button Overlay */}
+                          <div className="absolute inset-0 bg-black/30 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-center justify-center">
+                            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#8a1d1d] text-white shadow-xl">
+                              <svg className="h-7 w-7 fill-current ml-1" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                              </svg>
+                            </div>
+                          </div>
 
-                      {video.duration && (
-                        <span className="absolute bottom-3 right-3 rounded-md bg-black/80 px-2.5 py-1 text-xs font-bold text-white">
-                          {video.duration}
-                        </span>
+                          {video.duration && (
+                            <span className="absolute bottom-3 right-3 rounded-md bg-black/80 px-2.5 py-1 text-xs font-bold text-white">
+                              {video.duration}
+                            </span>
+                          )}
+                        </>
                       )}
-                    </div>
-
-                    {/* Video Title Block */}
-                    <div className="flex flex-1 flex-col justify-between bg-white p-5">
-                      <h3 className="text-base sm:text-lg font-bold text-black group-hover:text-[#8a1d1d] transition-colors line-clamp-2">
-                        {video.title}
-                      </h3>
                     </div>
                   </div>
                 </motion.div>
@@ -508,7 +522,7 @@ export default function NewsroomPage() {
               Media Archive
             </p>
             <h2 className="text-xl font-black uppercase tracking-tight text-black sm:text-2xl">
-              More Coverage & Videos
+              Media Archive
             </h2>
           </div>
 

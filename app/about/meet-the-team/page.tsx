@@ -74,7 +74,7 @@ export default function WhoWeArePage() {
             </div>
 
             <div className="space-y-3 text-gray-700">
-              <h3 className="text-2xl font-bold text-black">Prof. Dr. Muhammad Khurram</h3>
+              <h3 className="relative top-3.5 text-2xl font-bold text-black">Prof. Dr. Muhammad Khurram</h3>
               
               <h2 className="mt-10 text-xl font-bold text-[#8a1d1d]">Professor and Co-Chairman</h2>
 
@@ -112,7 +112,7 @@ export default function WhoWeArePage() {
                 { name: "Ansharah Mobeen", role: "Team Lead", image: "/Ansharah_Mobeen.jpeg" },
                 { name: "Fatima Saud", role: "Project Manager, Computer Vision Engineer, Research Associate", image: "/Fatima_Saud1.jpeg" },
                 { name: "Hamid Raza", role: "Embedded Systems Engineer, Research Assistant", image: "/Hamid Raza.jpeg" },
-                { name: "Saleem", role: "Embedded Systems Engineer, Research Assistant", image: "/Saleem1.jpeg" }
+                { name: "Saleem", role: "Embedded Systems Engineer, Research Assistant", image: "/saleem.png" }
               ].map((member) => (
                 <motion.div 
                   key={member.name} 
