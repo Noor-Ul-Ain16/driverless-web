@@ -19,7 +19,7 @@ const CursorGlow = () => {
 
   return (
     <div
-      className="pointer-events-none fixed inset-0 z-50 transition-opacity duration-300"
+      className="pointer-events-none fixed inset-0 z-50 transition-opacity duration-300 hidden md:block"
       style={{
         background: `radial-gradient(200px circle at ${cursorPosition.x}px ${cursorPosition.y}px,
          #c2bebe, transparent 20%)`,
@@ -225,7 +225,7 @@ export default function TechnologyPage() {
                     src="/av_website.gif"
                     alt="Autonomous Vehicle Setup"
                     fill
-                    className="object-conatin"
+                    className="object-fill sm:object-cover"
                     priority
                   />
 
@@ -283,7 +283,7 @@ export default function TechnologyPage() {
                     src="/high_perf.gif"
                     alt="High Performance Circuitry"
                     fill
-                    className="object-cover"
+                    className="object-fill sm:object-cover"
                     unoptimized
                   />
 
@@ -309,7 +309,7 @@ export default function TechnologyPage() {
                     src="/high_performance_system2.gif"
                     alt="High Performance System"
                     fill
-                    className="object-cover"
+                    className="object-fill sm:object-cover"
                     unoptimized
                   />
 
@@ -335,7 +335,7 @@ export default function TechnologyPage() {
                     src="/lidar.gif"
                     alt="LiDAR Roof Sensors"
                     fill
-                    className="object-cover"
+                    className="object-fill sm:object-cover"
                     unoptimized
                   />
 
