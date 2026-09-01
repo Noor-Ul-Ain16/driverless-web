@@ -23,7 +23,7 @@ export default function PublicationsPage() {
   return (
     <main
       id="publications"
-      className="mx-auto max-w-4xl 2xl:max-w-6xl min-[1920px]:max-w-[95rem] min-[2560px]:max-w-[125rem] px-4 sm:px-6 2xl:px-12 min-[1920px]:px-16 pt-24 sm:pt-28 2xl:pt-36 pb-16 2xl:pb-28 text-zinc-900 overflow-hidden"
+      className="mx-auto max-w-6xl 2xl:max-w-7xl min-[1920px]:max-w-[110rem] min-[2560px]:max-w-[140rem] px-4 sm:px-6 2xl:px-12 min-[1920px]:px-16 pt-24 sm:pt-28 2xl:pt-36 pb-16 2xl:pb-28 text-zinc-900 overflow-hidden"
     >
       {/* Page Title */}
       <motion.h1
@@ -60,7 +60,7 @@ export default function PublicationsPage() {
             transition={{ duration: 0.4 }}
             className="p-3 sm:p-6 2xl:p-10 min-[1920px]:p-12 rounded-sm flex flex-row gap-3 sm:gap-6 2xl:gap-12 min-[1920px]:gap-16 items-start transition-all duration-300"
           >
-            <div className="w-24 sm:w-40 2xl:w-72 min-[1920px]:w-96 min-[2560px]:w-[28rem] h-20 sm:h-28 2xl:h-48 min-[1920px]:h-60 min-[2560px]:h-72 relative flex-shrink-0 bg-zinc-200 rounded overflow-hidden">
+            <div className="w-28 sm:w-52 2xl:w-80 min-[1920px]:w-[26rem] min-[2560px]:w-[32rem] h-24 sm:h-36 2xl:h-56 min-[1920px]:h-72 min-[2560px]:h-80 relative flex-shrink-0 bg-zinc-200 rounded overflow-hidden">
               <Image 
                 src="/1_Advancing Road Safety.png" 
                 alt="Advancing Road Safety publication thumbnail" 
@@ -92,7 +92,7 @@ export default function PublicationsPage() {
             transition={{ duration: 0.4 }}
             className="p-3 sm:p-6 2xl:p-10 min-[1920px]:p-12 rounded-sm flex flex-row gap-3 sm:gap-6 2xl:gap-12 min-[1920px]:gap-16 items-start transition-all duration-300"
           >
-            <div className="w-24 sm:w-40 2xl:w-72 min-[1920px]:w-96 min-[2560px]:w-[28rem] h-20 sm:h-28 2xl:h-48 min-[1920px]:h-60 min-[2560px]:h-72 relative flex-shrink-0 bg-zinc-200 rounded overflow-hidden">
+            <div className="w-28 sm:w-52 2xl:w-80 min-[1920px]:w-[26rem] min-[2560px]:w-[32rem] h-24 sm:h-36 2xl:h-56 min-[1920px]:h-72 min-[2560px]:h-80 relative flex-shrink-0 bg-zinc-200 rounded overflow-hidden">
               <Image 
                 src="/2_Lightweight Convolutional Neural Network.png" 
                 alt="Predict Steering Angle publication thumbnail" 
@@ -146,7 +146,7 @@ export default function PublicationsPage() {
             transition={{ duration: 0.4 }}
             className="p-3 sm:p-6 2xl:p-10 min-[1920px]:p-12 rounded-sm flex flex-row gap-3 sm:gap-6 2xl:gap-12 min-[1920px]:gap-16 items-start transition-all duration-300"
           >
-            <div className="w-24 sm:w-40 2xl:w-72 min-[1920px]:w-96 min-[2560px]:w-[28rem] h-20 sm:h-28 2xl:h-48 min-[1920px]:h-60 min-[2560px]:h-72 relative flex-shrink-0 bg-zinc-200 rounded overflow-hidden">
+            <div className="w-28 sm:w-52 2xl:w-80 min-[1920px]:w-[26rem] min-[2560px]:w-[32rem] h-24 sm:h-36 2xl:h-56 min-[1920px]:h-72 min-[2560px]:h-80 relative flex-shrink-0 bg-zinc-200 rounded overflow-hidden">
               <Image 
                 src="/high-definition maps.png"
                 alt="Autonomous vehicle navigation publication thumbnail" 
@@ -179,7 +179,7 @@ export default function PublicationsPage() {
             transition={{ duration: 0.4 }}
             className="p-3 sm:p-6 2xl:p-10 min-[1920px]:p-12 rounded-sm flex flex-row gap-3 sm:gap-6 2xl:gap-12 min-[1920px]:gap-16 items-start transition-all duration-300"
           >
-            <div className="w-24 sm:w-40 2xl:w-72 min-[1920px]:w-96 min-[2560px]:w-[28rem] h-20 sm:h-28 2xl:h-48 min-[1920px]:h-60 min-[2560px]:h-72 relative flex-shrink-0 bg-zinc-200 rounded overflow-hidden">
+            <div className="w-28 sm:w-52 2xl:w-80 min-[1920px]:w-[26rem] min-[2560px]:w-[32rem] h-24 sm:h-36 2xl:h-56 min-[1920px]:h-72 min-[2560px]:h-80 relative flex-shrink-0 bg-zinc-200 rounded overflow-hidden">
               <Image 
                 src="/An Integrated Vision-Based Automated Detection.png"
                 alt="Out-Cabin ADAS publication thumbnail" 
