@@ -207,10 +207,10 @@ export default function TechnologyPage() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
           transition={{ staggerChildren: 0.15 }}
-          className="zoom-responsive relative z-10 mx-auto max-w-6xl px-4 sm:px-6"
+          className="zoom-responsive relative z-10 mx-auto max-w-6xl px-0 sm:px-6"
         >
           {/* Main GIF Container - GIF Image content is untouched */}
-          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-slate-300 bg-black shadow-2xl">
+          <div className="relative aspect-[4/3] sm:aspect-[16/9] w-full overflow-hidden rounded-none border-x-0 border-y sm:rounded-2xl sm:border border-slate-300 bg-black shadow-2xl">
             <AnimatePresence mode="wait">
               {activeMedia === "default" && (
                 <motion.div
@@ -415,9 +415,9 @@ export default function TechnologyPage() {
             </div>
           </div>
 
-          <div className="relative w-full bg-[#8a1d1d] mt-10 pt-12 pb-16 md:-mt-24 md:pt-32">
-            <div className="zoom-responsive mx-auto max-w-5xl px-6 md:px-12">
-              <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 p-4 shadow-2xl md:p-6">
+          <div className="relative w-full bg-[#8a1d1d] -mt-10 pt-20 pb-16 md:-mt-24 md:pt-32">
+            <div className="zoom-responsive mx-auto max-w-5xl px-0 md:px-12">
+              <div className="overflow-hidden rounded-none border-x-0 border-y sm:rounded-2xl sm:border border-zinc-800 bg-zinc-950 p-2 sm:p-4 shadow-2xl md:p-6">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeSensor.id}
