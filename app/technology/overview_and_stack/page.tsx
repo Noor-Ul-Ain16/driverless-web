@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 
 // Custom Cursor Glow Component
 const CursorGlow = () => {
@@ -209,7 +208,7 @@ export default function TechnologyPage() {
           transition={{ staggerChildren: 0.15 }}
           className="zoom-responsive relative z-10 mx-auto max-w-6xl px-0 sm:px-6"
         >
-          {/* Main GIF Container - GIF Image content is untouched */}
+          {/* Main media container - looping muted video clips */}
           <div className="relative aspect-[4/3] sm:aspect-[16/9] w-full overflow-hidden rounded-none border-x-0 border-y sm:rounded-2xl sm:border border-slate-300 bg-black shadow-2xl">
             <AnimatePresence mode="wait">
               {activeMedia === "default" && (
@@ -221,12 +220,14 @@ export default function TechnologyPage() {
                   transition={{ duration: 0.3 }}
                   className="relative h-full w-full"
                 >
-                  <Image
-                    src="/av_website.gif"
-                    alt="Autonomous Vehicle Setup"
-                    fill
-                    className="object-fill sm:object-cover"
-                    priority
+                  <video
+                    src="/av_website.mp4"
+                    aria-label="Autonomous Vehicle Setup"
+                    autoPlay
+                    muted
+                    playsInline
+                    preload="metadata"
+                    className="absolute inset-0 h-full w-full object-fill sm:object-cover"
                   />
 
                   {/* Hotspot 1: High Performance Circuitry */}
@@ -279,12 +280,14 @@ export default function TechnologyPage() {
                   transition={{ duration: 0.3 }}
                   className="relative h-full w-full"
                 >
-                  <Image
-                    src="/high_perf.gif"
-                    alt="High Performance Circuitry"
-                    fill
-                    className="object-fill sm:object-cover"
-                    unoptimized
+                  <video
+                    src="/high_perf.mp4"
+                    aria-label="High Performance Circuitry"
+                    autoPlay
+                    muted
+                    playsInline
+                    preload="metadata"
+                    className="absolute inset-0 h-full w-full object-fill sm:object-cover"
                   />
 
                   <button
@@ -305,12 +308,14 @@ export default function TechnologyPage() {
                   transition={{ duration: 0.3 }}
                   className="relative h-full w-full"
                 >
-                  <Image
-                    src="/high_performance_system2.gif"
-                    alt="High Performance System"
-                    fill
-                    className="object-fill sm:object-cover"
-                    unoptimized
+                  <video
+                    src="/high_performance_system2.mp4"
+                    aria-label="High Performance System"
+                    autoPlay
+                    muted
+                    playsInline
+                    preload="metadata"
+                    className="absolute inset-0 h-full w-full object-fill sm:object-cover"
                   />
 
                   <button
@@ -331,12 +336,14 @@ export default function TechnologyPage() {
                   transition={{ duration: 0.3 }}
                   className="relative h-full w-full"
                 >
-                  <Image
-                    src="/lidar.gif"
-                    alt="LiDAR Roof Sensors"
-                    fill
-                    className="object-fill sm:object-cover"
-                    unoptimized
+                  <video
+                    src="/lidar.mp4"
+                    aria-label="LiDAR Roof Sensors"
+                    autoPlay
+                    muted
+                    playsInline
+                    preload="metadata"
+                    className="absolute inset-0 h-full w-full object-fill sm:object-cover"
                   />
 
                   <button
