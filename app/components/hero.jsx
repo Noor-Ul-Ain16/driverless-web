@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 15 },
@@ -25,8 +24,6 @@ const containerVariants = {
 };
 
 export default function Home() {
-  const [showVideo] = useState(true);
-
   return (
     <main className="w-full bg-white overflow-hidden">
       {/* Min-h-screen hero section */}
@@ -35,23 +32,16 @@ export default function Home() {
 
           {/* Background Video starting at top screen boundary */}
           <div className="absolute inset-0 z-0 bg-black">
-            <AnimatePresence mode="wait">
-              {showVideo ? (
-                <motion.video
-                  key="video"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.6 }}
-                  src="/av-website-hero-video.mp4"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-full object-cover absolute inset-0"
-                />
-              ) : null}
-            </AnimatePresence>
+            <video
+              src="\av-website-hero-video.mp4"
+              poster="/hero-poster.png"
+              preload="none"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 h-full w-full object-cover"
+            />
 
             <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/30 pointer-events-none" />
           </div>

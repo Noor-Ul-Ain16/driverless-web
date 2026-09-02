@@ -65,7 +65,7 @@ export default function NewsroomPage() {
       title: 'DW news',
       duration: '03:05',
       thumbnail: '/dw news thumbnail.png',
-      url: 'https://www.dw.com/en/pakistan-inside-an-ai-powered-driverless-car/video-75475114',
+      url: 'https://www.facebook.com/share/v/18wxskjkSm/',
     },
     {
       title: 'Morning Asia',

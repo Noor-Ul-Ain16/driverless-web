@@ -1,25 +1,26 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { contactSchema, sanitizeHeader } from "../../lib/validation";
 
 export async function POST(request: Request) {
+  let raw: unknown;
   try {
-    const body = await request.json();
+    raw = await request.json();
+  } catch {
+    return NextResponse.json({ message: "Invalid request body." }, { status: 400 });
+  }
 
-    const {
-      firstName,
-      lastName,
-      email,
-      phone,
-      message,
-    } = body;
+  const parsed = contactSchema.safeParse(raw);
+  if (!parsed.success) {
+    return NextResponse.json(
+      { message: "Please fill in all required fields with valid values." },
+      { status: 400 }
+    );
+  }
 
-    if (!firstName || !lastName || !email || !message) {
-      return NextResponse.json(
-        { message: "Please fill in all required fields." },
-        { status: 400 }
-      );
-    }
+  const { firstName, lastName, email, phone, message } = parsed.data;
 
+  try {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -32,9 +33,10 @@ export async function POST(request: Request) {
       from: process.env.EMAIL_USER,
       to: process.env.OWNER_EMAIL,
       replyTo: email,
-      subject: `New Contact Form Submission from ${firstName} ${lastName}`,
-      text: `
-New Contact Form Submission
+      // Strip CR/LF so the name cannot inject extra email headers.
+      subject: sanitizeHeader(`New Contact Form Submission from ${firstName} ${lastName}`),
+      // Plain-text body: no HTML parsing, so no markup injection risk.
+      text: `New Contact Form Submission
 
 Name: ${firstName} ${lastName}
 Email: ${email}
@@ -42,7 +44,7 @@ Phone: ${phone || "Not provided"}
 
 Message:
 ${message}
-      `,
+`,
     });
 
     return NextResponse.json(
