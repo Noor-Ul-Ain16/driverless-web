@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo, useRef, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Custom Cursor Glow Component
-const CursorGlow = () => {
+const CursorGlow = memo(function CursorGlow() {
   const glowRef = useRef<HTMLDivElement>(null);
   const pointer = useRef({ x: -100, y: -100 });
   const rafId = useRef<number | null>(null);
@@ -47,12 +47,12 @@ const CursorGlow = () => {
       } as React.CSSProperties}
     />
   );
-};
+});
 
 // Visible Grey Floating Particles Component
 const PARTICLE_COUNT = 99;
 
-const ParticleBackground = () => {
+const ParticleBackground = memo(function ParticleBackground() {
   // All Math.random() runs once on mount and is memoised, so random values are
   // never recomputed on re-render.
   const particles = useMemo(
@@ -83,11 +83,7 @@ const ParticleBackground = () => {
             height: `${p.size}px`,
             backgroundColor: p.color,
             boxShadow: `0 0 6px ${p.color}80`,
-            willChange: "transform, opacity",
           }}
-          // Force a GPU-composited layer: prepend translate3d to the transform
-          // framer-motion generates for the x/y animation below.
-          transformTemplate={(_, generated) => `translate3d(0, 0, 0) ${generated}`}
           animate={{
             y: [0, p.yTo, 0],
             x: [0, p.xTo, 0],
@@ -103,7 +99,7 @@ const ParticleBackground = () => {
       ))}
     </div>
   );
-};
+});
 
 // Sensor tab that is active on first render; its video may buffer eagerly,
 // every other sensor video stays at preload="none" until the user selects it.
