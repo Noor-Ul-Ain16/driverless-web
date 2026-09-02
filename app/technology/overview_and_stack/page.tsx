@@ -1,79 +1,116 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Custom Cursor Glow Component
 const CursorGlow = () => {
-  const [cursorPosition, setCursorPosition] = useState({ x: -100, y: -100 });
+  const glowRef = useRef<HTMLDivElement>(null);
+  const pointer = useRef({ x: -100, y: -100 });
+  const rafId = useRef<number | null>(null);
 
   useEffect(() => {
+    // Write the pointer position straight to CSS custom properties via rAF.
+    // No React state -> no re-render on mouse movement.
+    const flush = () => {
+      rafId.current = null;
+      const el = glowRef.current;
+      if (!el) return;
+      el.style.setProperty("--mouse-x", `${pointer.current.x}px`);
+      el.style.setProperty("--mouse-y", `${pointer.current.y}px`);
+    };
+
     const handleMouseMove = (e: MouseEvent) => {
-      setCursorPosition({ x: e.clientX, y: e.clientY });
+      pointer.current.x = e.clientX;
+      pointer.current.y = e.clientY;
+      if (rafId.current === null) {
+        rafId.current = requestAnimationFrame(flush);
+      }
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      if (rafId.current !== null) cancelAnimationFrame(rafId.current);
+    };
   }, []);
 
   return (
     <div
+      ref={glowRef}
       className="pointer-events-none fixed inset-0 z-50 transition-opacity duration-300 hidden md:block"
       style={{
-        background: `radial-gradient(200px circle at ${cursorPosition.x}px ${cursorPosition.y}px,
-         #c2bebe, transparent 20%)`,
-      }}
+        "--mouse-x": "-100px",
+        "--mouse-y": "-100px",
+        background:
+          "radial-gradient(200px circle at var(--mouse-x) var(--mouse-y), #c2bebe, transparent 20%)",
+      } as React.CSSProperties}
     />
   );
 };
 
 // Visible Grey Floating Particles Component
+const PARTICLE_COUNT = 99;
+
 const ParticleBackground = () => {
-  const particles = Array.from({ length: 99 });
+  // All Math.random() runs once on mount and is memoised, so random values are
+  // never recomputed on re-render.
+  const particles = useMemo(
+    () =>
+      Array.from({ length: PARTICLE_COUNT }, (_, i) => ({
+        size: Math.random() * 3 + 2, // 2px to 5px for good visibility
+        // Shades of grey for particle visibility on light background
+        color: i % 2 === 0 ? "#475569" : "#64748b",
+        initialX: Math.random() * 100,
+        initialY: Math.random() * 100,
+        duration: Math.random() * 12 + 8,
+        yTo: Math.random() * -60 - 20,
+        xTo: Math.random() * 40 - 20,
+      })),
+    []
+  );
 
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-      {particles.map((_, i) => {
-        const size = Math.random() * 3 + 2; // 2px to 5px for good visibility
-        // Shades of grey for particle visibility on light background
-        const isDarkGrey = i % 2 === 0;
-        const color = isDarkGrey ? "#475569" : "#64748b"; 
-        const initialX = Math.random() * 100;
-        const initialY = Math.random() * 100;
-        const duration = Math.random() * 12 + 8;
-
-        return (
-          <motion.div
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              top: `${initialY}%`,
-              left: `${initialX}%`,
-              width: `${size}px`,
-              height: `${size}px`,
-              backgroundColor: color,
-              boxShadow: `0 0 6px ${color}80`,
-            }}
-            animate={{
-              y: [0, Math.random() * -60 - 20, 0],
-              x: [0, Math.random() * 40 - 20, 0],
-              opacity: [0.35, 0.85, 0.35],
-              scale: [0.9, 1.3, 0.9],
-            }}
-            transition={{
-              duration: duration/2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        );
-      })}
+      {particles.map((p, i) => (
+        <motion.div
+          key={i}
+          className="absolute rounded-full"
+          style={{
+            top: `${p.initialY}%`,
+            left: `${p.initialX}%`,
+            width: `${p.size}px`,
+            height: `${p.size}px`,
+            backgroundColor: p.color,
+            boxShadow: `0 0 6px ${p.color}80`,
+            willChange: "transform, opacity",
+          }}
+          // Force a GPU-composited layer: prepend translate3d to the transform
+          // framer-motion generates for the x/y animation below.
+          transformTemplate={(_, generated) => `translate3d(0, 0, 0) ${generated}`}
+          animate={{
+            y: [0, p.yTo, 0],
+            x: [0, p.xTo, 0],
+            opacity: [0.35, 0.85, 0.35],
+            scale: [0.9, 1.3, 0.9],
+          }}
+          transition={{
+            duration: p.duration / 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
     </div>
   );
 };
 
+// Sensor tab that is active on first render; its video may buffer eagerly,
+// every other sensor video stays at preload="none" until the user selects it.
+const DEFAULT_SENSOR_TAB = "lidar" as const;
+
 export default function TechnologyPage() {
-  const [activeTab, setActiveTab] = useState<"lidar" | "cameras" | "gps">("lidar");
+  const [activeTab, setActiveTab] = useState<"lidar" | "cameras" | "gps">(DEFAULT_SENSOR_TAB);
   const [activeMedia, setActiveMedia] = useState<
     "default" | "high_perf" | "high_performance_system" | "lidar"
   >("default");
@@ -441,6 +478,12 @@ export default function TechnologyPage() {
                     </div>
 
                     <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-zinc-900 flex items-center justify-center">
+                      {/*
+                        Only the active sensor's <video> is ever mounted (keyed by
+                        activeSensor.videoUrl inside AnimatePresence), so inactive
+                        tabs never download their clip. The default tab may buffer;
+                        any other tab loads only once the user switches to it.
+                      */}
                       {activeSensor.videoUrl ? (
                         <video
                           key={activeSensor.videoUrl}
@@ -451,6 +494,7 @@ export default function TechnologyPage() {
                           muted
                           playsInline
                           controls
+                          preload={activeSensor.id === DEFAULT_SENSOR_TAB ? "metadata" : "none"}
                         />
                       ) : (
                         <p className="text-sm text-zinc-400">Feed content for {activeSensor.title}</p>
