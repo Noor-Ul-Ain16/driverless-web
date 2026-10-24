@@ -21,8 +21,7 @@ export default function WhoWeArePage() {
   }
 
   return (
-    <div className="w-full bg-white pt-28 pb-16 px-6 md:px-12 text-zinc-900 overflow-hidden">
-      <div className="zoom-responsive max-w-6xl mx-auto">
+  <div className="w-full bg-white pt-28 pb-16 px-6 md:px-12 lg:px-16 xl:px-20 2xl:px-24 text-zinc-900 overflow-hidden">      <div className="zoom-responsive max-w-6xl mx-auto">
         
         {/* Page Header */}
         <motion.div 

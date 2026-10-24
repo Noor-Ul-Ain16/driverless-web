@@ -175,10 +175,10 @@ export default function GalleryPage() {
       </section>
 
       {/* GALLERY CONTAINER */}
-      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 space-y-20" style={{ zoom } as React.CSSProperties}>
+      <main className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-12 sm:py-16 2xl:py-24 space-y-16 sm:space-y-20 2xl:space-y-28">
 
         {/* 1. HIGHLIGHTED OVERLAPPING CARDS HERO SHOWCASE WITH COLLAGE BACKGROUND */}
-        <section className="relative overflow-hidden rounded-3xl border border-slate-300/80 bg-slate-200/50 p-6 sm:p-10 shadow-inner">
+        <section className="relative w-screen max-w-none left-1/2 -translate-x-1/2 overflow-hidden border-y border-slate-300/80 bg-slate-200/50 p-6 sm:p-10 lg:p-12 2xl:p-16 shadow-inner">          
           
           {/* BACKGROUND COLLAGE GRID WITH BLUR & OVERLAY */}
           <div className="absolute inset-0 z-0 grid grid-cols-3 sm:grid-cols-4 gap-2 opacity-150 filter blur-[2px] scale-105 pointer-events-none select-none">
@@ -203,7 +203,7 @@ export default function GalleryPage() {
                 Featured Highlights
               </span>
               <h2 className="mt-2 text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                Primary Project Vehicles & Telemetry
+                Primary Project Vehicle & Telemetry
               </h2>
             </div>
 
