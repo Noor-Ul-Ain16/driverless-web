@@ -5,9 +5,9 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 const socialLinks = [
-  { label: "LinkedIn", href: "https://www.linkedin.com/company/smart-city-lab-ncai-ned-uet/home/ ", iconPath: "/linkedin_icon__.png" },
-  { label: "YouTube", href: "https://www.youtube.com/@SmartCityLab ", iconPath: "/youtube_icon.png" },
-  { label: "Facebook", href: "https://www.facebook.com/SMARTCITYLAB.NCAI/ #", iconPath: "/facebook_icon.png" },
+  { label: "LinkedIn", href: "", iconPath: "/linkedin_icon__.png" },
+  { label: "YouTube", href: "", iconPath: "/youtube_icon.png" },
+  { label: "Facebook", href: "", iconPath: "/facebook_icon.png" },
 ];
 
 export default function ContactPage() {

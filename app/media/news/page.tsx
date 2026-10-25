@@ -333,9 +333,9 @@ export default function NewsroomPage() {
             variants={staggerContainer}
           >
             {[
-              { label: 'LinkedIn', href: 'https://www.linkedin.com/company/smart-city-lab-ncai-ned-uet/home/' },
-              { label: 'YouTube', href: 'https://www.youtube.com/@SmartCityLab ' },
-              { label: 'Facebook', href: 'https://www.facebook.com/SMARTCITYLAB.NCAI/' },
+              { label: 'LinkedIn', href: '' },
+              { label: 'YouTube', href: '' },
+              { label: 'Facebook', href: '' },
             ].map((item) => (
               <motion.a
                 key={item.label}
