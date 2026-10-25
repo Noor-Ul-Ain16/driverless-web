@@ -47,5 +47,3 @@ content, and provides contact and sponsorship inquiry forms.
   `/be-part-of-it/contact-join-our-team`   Contact and join-the-team form
 
   `/be-part-of-it/sponsorship-form`        Sponsorship and partnership form
-  ----------------------------------------------------------------------------
-
