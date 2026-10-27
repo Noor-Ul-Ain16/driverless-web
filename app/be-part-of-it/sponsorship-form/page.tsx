@@ -1,348 +1,375 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import Link from 'next/link'
+import { motion } from 'framer-motion'
 
-export default function SponsorshipPage() {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    company: "",
-    phone: "",
-    jobTitle: "",
-    sponsorshipInterest: "Corporate Sponsorship",
-    interests: [] as string[],
-    message: "",
-  });
-
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  const supportOptions = [
-    { id: "hardware", label: "Hardware & Sensors (LiDAR, Radar, Cameras, GPUs)" },
-    { id: "financial", label: "Direct Financial & Team Sponsorship" },
-    { id: "compute", label: "Cloud & AI Compute Credits" },
-    { id: "recruitment", label: "Student Internships & Recruitment Access" },
-    { id: "events", label: "Event & Competition Travel Funding" },
-    { id: "inkind", label: "In-Kind Tech Support & Software Licenses" },
-  ];
-
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    setError("");
-  };
-
-  const handleCheckboxChange = (optionLabel: string) => {
-    setFormData((prev) => {
-      const exists = prev.interests.includes(optionLabel);
-      if (exists) {
-        return { ...prev, interests: prev.interests.filter((i) => i !== optionLabel) };
-      } else {
-        return { ...prev, interests: [...prev.interests, optionLabel] };
-      }
-    });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
-
-    try {
-      const res = await fetch("/api/sponsorship", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok || !data.success) {
-        throw new Error(data.message || "Something went wrong.");
-      }
-
-      setSubmitted(true);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("Failed to send inquiry. Please try again.");
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  //Animation configurations
+export default function WhoWeArePage() {
+  // Common Animation Variants
   const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-  };
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0 },
+  }
 
-  const staggerContainer = {
+  const staggerGrid = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.08,
+        staggerChildren: 0.1,
       },
     },
-  };
+  }
 
   return (
-    <main className="min-h-screen w-full bg-zinc-50 pt-24 sm:pt-28 pb-12 px-4 sm:px-6 lg:px-8">
-      <div className="zoom-responsive mx-auto max-w-4xl">
-        {/* Header Section */}
+    <div className="w-full bg-white pt-32 md:pt-36 lg:pt-40 pb-16 px-6 md:px-12 lg:px-16 xl:px-20 2xl:px-24 text-zinc-900 overflow-hidden">
+      <div className="zoom-responsive max-w-6xl mx-auto">
+
+        {/* Page Header */}
         <motion.div
-          className="text-center mb-10"
+          className="text-center mb-12"
           initial="hidden"
-          animate="visible"
-          variants={fadeInUp}
+          whileInView="visible"
+          viewport={{ once: true }}
+          transition={{ staggerChildren: 0.15, duration: 0.5 }}
         >
-          <h1 className="text-2xl font-extrabold uppercase tracking-tight text-zinc-900 sm:text-4xl md:text-5xl">
-            Sponsorship & Partnerships
-          </h1>
+          <motion.p
+            variants={fadeInUp}
+            className="text-xs font-semibold uppercase tracking-[0.35em] text-[#8a1d1d] mb-3"
+          >
+            About Us
+          </motion.p>
+
+          <motion.h1
+            variants={fadeInUp}
+            className="mt-6 text-4xl sm:text-5xl font-extrabold text-black"
+          >
+            Meet The Team
+          </motion.h1>
         </motion.div>
 
-        {/* Main Card */}
-        <motion.div
-          className="bg-white border border-zinc-200 rounded-2xl shadow-xl overflow-hidden"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          <AnimatePresence mode="wait">
-            {submitted ? (
-              /* Success Confirmation State */
-              <motion.div
-                key="success"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.4 }}
-                className="p-10 text-center space-y-6"
-              >
+        {/* Director Section */}
+        <section className="mb-20">
+          <motion.h2
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-3xl font-bold text-black mb-8 border-b border-gray-200 pb-3"
+          >
+            Director
+          </motion.h2>
+
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6 }}
+            className="grid md:grid-cols-[280px_1fr] gap-8 items-start bg-zinc-50 p-8 rounded-3xl border border-gray-200 shadow-xl shadow-zinc-200/40 overflow-hidden"
+          >
+            <div className="aspect-[4/5] rounded-2xl bg-zinc-200 border border-gray-300 overflow-hidden flex items-center justify-center shadow-inner relative group">
+              <img
+                src="/Dr. Muhammad Khurram"
+                alt="Prof. Dr. Muhammad Khurram"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+
+            <div className="space-y-3 text-gray-700">
+              <h3 className="relative top-3.5 text-2xl font-bold text-black">
+                Prof. Dr. Muhammad Khurram
+              </h3>
+
+              <h2 className="mt-10 text-xl font-bold text-[#8a1d1d]">
+                Professor and Co-Chairman
+              </h2>
+
+              <p className="text-sm font-medium">
+                Department of Computer & Information Systems Engineering
+              </p>
+
+              <p className="text-sm font-medium">
+                Director, Research Center for Artificial Intelligence (RCAI)
+              </p>
+
+              <p className="text-sm font-medium">
+                Director, National Center of Artificial Intelligence (NCAI)
+                NEDUET & PI, Smart City Lab
+              </p>
+
+              <p className="text-sm font-medium">
+                Ph.D. (IC Design), Massey University, New Zealand, 2012
+              </p>
+            </div>
+          </motion.div>
+        </section>
+
+        {/* Research Team Section */}
+        <section>
+          <motion.h2
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-3xl font-bold text-black mb-10 border-b border-gray-200 pb-3"
+          >
+            Research Team
+          </motion.h2>
+
+          {/* Graduate Leads */}
+          <div className="mb-12">
+            <h3 className="text-xl font-bold text-[#8a1d1d] mb-6">
+              Graduate Leads
+            </h3>
+
+            <motion.div
+              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+              variants={staggerGrid}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              {[
+                {
+                  name: 'Ansharah Mobeen',
+                  role: 'Team Lead',
+                  image: '/Ansharah_Mobeen.jpeg',
+                },
+                {
+                  name: 'Fatima Saud',
+                  role: 'Project Manager, Computer Vision Engineer, Research Associate',
+                  image: '/Fatima_Saud1.jpeg',
+                },
+                {
+                  name: 'Hamid Raza',
+                  role: 'Embedded Systems Engineer, Research Assistant',
+                  image: '/Hamid Raza.jpeg',
+                },
+                {
+                  name: 'Saleem',
+                  role: 'Embedded Systems Engineer, Research Assistant',
+                  image: '/saleem.png',
+                },
+              ].map((member) => (
                 <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.1 }}
-                  className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600"
+                  key={member.name}
+                  variants={fadeInUp}
+                  transition={{ duration: 0.4 }}
+                  className="group relative rounded-2xl border border-zinc-200/80 bg-white overflow-hidden flex flex-col transition-all duration-300 hover:shadow-xl hover:shadow-zinc-200/50 hover:-translate-y-1.5 w-full"
                 >
-                  <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </motion.div>
-                <h2 className="text-2xl font-bold text-zinc-900">Inquiry Received!</h2>
-                <p className="text-sm text-zinc-600 max-w-md mx-auto">
-                  Thank you for reaching out, <span className="font-semibold text-zinc-900">{formData.firstName}</span>. Our team will review your partnership request and get back to you shortly.
-                </p>
-                <motion.button
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  onClick={() => setSubmitted(false)}
-                  className="mt-4 inline-flex items-center gap-2 rounded-lg bg-[#8a1d1d] px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-[#6e1717]"
-                >
-                  Submit Another Response
-                </motion.button>
-              </motion.div>
-            ) : (
-              /* Form Fields */
-              <motion.form
-                key="form"
-                initial="hidden"
-                animate="visible"
-                exit={{ opacity: 0 }}
-                variants={staggerContainer}
-                onSubmit={handleSubmit}
-                className="p-6 sm:p-10 space-y-8"
-              >
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                  {/* First Name */}
-                  <motion.div variants={fadeInUp}>
-                    <label htmlFor="firstName" className="block text-xs font-bold uppercase tracking-wider text-[#8a1d1d] mb-1">
-                      First Name <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="firstName"
-                      name="firstName"
-                      required
-                      value={formData.firstName}
-                      onChange={handleInputChange}
-                      placeholder="First Name"
-                      className="w-full rounded-lg border border-zinc-300 px-4 py-2.5 text-sm text-zinc-900 outline-none transition focus:border-[#8a1d1d] focus:ring-1 focus:ring-[#8a1d1d]"
+                  <div className="w-full aspect-[4/3] bg-zinc-100 overflow-hidden relative">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                     />
-                  </motion.div>
 
-                  {/* Last Name */}
-                  <motion.div variants={fadeInUp}>
-                    <label htmlFor="lastName" className="block text-xs font-bold uppercase tracking-wider text-[#8a1d1d] mb-1">
-                      Last Name <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="lastName"
-                      name="lastName"
-                      required
-                      value={formData.lastName}
-                      onChange={handleInputChange}
-                      placeholder="Last Name"
-                      className="w-full rounded-lg border border-zinc-300 px-4 py-2.5 text-sm text-zinc-900 outline-none transition focus:border-[#8a1d1d] focus:ring-1 focus:ring-[#8a1d1d]"
-                    />
-                  </motion.div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
 
-                  {/* Work Email */}
-                  <motion.div variants={fadeInUp}>
-                    <label htmlFor="email" className="block text-xs font-bold uppercase tracking-wider text-[#8a1d1d] mb-1">
-                      Email <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      placeholder="yourname@gmail.com"
-                      className="w-full rounded-lg border border-zinc-300 px-4 py-2.5 text-sm text-zinc-900 outline-none transition focus:border-[#8a1d1d] focus:ring-1 focus:ring-[#8a1d1d]"
-                    />
-                  </motion.div>
+                  <div className="p-5 bg-white flex flex-col flex-1 justify-between">
+                    <div>
+                      <h4 className="font-bold text-zinc-900 text-base group-hover:text-[#8a1d1d] transition-colors">
+                        {member.name}
+                      </h4>
 
-                  {/* Phone Number */}
-                  <motion.div variants={fadeInUp}>
-                    <label htmlFor="phone" className="block text-xs font-bold uppercase tracking-wider text-[#8a1d1d] mb-1">
-                      Phone / WhatsApp
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      placeholder="+92 312 3456789"
-                      className="w-full rounded-lg border border-zinc-300 px-4 py-2.5 text-sm text-zinc-900 outline-none transition focus:border-[#8a1d1d] focus:ring-1 focus:ring-[#8a1d1d]"
-                    />
-                  </motion.div>
-
-                  {/* Company / Organization */}
-                  <motion.div variants={fadeInUp}>
-                    <label htmlFor="company" className="block text-xs font-bold uppercase tracking-wider text-[#8a1d1d] mb-1">
-                      Company / Organization <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="company"
-                      name="company"
-                      required
-                      value={formData.company}
-                      onChange={handleInputChange}
-                      placeholder="Tech Solutions Ltd."
-                      className="w-full rounded-lg border border-zinc-300 px-4 py-2.5 text-sm text-zinc-900 outline-none transition focus:border-[#8a1d1d] focus:ring-1 focus:ring-[#8a1d1d]"
-                    />
-                  </motion.div>
-
-                  {/* Job Title */}
-                  <motion.div variants={fadeInUp}>
-                    <label htmlFor="jobTitle" className="block text-xs font-bold uppercase tracking-wider text-[#8a1d1d] mb-1">
-                      Job Title / Designation
-                    </label>
-                    <input
-                      type="text"
-                      id="jobTitle"
-                      name="jobTitle"
-                      value={formData.jobTitle}
-                      onChange={handleInputChange}
-                      placeholder="Head of CSR / Lead Tech Partner"
-                      className="w-full rounded-lg border border-zinc-300 px-4 py-2.5 text-sm text-zinc-900 outline-none transition focus:border-[#8a1d1d] focus:ring-1 focus:ring-[#8a1d1d]"
-                    />
-                  </motion.div>
-
-                  {/* Checkboxes */}
-                  <motion.div className="col-span-full" variants={fadeInUp}>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#8a1d1d] mb-3">
-                      What are you interested in supporting? <span className="text-zinc-400 font-normal">(Select all that apply)</span>
-                    </label>
-
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                      {supportOptions.map((opt) => {
-                        const isChecked = formData.interests.includes(opt.label);
-                        return (
-                          <motion.label
-                            key={opt.id}
-                            whileHover={{ scale: 1.01 }}
-                            whileTap={{ scale: 0.99 }}
-                            onClick={() => handleCheckboxChange(opt.label)}
-                            className={`flex items-start gap-3 rounded-lg border p-3.5 cursor-pointer transition select-none ${
-                              isChecked
-                                ? "border-[#8a1d1d] bg-[#8a1d1d]/5 text-zinc-900 ring-1 ring-[#8a1d1d]"
-                                : "border-zinc-200 bg-zinc-50/50 text-zinc-700 hover:border-zinc-300 hover:bg-zinc-100"
-                            }`}
-                          >
-                            <input
-                              type="checkbox"
-                              checked={isChecked}
-                              onChange={() => {}}
-                              className="mt-0.5 h-4 w-4 rounded border-zinc-300 text-[#8a1d1d] focus:ring-[#8a1d1d]"
-                            />
-                            <span className="text-xs font-medium leading-tight">{opt.label}</span>
-                          </motion.label>
-                        );
-                      })}
+                      {member.role && (
+                        <p className="text-xs text-zinc-500 mt-1.5 font-medium leading-relaxed">
+                          {member.role}
+                        </p>
+                      )}
                     </div>
-                  </motion.div>
-                </div>
-
-                <hr className="border-zinc-200" />
-
-                {/* Message */}
-                <motion.div variants={fadeInUp}>
-                  <label htmlFor="message" className="block text-xs font-bold uppercase tracking-wider text-[#8a1d1d] mb-1">
-                    Additional Notes or Details
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={4}
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    placeholder="Tell us more about how your organization would like to collaborate with NED Driverless..."
-                    className="w-full rounded-lg border border-zinc-300 px-4 py-2.5 text-sm text-zinc-900 outline-none transition focus:border-[#8a1d1d] focus:ring-1 focus:ring-[#8a1d1d]"
-                  ></textarea>
+                  </div>
                 </motion.div>
+              ))}
+            </motion.div>
+          </div>
 
-                {/* Error Message */}
-                {error && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="rounded-lg bg-red-50 p-3 text-xs font-medium text-red-600 border border-red-200"
-                  >
-                    {error}
-                  </motion.p>
-                )}
+          {/* Undergraduate Students Section */}
+          <div className="mb-12">
+            <h3 className="text-xl font-bold text-[#8a1d1d] mb-6">
+              Undergraduate Students
+            </h3>
 
-                {/* Submit Button */}
-                <motion.div className="pt-2" variants={fadeInUp}>
-                  <motion.button
-                    type="submit"
-                    disabled={loading}
-                    whileHover={{ scale: loading ? 1 : 1.01 }}
-                    whileTap={{ scale: loading ? 1 : 0.98 }}
-                    className="w-full rounded-lg bg-[#8a1d1d] py-3.5 px-6 text-xs font-bold uppercase tracking-widest text-white shadow-lg transition hover:bg-[#6e1717] focus:ring-2 focus:ring-[#8a1d1d] focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed"
-                  >
-                    {loading ? "Sending Inquiry..." : "Submit Sponsorship Inquiry"}
-                  </motion.button>
+            <motion.div
+              className="grid gap-6 sm:grid-cols-2 max-w-xl"
+              variants={staggerGrid}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              {[
+                {
+                  name: 'Tehreem Raza Khan',
+                  role: 'Hardware Lead',
+                  image: '/Tehreem_Raza_Khan1.jpg',
+                },
+                {
+                  name: 'Eshal Kashif',
+                  role: 'Software Lead',
+                  image: '/eshal1.jpeg',
+                },
+              ].map((member) => (
+                <motion.div
+                  key={member.name}
+                  variants={fadeInUp}
+                  transition={{ duration: 0.4 }}
+                  className="group relative rounded-2xl border border-zinc-200/80 bg-white overflow-hidden flex flex-col transition-all duration-300 hover:shadow-xl hover:shadow-zinc-200/50 hover:-translate-y-1.5 w-full"
+                >
+                  <div className="w-full aspect-[4/3] bg-zinc-100 overflow-hidden relative">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    />
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
+
+                  <div className="p-5 bg-white flex flex-col flex-1 justify-between">
+                    <div>
+                      <h4 className="font-bold text-zinc-900 text-base group-hover:text-[#8a1d1d] transition-colors">
+                        {member.name}
+                      </h4>
+
+                      {member.role && (
+                        <p className="text-xs text-zinc-500 mt-1.5 font-medium leading-relaxed">
+                          {member.role}
+                        </p>
+                      )}
+                    </div>
+                  </div>
                 </motion.div>
-              </motion.form>
-            )}
-          </AnimatePresence>
-        </motion.div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Software Team */}
+          <div className="mb-12">
+            <h3 className="text-lg font-bold text-zinc-900 mb-6 border-b border-gray-100 pb-2">
+              Software
+            </h3>
+
+            <motion.div
+              className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
+              variants={staggerGrid}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.1 }}
+            >
+              {[
+                {
+                  name: 'Muhammad Hussnain Mansoor',
+                  image: '/hussnain.jpeg',
+                },
+                {
+                  name: 'Syed Hussain Sajjad',
+                  image: '/hussain1.jpeg',
+                },
+                {
+                  name: 'Muhammad Haris',
+                  image: '/haris.png',
+                },
+                {
+                  name: 'Hamdan',
+                  image: '/hamdan.jpeg',
+                },
+                {
+                  name: 'Mazna Noman Khan',
+                  image: '/mazna.jpeg',
+                },
+                {
+                  name: 'Anam Jafar',
+                  image: '/anam.jpeg',
+                },
+              ].map((member) => (
+                <motion.div
+                  key={member.name}
+                  variants={fadeInUp}
+                  transition={{ duration: 0.3 }}
+                  className="group rounded-xl border border-zinc-200/80 bg-white overflow-hidden flex flex-col transition-all duration-300 hover:shadow-md hover:border-zinc-300 hover:-translate-y-1 w-full"
+                >
+                  <div className="w-full aspect-square bg-zinc-100 overflow-hidden relative">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+
+                  <div className="p-3 bg-white flex flex-col justify-center flex-1">
+                    <h4 className="font-semibold text-zinc-900 text-xs leading-snug group-hover:text-[#8a1d1d] transition-colors">
+                      {member.name}
+                    </h4>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Embedded/Hardware Team */}
+          <div>
+            <h3 className="text-lg font-bold text-zinc-900 mb-6 border-b border-gray-100 pb-2">
+              Embedded / Hardware
+            </h3>
+
+            <motion.div
+              className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
+              variants={staggerGrid}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.1 }}
+            >
+              {[
+                {
+                  name: 'Sumbal Zehra',
+                  image: '/Sumbal_Zehra1.jpeg',
+                },
+                {
+                  name: 'Abdul Muiz',
+                  image: '/Abdul_Muiz.jpeg',
+                },
+                {
+                  name: 'Muhammad Areeb',
+                  image: '/Areeb_Sohail1.jpeg',
+                },
+                {
+                  name: 'Muhammad Ubaid',
+                  image: '/Muhammad_Ubaid1.jpeg',
+                },
+                {
+                  name: 'Farhan Raza',
+                  image: '/Farhan_Raza1.jpeg',
+                },
+                {
+                  name: 'Shaheer Azmat Khan',
+                  image: '/Shaheer_Azmat_Khan1.jpeg',
+                },
+              ].map((member) => (
+                <motion.div
+                  key={member.name}
+                  variants={fadeInUp}
+                  transition={{ duration: 0.3 }}
+                  className="group rounded-xl border border-zinc-200/80 bg-white overflow-hidden flex flex-col transition-all duration-300 hover:shadow-md hover:border-zinc-300 hover:-translate-y-1 w-full"
+                >
+                  <div className="w-full aspect-square bg-zinc-100 overflow-hidden relative">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+
+                  <div className="p-3 bg-white flex flex-col justify-center flex-1">
+                    <h4 className="font-semibold text-zinc-900 text-xs leading-snug group-hover:text-[#8a1d1d] transition-colors">
+                      {member.name}
+                    </h4>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
       </div>
-    </main>
-  );
+    </div>
+  )
 }
